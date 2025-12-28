@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="Cinestar_app.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Cinestar_app"
+    xmlns:pages="clr-namespace:Cinestar_app.Pages"
     Title="Cinestar_app">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent Title="Home" Icon="home.png" ContentTemplate="{DataTemplate pages:MainPage}" />
+        <ShellContent Title="Movies" Icon="movies.png" ContentTemplate="{DataTemplate pages:Filmovi}" />
+        <ShellContent Title="Loyalty" Icon="loyalty.png" ContentTemplate="{DataTemplate pages:LoyaltyBodovi}" />
+        <ShellContent Title="Profile" Icon="profile.png" ContentTemplate="{DataTemplate pages:Profil}" />
+    </TabBar>
 
 </Shell>
