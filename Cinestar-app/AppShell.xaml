@@ -6,9 +6,9 @@
     Title="Cinestar_app">
 
     <TabBar>
-        <ShellContent Title="Home"  ContentTemplate="{DataTemplate pages:MainPage}" />
-        <ShellContent Title="Movies"  ContentTemplate="{DataTemplate pages:Filmovi}" />
-        <ShellContent Title="Loyalty"  ContentTemplate="{DataTemplate pages:LoyaltyBodovi}" />
+        <ShellContent Title="Pocetna"  ContentTemplate="{DataTemplate pages:MainPage}" />
+        <ShellContent Title="Filmovi"  ContentTemplate="{DataTemplate pages:Filmovi}" />
+        <ShellContent Title="LoyaltyBodovi"  ContentTemplate="{DataTemplate pages:LoyaltyBodovi}" />
         <ShellContent Title="Profile"  ContentTemplate="{DataTemplate pages:Profil}" />
     </TabBar>
 
