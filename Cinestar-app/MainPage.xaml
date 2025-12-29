@@ -1,19 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:pages="clr-namespace:Cinestar_app.Pages"
-            x:Class="Cinestar_app.Pages.MainPage">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Cinestar_app.Pages"
+             x:Class="Cinestar_app.Pages.MainPage"
+             Title="Home">
 
-    <!-- Home tab -->
-    <pages:Home Title="Home"  />
+    <ScrollView>
+        <StackLayout BackgroundColor="Blue">
 
-    <!-- Movies tab -->
-    <pages:Filmovi Title="Movies" />
+            <!-- Frame sa slikama -->
+            <Frame BackgroundColor="Gray" Margin="0,20">
+                <StackLayout>
+                    <Label Text="SLike"></Label>
+                </StackLayout>
+            </Frame>
 
-    <!-- Loyalty tab -->
-    <pages:LoyaltyBodovi Title="Loyalty"  />
+            <Label Text="Na programu" TextTransform="Uppercase"/>
 
-    <!-- Profile tab -->
-    <pages:Profil Title="Profile" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-</TabbedPage>
+                <!-- Frame 1 -->
+                <Frame Grid.Row="0" Grid.Column="0" Margin="10" Padding="10" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Label Text="Label 1" HorizontalOptions="Center" />
+                        <Image Source="slika1.png" Aspect="AspectFit" HeightRequest="100" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Frame 2 -->
+                <Frame Grid.Row="0" Grid.Column="1" Margin="10" Padding="10" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Label Text="Label 2" HorizontalOptions="Center" />
+                        <Image Source="slika2.png" Aspect="AspectFit" HeightRequest="100" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Frame 3 -->
+                <Frame Grid.Row="1" Grid.Column="0" Margin="10" Padding="10" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Label Text="Label 3" HorizontalOptions="Center" />
+                        <Image Source="slika3.png" Aspect="AspectFit" HeightRequest="100" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Frame 4 -->
+                <Frame Grid.Row="1" Grid.Column="1" Margin="10" Padding="10" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Label Text="Label 4" HorizontalOptions="Center" />
+                        <Image Source="slika4.png" Aspect="AspectFit" HeightRequest="100" />
+                    </StackLayout>
+                </Frame>
+
+            </Grid>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

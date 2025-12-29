@@ -6,10 +6,11 @@
     Title="Cinestar_app">
 
     <TabBar>
-        <ShellContent Title="Home" Icon="home.png" ContentTemplate="{DataTemplate pages:MainPage}" />
-        <ShellContent Title="Movies" Icon="movies.png" ContentTemplate="{DataTemplate pages:Filmovi}" />
-        <ShellContent Title="Loyalty" Icon="loyalty.png" ContentTemplate="{DataTemplate pages:LoyaltyBodovi}" />
-        <ShellContent Title="Profile" Icon="profile.png" ContentTemplate="{DataTemplate pages:Profil}" />
+        <ShellContent Title="Home"  ContentTemplate="{DataTemplate pages:MainPage}" />
+        <ShellContent Title="Movies"  ContentTemplate="{DataTemplate pages:Filmovi}" />
+        <ShellContent Title="Loyalty"  ContentTemplate="{DataTemplate pages:LoyaltyBodovi}" />
+        <ShellContent Title="Profile"  ContentTemplate="{DataTemplate pages:Profil}" />
     </TabBar>
+
 
 </Shell>
