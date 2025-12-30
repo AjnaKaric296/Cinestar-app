@@ -1,12 +1,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.Pages.Filmovi"
-             Title="Movies">
-
-    <StackLayout>
+             Title="">
+    <ScrollView>
+        <StackLayout BackgroundColor="#051851">
         <Label Text="Filmovi page!" 
                HorizontalOptions="Center" 
                VerticalOptions="Center"/>
     </StackLayout>
-
+</ScrollView>
 </ContentPage>
