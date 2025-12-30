@@ -3,15 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:Cinestar_app.Pages"
              x:Class="Cinestar_app.Pages.MainPage"
-             Title="Home">
+             Title="">
 
     <ScrollView>
+<<<<<<< HEAD
         <StackLayout BackgroundColor="Blue">
 
             <Image Source="logo.png"
                    HeightRequest="40"
                    HorizontalOptions="Start"
                    VerticalOptions="Center" />
+=======
+        <StackLayout BackgroundColor="#051851">
+            <StackLayout Orientation="Horizontal">
+                <Picker TextColor="White" x:Name="gradoviPicker" ></Picker>
+            </StackLayout>
+>>>>>>> 78713309a46ee98d58ce46e082b8437eb2a0d18f
             <!-- Frame sa slikama -->
             <Frame BackgroundColor="Gray" Margin="0,20">
                 <StackLayout>
