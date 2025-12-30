@@ -8,6 +8,10 @@
     <ScrollView>
         <StackLayout BackgroundColor="Blue">
 
+            <Image Source="logo.png"
+                   HeightRequest="40"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center" />
             <!-- Frame sa slikama -->
             <Frame BackgroundColor="Gray" Margin="0,20">
                 <StackLayout>
