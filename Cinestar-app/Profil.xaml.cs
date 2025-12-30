@@ -21,4 +21,9 @@ public partial class Profil : ContentPage
     {
         RegistracijaForma.IsVisible = !RegistracijaForma.IsVisible;
     }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }

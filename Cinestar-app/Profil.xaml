@@ -13,11 +13,15 @@
             <!-- BUTTONI -->
             <Button Text="Prijava"
                     BackgroundColor="DarkBlue"
-                    TextColor="White"/>
+                    TextColor="White"
+                    Clicked="Prijava_Clicked"
+                    />
 
             <Button Text="Registracija"
                     BackgroundColor="Gray"
-                    TextColor="White"/>
+                    TextColor="White"
+                    Clicked="Registracija_Clicked"
+                    />
 
             <!-- REGISTRACIJA FORMA (sakrivena na početku) -->
             <VerticalStackLayout x:Name="RegistracijaForma"
@@ -38,7 +42,9 @@
 
                 <Button Text="Registruj se"
                         BackgroundColor="Green"
-                        TextColor="White"/>
+                        TextColor="White"
+                       
+                        />
             </VerticalStackLayout>
 
         </VerticalStackLayout>
