@@ -1,4 +1,7 @@
-﻿namespace Cinestar_app
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+
+namespace Cinestar_app
 {
     public partial class App : Application
     {
@@ -9,7 +12,18 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            // *** TEMPORARNO OBRIŠI OVO ZA TEST ***
+            Preferences.Clear(); // ODKOMENTIRAJ OVO 1 PUT
+
+            if (Preferences.ContainsKey("SelectedCity"))
+            {
+                return new Window(new AppShell());
+            }
+            else
+            {
+                return new Window(new SplashPage());
+            }
         }
+
     }
 }
