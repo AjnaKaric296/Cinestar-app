@@ -31,7 +31,8 @@
                                FontAttributes="Bold"
                                TextColor="White"
                                Padding="30,20"
-                               VerticalOptions="Center" />
+                               VerticalOptions="Center"
+                               FontFamily="Arial"/>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

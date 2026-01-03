@@ -1,13 +1,18 @@
 using Microsoft.Maui.Controls;
 using System.Threading.Tasks;
+using Cinestar_app.Models;
+using Cinestar_app.Services;
 
-namespace Cinestar_app;
+namespace Cinestar_app.Pages;
 
 public partial class RegistracijaPage : ContentPage
 {
+    private UserDatabase _db;
+
     public RegistracijaPage()
     {
         InitializeComponent();
+        _db = new UserDatabase();
     }
 
     private async void RegistrujSe_Clicked(object sender, EventArgs e)
@@ -25,12 +30,24 @@ public partial class RegistracijaPage : ContentPage
             return;
         }
 
-        // OZNAÈAVAMO DA JE KORISNIK REGISTROVAN
-        App.IsUserRegistered = true;
+        var existingUser = await _db.GetUserByEmailAsync(EmailEntry.Text);
+        if (existingUser != null)
+        {
+            await DisplayAlert("Greška", "Korisnik s tim emailom veæ postoji", "OK");
+            return;
+        }
 
+        var user = new User
+        {
+            Ime = ImeEntry.Text,
+            Prezime = PrezimeEntry.Text,
+            Email = EmailEntry.Text,
+            Lozinka = LozinkaEntry.Text
+        };
+
+        await _db.AddUserAsync(user);
         await DisplayAlert("Uspjeh", "Registracija uspješna!", "OK");
 
-        // Povratak na Profil
         await Navigation.PopAsync();
     }
 }
