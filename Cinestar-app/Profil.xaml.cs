@@ -11,19 +11,23 @@ public partial class Profil : ContentPage
 
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
+        if (!App.IsUserRegistered)
+        {
+            await DisplayAlert(
+                "Prijava",
+                "Nemate nalog. Molimo vas da se prvo registrujete.",
+                "OK");
+            return;
+        }
+
         await DisplayAlert(
             "Prijava",
-            "Nemate nalog. Molimo vas da se prvo registrujete.",
+            "Uspješna prijava!",
             "OK");
     }
 
-    private void Registracija_Clicked(object sender, EventArgs e)
+    private async void Registracija_Clicked(object sender, EventArgs e)
     {
-        RegistracijaForma.IsVisible = !RegistracijaForma.IsVisible;
-    }
-
-    private void Button_Clicked(object sender, EventArgs e)
-    {
-
+        await Navigation.PushAsync(new RegistracijaPage());
     }
 }

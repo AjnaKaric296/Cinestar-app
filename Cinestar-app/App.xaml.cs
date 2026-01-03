@@ -25,5 +25,9 @@ namespace Cinestar_app
             }
         }
 
+        public static bool IsUserRegistered { get; set; } = false;
+
+       
+
     }
 }
