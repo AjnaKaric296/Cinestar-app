@@ -6,7 +6,7 @@
              Title="">
 
     <ScrollView>
-        <StackLayout BackgroundColor="Blue">
+        <StackLayout BackgroundColor="#051851">
 
 
             <StackLayout BackgroundColor="#051851">
@@ -16,7 +16,7 @@
           HorizontalOptions="Start"
           VerticalOptions="Center" />
 
-                    <Picker TextColor="White" x:Name="gradoviPicker" ></Picker>
+                    <Picker x:Name="gradoviPicker" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="White"></Picker>
                 </StackLayout>
 
                 <!-- Frame sa slikama -->

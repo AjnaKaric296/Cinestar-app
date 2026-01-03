@@ -16,9 +16,12 @@ public partial class MainPage : ContentPage
             "Osijek",
             "Pula"
         };
-        
-        
+
+        gradoviPicker.ItemsSource = gradovi;
+
+        gradoviPicker.SelectedItem = "Split";
+
     }
 
-    
+
 }
