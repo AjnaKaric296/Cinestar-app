@@ -3,22 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.CityPickerPage"
              BackgroundColor="#051851">
+    <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="20">
 
-    <ListView x:Name="CitiesListView"
-              BackgroundColor="Transparent"
-              SeparatorVisibility="None"
-              RowHeight="70">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Label Text="{Binding}" 
-                           FontSize="22"
-                           FontAttributes="Bold"
-                           TextColor="White"
-                           Padding="30,20"
-                           VerticalOptions="Center" />
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+        <!-- LOGO -->
+        <Image Source="logo.png"
+               HeightRequest="80"
+               HorizontalOptions="Center"
+               Aspect="AspectFit" />
+
+        <!-- LABEL -->
+        <Label Text="Odaberite grad"
+               FontSize="20"
+               TextColor="White"
+               HorizontalOptions="Center" />
+
+        <!-- LISTA GRADOVA -->
+        <ListView x:Name="CitiesListView"
+                  BackgroundColor="Transparent"
+                  SeparatorVisibility="None"
+                  RowHeight="70">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding}" 
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               Padding="30,20"
+                               VerticalOptions="Center" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

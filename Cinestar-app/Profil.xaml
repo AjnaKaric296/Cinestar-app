@@ -1,26 +1,37 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.Pages.Profil"
-             Title="">
+             Title=""
+             BackgroundColor="#051851">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#051851">
+        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#051851" VerticalOptions="Center">
 
-            <Label Text="PRIJAVI SE"
+            <Label Text="PRIJAVA"
                    FontSize="24"
                    HorizontalOptions="Center"
-                   TextColor="White" />
+                   TextColor="White"
+                   FontFamily="Arial"
+                   Padding="10"/>
+            <BoxView HeightRequest="1" 
+                     BackgroundColor="#FFD700" 
+                    HorizontalOptions="FillAndExpand"
+                    Margin="5,5"/>
 
             <!-- BUTTONI -->
-            <Button Text="Prijava"
-                    BackgroundColor="DarkBlue"
+            <Button Text="Prijavi se"
+                    BackgroundColor="#FFD700"
                     TextColor="White"
                     Clicked="Prijava_Clicked"
+                    FontFamily="Arial"
+                    Margin="10"
                     />
 
-            <Button Text="Registracija"
-                    BackgroundColor="Gray"
+            <Button Text="Registruj se"
+                    BackgroundColor="#FFD700"
                     TextColor="White"
                     Clicked="Registracija_Clicked"
+                    FontFamily="Arial"
+                    Margin="5,0"
                     />
 
             <!-- REGISTRACIJA FORMA (sakrivena na početku) -->
@@ -32,21 +43,21 @@
                 <Label Text="Registracija"
                        FontSize="20"
                        HorizontalOptions="Center"
-                       TextColor="White"/>
+                       TextColor="White"
+                       FontFamily="Arial"/>
 
-                <Entry Placeholder="Ime" TextColor="White"/>
-                <Entry Placeholder="Prezime" TextColor="White"/>
-                <Entry Placeholder="Email" Keyboard="Email" TextColor="White"/>
-                <Entry Placeholder="Lozinka" IsPassword="True" TextColor="White"/>
-                <Entry Placeholder="Potvrdi lozinku" IsPassword="True" TextColor="White"/>
+                <Entry Placeholder="Ime" TextColor="White" FontFamily="Arial"/>
+                <Entry Placeholder="Prezime" TextColor="White" FontFamily="Arial"/>
+                <Entry Placeholder="Email" Keyboard="Email" TextColor="White" FontFamily="Arial"/>
+                <Entry Placeholder="Lozinka" IsPassword="True" TextColor="White" FontFamily="Arial"/>
+                <Entry Placeholder="Potvrdi lozinku" IsPassword="True" TextColor="White" FontFamily="Arial"/>
 
                 <Button Text="Registruj se"
                         BackgroundColor="Green"
                         TextColor="White"
-                       
+                        FontFamily="Arial"
                         />
             </VerticalStackLayout>
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
