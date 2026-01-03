@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Cinestar_app.Pages"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    x:Class="Cinestar_app.Pages.MainTabbedPage"
+    android:TabbedPage.ToolbarPlacement="Bottom"
+    >
+
+    <TabbedPage.Children>
+        <NavigationPage Title="Pocetna" IconImageSource="home.png">
+            <x:Arguments>
+                <pages:MainPage />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Filmovi" IconImageSource="film.png">
+            <x:Arguments>
+                <pages:Filmovi />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Bodovi" IconImageSource="bodovi.png">
+            <x:Arguments>
+                <pages:LoyaltyBodovi />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Profil" IconImageSource="profil.png">
+            <x:Arguments>
+                <pages:Profil />
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+
+</TabbedPage>

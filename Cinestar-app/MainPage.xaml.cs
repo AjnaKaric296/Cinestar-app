@@ -8,19 +8,7 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        var gradovi = new List<string>
-        {
-            "Zagreb",
-            "Split",
-            "Rijeka",
-            "Osijek",
-            "Pula"
-        };
-
-        gradoviPicker.ItemsSource = gradovi;
-
-        gradoviPicker.SelectedItem = "Split";
-
+      
     }
 
 

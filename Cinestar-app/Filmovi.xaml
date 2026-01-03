@@ -7,6 +7,8 @@
         <Label Text="Filmovi page!" 
                HorizontalOptions="Center" 
                VerticalOptions="Center"/>
+
+            <Button Text="Klikni me" Clicked="IdiNaFIlmDetalji"></Button>
     </StackLayout>
 </ScrollView>
 </ContentPage>

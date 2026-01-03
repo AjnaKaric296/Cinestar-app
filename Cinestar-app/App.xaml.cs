@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using Cinestar_app.Pages;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
 namespace Cinestar_app
@@ -10,6 +11,8 @@ namespace Cinestar_app
             InitializeComponent();
         }
 
+        
+
         protected override Window CreateWindow(IActivationState? activationState)
         {
             // *** TEMPORARNO OBRIŠI OVO ZA TEST ***
@@ -17,7 +20,7 @@ namespace Cinestar_app
 
             if (Preferences.ContainsKey("SelectedCity"))
             {
-                return new Window(new AppShell());
+                return new Window(new NavigationPage(new MainPage()));
             }
             else
             {

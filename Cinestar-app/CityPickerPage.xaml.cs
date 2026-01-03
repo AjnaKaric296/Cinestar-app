@@ -1,3 +1,4 @@
+using Cinestar_app.Pages;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -23,7 +24,9 @@ namespace Cinestar_app
             if (e.SelectedItem is string selectedCity)
             {
                 Preferences.Set("SelectedCity", selectedCity);
-                Application.Current.MainPage = new AppShell();
+                Application.Current.MainPage = new MainTabbedPage();
+
+
             }
         }
     }
