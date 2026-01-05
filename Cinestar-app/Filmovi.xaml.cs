@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls;
 namespace Cinestar_app.Pages;
 
 public partial class Filmovi : ContentPage
@@ -6,8 +7,8 @@ public partial class Filmovi : ContentPage
 	{
 		InitializeComponent();
 
-
-	}
+        NavigationPage.SetHasNavigationBar(this, false);
+    }
 
     private async void IdiNaFIlmDetalji(object sender, EventArgs e)
     { 

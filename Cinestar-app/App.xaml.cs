@@ -20,7 +20,7 @@ namespace Cinestar_app
 
             if (Preferences.ContainsKey("SelectedCity"))
             {
-                return new Window(new NavigationPage(new MainPage()));
+                return new Window(new NavigationPage(new MainTabbedPage()));
             }
             else
             {

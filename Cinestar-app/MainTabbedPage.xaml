@@ -11,7 +11,7 @@
     <TabbedPage.Children>
         <NavigationPage Title="Pocetna" IconImageSource="home.png">
             <x:Arguments>
-                <pages:MainPage />
+                <pages:HomePage />
             </x:Arguments>
         </NavigationPage>
 

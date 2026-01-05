@@ -7,7 +7,11 @@ public partial class Profil : ContentPage
     public Profil()
     {
         InitializeComponent();
+
+        NavigationPage.SetHasNavigationBar(this, false);
     }
+
+   
 
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
@@ -30,4 +34,6 @@ public partial class Profil : ContentPage
     {
         await Navigation.PushAsync(new RegistracijaPage());
     }
+
+
 }
