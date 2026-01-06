@@ -21,11 +21,37 @@
         TextColor="White"/>
             </StackLayout>
 
-            <Frame BackgroundColor="Gray" Margin="0,20">
-                <StackLayout>
-                    <Label Text="SLike"/>
-                </StackLayout>
-            </Frame>
+
+            <StackLayout>
+
+                <CarouselView
+        ItemsSource="{Binding Images}"
+        IndicatorView="indicator"
+        HeightRequest="220"
+                    IsSwipeEnabled="True"
+                    >
+
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Image
+                    Source="{Binding}"
+                    Aspect="AspectFill" />
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+
+                </CarouselView>
+
+                <IndicatorView
+        x:Name="indicator"
+        HorizontalOptions="Center"
+        Margin="0,5"
+        IndicatorColor="LightGray"
+        SelectedIndicatorColor="White"/>
+
+            </StackLayout>
+
+
+
 
             <Label Text="Na programu" TextTransform="Uppercase"/>
 
