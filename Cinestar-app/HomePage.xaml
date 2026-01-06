@@ -9,16 +9,19 @@
         <StackLayout BackgroundColor="#051851">
             <StackLayout Orientation="Horizontal">
                 <Image Source="logo.png"
-                       HeightRequest="40"
+                       HeightRequest="30"
                        HorizontalOptions="Start"
                        VerticalOptions="Center" />
 
                 <Button x:Name="CityPickerButton"
-        HorizontalOptions="End"
-        BackgroundColor="#051851"
-         Clicked="OnCittySelected"
-                     
-        TextColor="White"/>
+                 BackgroundColor="#051851"
+                Clicked="OnCittySelected"
+                TextColor="White"
+                HeightRequest="1"
+                Padding="5"
+                HorizontalOptions="EndAndExpand"/>
+
+                <Image Source="strelica.png" HeightRequest="10"/>
             </StackLayout>
 
 
@@ -53,7 +56,7 @@
 
 
 
-            <Label Text="Na programu" TextTransform="Uppercase"/>
+            <Label Text="Na programu" TextTransform="Uppercase" TextColor="White" Margin="10" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -66,36 +69,33 @@
                 </Grid.RowDefinitions>
 
                 <!-- Frame 1 -->
-                <Frame Grid.Row="0" Grid.Column="0" Margin="10" Padding="10" BackgroundColor="LightGray">
+                <Frame Grid.Row="0" Grid.Column="0" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
                     <StackLayout>
-                        <Label Text="Label 1" HorizontalOptions="Center"/>
-                        <Image Source="slika1.png" Aspect="AspectFit" HeightRequest="100"/>
+                        <Image Source="film1.png" Aspect="AspectFit" HeightRequest="100"/>
                     </StackLayout>
                 </Frame>
 
                 <!-- Frame 2 -->
-                <Frame Grid.Row="0" Grid.Column="1" Margin="10" Padding="10" BackgroundColor="LightGray">
+                <Frame Grid.Row="0" Grid.Column="1" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
                     <StackLayout>
-                        <Label Text="Label 2" HorizontalOptions="Center"/>
-                        <Image Source="slika2.png" Aspect="AspectFit" HeightRequest="100"/>
+                        <Image Source="film2.jpg" Aspect="AspectFit" HeightRequest="100"/>
                     </StackLayout>
                 </Frame>
 
                 <!-- Frame 3 -->
-                <Frame Grid.Row="1" Grid.Column="0" Margin="10" Padding="10" BackgroundColor="LightGray">
+                <Frame Grid.Row="1" Grid.Column="0" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
                     <StackLayout>
-                        <Label Text="Label 3" HorizontalOptions="Center"/>
-                        <Image Source="slika3.png" Aspect="AspectFit" HeightRequest="100"/>
+                        <Image Source="film3.png" Aspect="AspectFit" HeightRequest="100"/>
                     </StackLayout>
                 </Frame>
 
                 <!-- Frame 4 -->
-                <Frame Grid.Row="1" Grid.Column="1" Margin="10" Padding="10" BackgroundColor="LightGray">
+                <Frame Grid.Row="1" Grid.Column="1" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
                     <StackLayout>
-                        <Label Text="Label 4" HorizontalOptions="Center"/>
-                        <Image Source="slika4.png" Aspect="AspectFit" HeightRequest="100"/>
+                        <Image Source="film1.png" Aspect="AspectFit" HeightRequest="100"/>
                     </StackLayout>
                 </Frame>
+                
             </Grid>
         </StackLayout>
     </ScrollView>

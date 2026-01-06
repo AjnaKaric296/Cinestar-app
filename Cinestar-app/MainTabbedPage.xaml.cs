@@ -5,6 +5,7 @@ namespace Cinestar_app.Pages
         public MainTabbedPage()
         {
             InitializeComponent();
+
         }
     }
 }

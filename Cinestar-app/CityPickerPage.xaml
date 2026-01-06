@@ -3,22 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.CityPickerPage"
              BackgroundColor="#051851">
-
-    <ListView x:Name="CitiesListView"
-              BackgroundColor="Transparent"
-              SeparatorVisibility="None"
-              RowHeight="70">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Label Text="{Binding}" 
-                           FontSize="22"
-                           FontAttributes="Bold"
-                           TextColor="White"
-                           Padding="30,20"
-                           VerticalOptions="Center" />
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <ScrollView>
+        <StackLayout>
+            <Image Source="logo.png"
+                   Margin="30"
+                   HeightRequest="90"
+                   HorizontalOptions="Center"
+                   />
+            <Label Text="ODABERI GRAD:" TextDecorations="Underline" TextColor="White" HorizontalOptions="Center"/>
+            <ListView x:Name="CitiesListView"
+          BackgroundColor="Transparent"
+          SeparatorVisibility="None"
+          RowHeight="70">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                            <BoxView HeightRequest="1" Color="Gray" HorizontalOptions="FillAndExpand" Margin="0,10"/>
+                            <Label Text="{Binding}" 
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       Padding="30,20"
+                       VerticalOptions="Center" />
+                           </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ScrollView>
+    
 </ContentPage>

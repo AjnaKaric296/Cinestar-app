@@ -8,8 +8,8 @@ namespace Cinestar_app
     {
         private readonly string[] _cities =
         {
-            "Sarajevo", "Banja Luka", "Mostar", "Tuzla", "Zenica",
-            "Bihaæ", "Doboj", "Travnik", "Bijeljina", "Brèko"
+            "Mostar", "Bihaæ", "Tuzla","Banja Luka", "Zenica",
+            "Sarajevo", "Prijedor", "Graèanica"
         };
 
         public CityPickerPage()
