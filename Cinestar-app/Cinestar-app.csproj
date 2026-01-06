@@ -63,8 +63,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.20" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
+		<PackageReference Include="SQLite.Net-PCL" Version="3.1.1" />
+		<PackageReference Include="SQLite.Net.Async-PCL" Version="3.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>

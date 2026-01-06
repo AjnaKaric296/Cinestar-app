@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinestar_app.UserProfilPage"
+             BackgroundColor="#051851"
+             Title="Moj profil">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Label Text="MOJ PROFIL"
+               FontSize="24"
+               TextColor="#FFD700"
+               HorizontalOptions="Center"/>
+
+        <Label x:Name="ImeLabel" TextColor="White"/>
+        <Label x:Name="PrezimeLabel" TextColor="White"/>
+        <Label x:Name="EmailLabel" TextColor="White"/>
+
+        <Button Text="Odjavi se"
+                BackgroundColor="Red"
+                TextColor="White"
+                Clicked="Logout_Clicked"/>
+
+    </VerticalStackLayout>
+</ContentPage>
