@@ -34,6 +34,7 @@
                     Margin="5,0"
                     />
 
+
             <!-- REGISTRACIJA FORMA (sakrivena na početku) -->
             <VerticalStackLayout x:Name="RegistracijaForma"
                                  IsVisible="False"

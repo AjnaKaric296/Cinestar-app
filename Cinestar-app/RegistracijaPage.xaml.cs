@@ -46,8 +46,14 @@ public partial class RegistracijaPage : ContentPage
         };
 
         await _db.AddUserAsync(user);
+
+        // automatski login
+        UserSession.Login(user);
+
         await DisplayAlert("Uspjeh", "Registracija uspješna!", "OK");
 
-        await Navigation.PopAsync();
+        // direktno na profil
+        await Navigation.PushAsync(new UserProfilPage());
+
     }
 }

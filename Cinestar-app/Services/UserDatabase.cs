@@ -22,12 +22,13 @@ public class UserDatabase
         return _database.InsertAsync(user);
     }
 
-    public Task<User> GetUserByEmailAsync(string email)
-    {
+     public Task<User> GetUserByEmailAsync(string email)
+     {
+        email = email.Trim().ToLower();
         return _database.Table<User>()
-                        .Where(u => u.Email == email)
+                        .Where(u => u.Email.ToLower() == email)
                         .FirstOrDefaultAsync();
-    }
+     }
 
     public Task<List<User>> GetAllUsersAsync()
     {

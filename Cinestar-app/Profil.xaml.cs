@@ -1,4 +1,4 @@
-using Cinestar_app.Services;
+﻿using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 
 namespace Cinestar_app.Pages;
@@ -14,24 +14,45 @@ public partial class Profil : ContentPage
     }
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
-        string email = await DisplayPromptAsync("Email", "Unesite svoj email");
-        string lozinka = await DisplayPromptAsync("Lozinka", "Unesite lozinku", "OK", "Cancel", keyboard: Keyboard.Text);
+        // Dobijamo email i lozinku od korisnika
+        string email = (await DisplayPromptAsync("Email", "Unesite svoj email"))?.Trim().ToLower();
+        string lozinka = (await DisplayPromptAsync("Lozinka", "Unesite lozinku", "OK", "Cancel", keyboard: Keyboard.Text))?.Trim();
 
-        var user = await _db.GetUserByEmailAsync(email);
-
-        if (user == null || user.Lozinka != lozinka)
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(lozinka))
         {
-            await DisplayAlert("Gre�ka", "Email ili lozinka nisu ta�ni", "OK");
+            await DisplayAlert("Greška", "Morate unijeti email i lozinku", "OK");
             return;
         }
 
-        await DisplayAlert("Uspjeh", $"Dobrodo�li, {user.Ime}!", "OK");
+        var user = await _db.GetUserByEmailAsync(email);
 
-        // Ovdje mo�e� navigirati dalje u app
+        if (user == null)
+        {
+            await DisplayAlert("Greška", "Email nije registrovan", "OK");
+            return;
+        }
+
+        if (user.Lozinka.Trim() != lozinka)
+        {
+            await DisplayAlert("Greška", "Lozinka nije tačna", "OK");
+            return;
+        }
+
+        await DisplayAlert("Uspjeh", $"Dobrodošli, {user.Ime}!", "OK");
+
+        // ⬇⬇⬇ KLJUČNO
+        UserSession.Login(user);
+
+        // Navigacija na profil
+        await Navigation.PushAsync(new UserProfilPage());
+
     }
+
 
     private async void Registracija_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new RegistracijaPage());
     }
+
+
 }
