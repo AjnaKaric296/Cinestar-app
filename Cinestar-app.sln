@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36603.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinestar-app", "Cinestar-app\Cinestar-app.csproj", "{C5BFF290-D0F9-4918-B0D6-A0783B9D1E0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5BFF290-D0F9-4918-B0D6-A0783B9D1E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BFF290-D0F9-4918-B0D6-A0783B9D1E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BFF290-D0F9-4918-B0D6-A0783B9D1E0A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C5BFF290-D0F9-4918-B0D6-A0783B9D1E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BFF290-D0F9-4918-B0D6-A0783B9D1E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37C81627-FC6E-44CC-8CB8-312435EDE173}
+	EndGlobalSection
+EndGlobal

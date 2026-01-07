@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinestar_app.FilmDetalji"
+             Title="Film Detalji">
+    <ScrollView BackgroundColor="#051851">
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Image Source="{Binding SelectedMovie.Poster}" 
+                   HeightRequest="300" 
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="{Binding SelectedMovie.Title}" 
+                   FontSize="24" 
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="{Binding SelectedMovie.Year}" 
+                   FontSize="18" 
+                   TextColor="LightGray"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="{Binding SelectedMovie.imdbRating}" 
+                   FontSize="20" 
+                   TextColor="Gold"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="{Binding SelectedMovie.Plot}" 
+                   FontSize="16" 
+                   TextColor="White"
+                   LineBreakMode="WordWrap"
+                   HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

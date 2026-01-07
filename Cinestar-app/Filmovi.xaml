@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinestar_app.Filmovi"
+             Title="">
+    <ScrollView>
+        <StackLayout BackgroundColor="#051851" Padding="20">
+            <Label Text="Filmovi page!" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   TextColor="White"
+                   FontSize="24"
+                   Margin="0,20"/>
+
+            <!-- SAMO CollectionView -->
+            <CollectionView x:Name="FilmoviList" ItemsSource="{Binding Movies}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="White" Margin="5" Padding="10" CornerRadius="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Poster}" Grid.Column="0" Aspect="AspectFit" HeightRequest="120"/>
+                                <StackLayout Grid.Column="1" Margin="10,0">
+                                    <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Year}"/>
+                                    <Label Text="{Binding ImdbRating}" TextColor="Gold"/>
+                                    <Button Text="Klikni me" 
+                                            BackgroundColor="#051851"
+                                            TextColor="White"
+                                            Clicked="IdiNaFIlmDetalji"
+                                            CommandParameter="{Binding}"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

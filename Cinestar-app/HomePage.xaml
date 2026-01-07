@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinestar_app.HomePage"
+             Title="">
+
+    <ScrollView>
+        <StackLayout BackgroundColor="#051851">
+            <!-- Tvoj header sa CityPickerButton -->
+            <StackLayout Orientation="Horizontal">
+                <Image Source="logo.png"
+                       HeightRequest="30"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center" />
+
+                <Button x:Name="CityPickerButton"
+                        BackgroundColor="#051851"
+                        Clicked="OnCittySelected"
+                        TextColor="White"
+                        HeightRequest="1"
+                        Padding="5"
+                        HorizontalOptions="EndAndExpand"/>
+
+                <Image Source="strelica.png" HeightRequest="10"/>
+            </StackLayout>
+
+            <!-- Tvoj carousel -->
+            <StackLayout>
+                <CarouselView ItemsSource="{Binding Images}"
+                              IndicatorView="indicator"
+                              HeightRequest="220"
+                              IsSwipeEnabled="True">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding}" Aspect="AspectFill" />
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <IndicatorView x:Name="indicator"
+                               HorizontalOptions="Center"
+                               Margin="0,5"
+                               IndicatorColor="LightGray"
+                               SelectedIndicatorColor="White"/>
+            </StackLayout>
+
+            <Label Text="Na programu" TextTransform="Uppercase" TextColor="White" Margin="10" />
+
+            <!-- API FILMOVI - ZAMJENI TVOJ GRID -->
+            <CollectionView ItemsSource="{Binding FeaturedMovies}" Margin="10">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="LightGray" Margin="5" Padding="5" HeightRequest="100">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Poster}" Grid.Column="0" Aspect="AspectFit"/>
+                                <StackLayout Grid.Column="1" Margin="5,0">
+                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Year}" FontSize="12"/>
+                                    <Label Text="{Binding ImdbRating}" FontSize="12" TextColor="Gold"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

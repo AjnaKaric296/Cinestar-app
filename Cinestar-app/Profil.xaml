@@ -1,0 +1,52 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinestar_app.Pages.Profil"
+             Title="">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#051851">
+
+            <Label Text="PRIJAVI SE"
+                   FontSize="24"
+                   HorizontalOptions="Center"
+                   TextColor="White" />
+
+            <!-- BUTTONI -->
+            <Button Text="Prijava"
+                    BackgroundColor="DarkBlue"
+                    TextColor="White"
+                    Clicked="Prijava_Clicked"
+                    />
+
+            <Button Text="Registracija"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    Clicked="Registracija_Clicked"
+                    />
+
+            <!-- REGISTRACIJA FORMA (sakrivena na početku) -->
+            <VerticalStackLayout x:Name="RegistracijaForma"
+                                 IsVisible="False"
+                                 Spacing="10"
+                                 Margin="0,20,0,0">
+
+                <Label Text="Registracija"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       TextColor="White"/>
+
+                <Entry Placeholder="Ime" TextColor="White"/>
+                <Entry Placeholder="Prezime" TextColor="White"/>
+                <Entry Placeholder="Email" Keyboard="Email" TextColor="White"/>
+                <Entry Placeholder="Lozinka" IsPassword="True" TextColor="White"/>
+                <Entry Placeholder="Potvrdi lozinku" IsPassword="True" TextColor="White"/>
+
+                <Button Text="Registruj se"
+                        BackgroundColor="Green"
+                        TextColor="White"
+                       
+                        />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
