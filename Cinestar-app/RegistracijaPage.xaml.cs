@@ -1,4 +1,4 @@
-using Microsoft.Maui.Controls;
+Ôªøusing Microsoft.Maui.Controls;
 using System.Threading.Tasks;
 using Cinestar_app.Models;
 using Cinestar_app.Services;
@@ -20,20 +20,20 @@ public partial class RegistracijaPage : ContentPage
         if (string.IsNullOrWhiteSpace(EmailEntry.Text) ||
             string.IsNullOrWhiteSpace(LozinkaEntry.Text))
         {
-            await DisplayAlert("Greöka", "Sva polja su obavezna", "OK");
+            await DisplayAlert("Gre≈°ka", "Sva polja su obavezna", "OK");
             return;
         }
 
         if (LozinkaEntry.Text != PotvrdaLozinkeEntry.Text)
         {
-            await DisplayAlert("Greöka", "Lozinke se ne poklapaju", "OK");
+            await DisplayAlert("Gre≈°ka", "Lozinke se ne poklapaju", "OK");
             return;
         }
 
         var existingUser = await _db.GetUserByEmailAsync(EmailEntry.Text);
         if (existingUser != null)
         {
-            await DisplayAlert("Greöka", "Korisnik s tim emailom veÊ postoji", "OK");
+            await DisplayAlert("Gre≈°ka", "Korisnik s tim emailom ve√¶ postoji", "OK");
             return;
         }
 
@@ -50,7 +50,7 @@ public partial class RegistracijaPage : ContentPage
         // automatski login
         UserSession.Login(user);
 
-        await DisplayAlert("Uspjeh", "Registracija uspjeöna!", "OK");
+        await DisplayAlert("Uspjeh", "Registracija uspje≈°na!", "OK");
 
         // direktno na profil
         await Navigation.PushAsync(new UserProfilPage());

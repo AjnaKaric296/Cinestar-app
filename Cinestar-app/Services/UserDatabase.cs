@@ -2,36 +2,33 @@
 using Cinestar_app.Models;
 using System.IO;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Cinestar_app.Services;
 
 public class UserDatabase
 {
-    private SQLiteAsyncConnection _database;
+    readonly SQLiteAsyncConnection database;
 
     public UserDatabase()
     {
-        var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CinestarUsers.db3");
-        _database = new SQLiteAsyncConnection(dbPath);
-        _database.CreateTableAsync<User>().Wait();
+        // ✅ Android siguran path!
+#if ANDROID
+        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "CinestarUsers.db3");
+#else
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "CinestarUsers.db3");
+#endif
+
+        database = new SQLiteAsyncConnection(dbPath);
+        database.CreateTableAsync<User>().Wait();
     }
 
-    public Task<int> AddUserAsync(User user)
+    public Task<int> AddUserAsync(User user) => database.InsertAsync(user);
+
+    public Task<User> GetUserByEmailAsync(string email)
     {
-        return _database.InsertAsync(user);
-    }
-
-     public Task<User> GetUserByEmailAsync(string email)
-     {
         email = email.Trim().ToLower();
-        return _database.Table<User>()
-                        .Where(u => u.Email.ToLower() == email)
-                        .FirstOrDefaultAsync();
-     }
-
-    public Task<List<User>> GetAllUsersAsync()
-    {
-        return _database.Table<User>().ToListAsync();
+        return database.Table<User>()
+                       .Where(u => u.Email.ToLower() == email)
+                       .FirstOrDefaultAsync();
     }
 }
