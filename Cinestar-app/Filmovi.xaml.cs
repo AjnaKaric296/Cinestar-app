@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using System.Collections.ObjectModel;
-using System.Text.Json;
+﻿namespace Cinestar_app.Pages;
 
 namespace Cinestar_app;
 
@@ -8,9 +6,9 @@ public partial class Filmovi : ContentPage
 {
     public ObservableCollection<Movie> Movies { get; set; } = new();
 
-    public Filmovi()
-    {
-        InitializeComponent();
+	public Filmovi()
+	{
+		InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
         FilmoviCollection.ItemsSource = Movies;
         _ = LoadMovies();
@@ -69,5 +67,5 @@ public partial class Filmovi : ContentPage
     {
         base.OnAppearing();
         _ = LoadMovies();
-    }
+	}
 }

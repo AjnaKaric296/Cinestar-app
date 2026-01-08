@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
 namespace Cinestar_app
@@ -7,8 +7,8 @@ namespace Cinestar_app
     {
         private readonly string[] _cities =
         {
-            "Mostar", "Bihać", "Tuzla","Banja Luka", "Zenica",
-            "Sarajevo", "Prijedor", "Gračanica"
+            "Sarajevo", "Banja Luka", "Mostar", "Tuzla", "Zenica",
+            "Biha�", "Doboj", "Travnik", "Bijeljina", "Br�ko"
         };
 
         public CityPickerPage()
@@ -23,15 +23,8 @@ namespace Cinestar_app
             if (e.SelectedItem is string selectedCity)
             {
                 Preferences.Set("SelectedCity", selectedCity);
-
-                // ✅ Tvoj Splash pristup - UPDATE WINDOW PAGE
-                var window = Application.Current?.Windows?.FirstOrDefault();
-                if (window != null)
-                {
-                    window.Page = new MainTabbedPage();
-                }
+                Application.Current.MainPage = new AppShell();
             }
         }
-
     }
 }

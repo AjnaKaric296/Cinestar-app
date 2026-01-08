@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Cinestar_app.Platforms.Android
+namespace Cinestar_app
 {
     [Application]
     public class MainApplication : MauiApplication

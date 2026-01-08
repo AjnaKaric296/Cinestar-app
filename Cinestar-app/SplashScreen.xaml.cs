@@ -21,26 +21,20 @@ namespace Cinestar_app
         {
             if (LogoImage != null)
             {
-                await LogoImage.FadeTo(1, 1000);
-                await LogoImage.ScaleTo(1.0, 1000, Easing.CubicOut);
+            await LogoImage.FadeTo(1, 1000);
+            await LogoImage.ScaleTo(1.0, 1000, Easing.CubicOut);
             }
 
             await Task.Delay(200);
 
             if (WelcomeLabel != null)
             {
-                await WelcomeLabel.FadeTo(1, 1000);
+            await WelcomeLabel.FadeTo(1, 1000);
             }
 
             await Task.Delay(1500);
 
-            // Use the recommended CreateWindow override in App to set the initial window.
-            // For switching root page at runtime, update the first window's Page.
-            var window = Application.Current?.Windows?.FirstOrDefault();
-            if (window != null)
-            {
-                window.Page = new CityPickerPage();
-            }
+            Application.Current.MainPage = new CityPickerPage();
         }
     }
 }

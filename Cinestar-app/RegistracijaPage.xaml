@@ -1,16 +1,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cinestar_app.RegistracijaPage"
-             Title="Registracija"
-             BackgroundColor="#051851">
+             x:Class="Cinestar_app.Pages.RegistracijaPage"
+             BackgroundColor="#051851"
+             Title="Registracija">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
             <Label Text="REGISTRACIJA"
                    FontSize="24"
-                   HorizontalOptions="Center"
-                   TextColor="White"/>
 
             <Entry x:Name="ImeEntry" Placeholder="Ime" TextColor="White"/>
             <Entry x:Name="PrezimeEntry" Placeholder="Prezime" TextColor="White"/>
@@ -22,9 +20,8 @@
                    IsPassword="True" TextColor="White"/>
 
             <Button Text="Registruj se"
-                    BackgroundColor="Green"
-                    TextColor="White"
                     Clicked="RegistrujSe_Clicked"/>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

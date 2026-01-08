@@ -2,33 +2,57 @@
 using Cinestar_app.Models;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Cinestar_app.Services;
 
 public class UserDatabase
 {
-    readonly SQLiteAsyncConnection database;
+    private SQLiteAsyncConnection _database;
 
     public UserDatabase()
     {
-        // ✅ Android siguran path!
-#if ANDROID
-        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "CinestarUsers.db3");
-#else
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "CinestarUsers.db3");
-#endif
-
-        database = new SQLiteAsyncConnection(dbPath);
-        database.CreateTableAsync<User>().Wait();
     }
 
-    public Task<int> AddUserAsync(User user) => database.InsertAsync(user);
 
-    public Task<User> GetUserByEmailAsync(string email)
-    {
+     public Task<User> GetUserByEmailAsync(string email)
+     {
         email = email.Trim().ToLower();
-        return database.Table<User>()
-                       .Where(u => u.Email.ToLower() == email)
-                       .FirstOrDefaultAsync();
+                        .Where(u => u.Email.ToLower() == email)
+                        .FirstOrDefaultAsync();
+     }
+
+    public Task<List<User>> GetAllUsersAsync()
+    {
+        return _database.Table<User>().ToListAsync();
     }
+
+    // UserDatabase.cs
+    public async Task<Loyalty?> GetLoyaltyAsync(string email)
+    {
+        return await _database.Table<Loyalty>()
+            .FirstOrDefaultAsync(l => l.UserEmail == email);
+    }
+
+    public async Task AddPointsAsync(string email, int points)
+    {
+        var loyalty = await GetLoyaltyAsync(email);
+
+        if (loyalty == null)
+        {
+            loyalty = new Loyalty
+            {
+                UserEmail = email,
+                Bodovi = points
+            };
+            await _database.InsertAsync(loyalty);
+        }
+        else
+        {
+            loyalty.Bodovi += points;
+            await _database.UpdateAsync(loyalty);
+        }
+    }
+
+
 }

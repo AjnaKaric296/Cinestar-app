@@ -5,11 +5,104 @@
              Title="">
 
     <ScrollView>
-        <StackLayout BackgroundColor="#051851">
-            <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </StackLayout>
+        <VerticalStackLayout  Spacing="15" BackgroundColor="#051851">
+
+            <!-- NEPRIJAVLJEN KORISNIK -->
+            <StackLayout x:Name="GuestView" IsVisible="False" Spacing="10">
+
+                <Grid HeightRequest="240">
+                    <Image Source="pocetnaloyalty.jpg"
+                           Aspect="AspectFill"
+                           HeightRequest="240"
+                           HorizontalOptions="Fill"/>
+                    <BoxView Color="#62000030" 
+                             HeightRequest="240"
+                             HorizontalOptions="Fill"/>
+                </Grid>
+
+                <!-- Kartica sa tekstom -->
+                <Frame BackgroundColor="#0A1B3A" 
+                       CornerRadius="15" 
+                       Padding="15"
+                       HasShadow="True"
+                       Margin="0,10">
+                    <VerticalStackLayout Spacing="10">
+
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                            <Label Text="Skupljajte loyalty bodove "
+                                   TextColor="White"
+                                   FontSize="16"
+                                   HorizontalOptions="StartAndExpand"/>
+                            <Image Source="bodovi.png"
+                                   HeightRequest="15"
+                                   Aspect="AspectFit" />
+                        </HorizontalStackLayout>
+
+                        <Label Text="Predstavljamo ti novo digitalno članstvo u kojem mogu sudjelovati svi registrirani korisnici CineStar aplikacije. Registruj se sada i počni skupljati zvjezdice koje možeš mijenjati za nagrade!
+Očekuju te i zvjezdice dobrodošlice. Jednom kada si registriran online ili putem CineStar aplikacije, svaku tvoju potrošnju nagrađujemo – bilo da kupuješ ulaznice, kokice, nachose, piće ili poklon kartice, bilo kako, online ili na blagajni – skupljaš zvjezdice koje možeš zamijeniti za razne nagrade u našoj trgovini s kuponima"
+                               TextColor="White"
+                               FontSize="14"
+                               LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Grid HeightRequest="240">
+                    <Image Source="beba.jpg"
+            Aspect="AspectFill"
+            HeightRequest="240"
+            HorizontalOptions="Fill"/>
+                    <BoxView Color="#62000030" 
+              HeightRequest="240"
+              HorizontalOptions="Fill"/>
+                </Grid>
+
+                <Frame BackgroundColor="#0A1B3A" 
+                       CornerRadius="15" 
+                       Padding="15"
+                       HasShadow="True"
+                       Margin="0,10">
+                    <VerticalStackLayout Spacing="10">
+
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                            <Label Text="Pogodnosti:"
+                                   TextColor="White"
+                                   FontSize="16"
+                                   HorizontalOptions="StartAndExpand"/>
+                            
+                        </HorizontalStackLayout>
+
+                        <Label Text="🎟️ ČLANSTVO - Članstvo je besplatno i njemu  prvom registracijom                                                
+                               ⭐ SKUPLJANJE ZVJEZDICA - Kupuj ulaznice i proizvode koristeći članstvo jer za svaki potrošeni 1 BAM dobivaš 1 zvjezdicu. Zvjezdice vrijede godinu dana.                                                                                                      
+                               🔄 ZAMJENA ZVJEZDICA ZA KUPONE -  Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene."
+                               
+                        FontSize="14"
+                               TextColor="White"
+                               LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </StackLayout>
+            
+
+            <!-- PRIJAVLJEN KORISNIK -->
+            <StackLayout x:Name="UserView" IsVisible="False" Spacing="10">
+                <Label Text="Vaši loyalty bodovi"
+                       FontSize="22"
+                       FontAttributes="Bold" />
+
+                <Label x:Name="BodoviLabel"
+                       Text="0"
+                       FontSize="30"
+                       TextColor="Green"
+                       HorizontalOptions="Center" />
+
+                <Button Text="Kupovina karte (+10 bodova)"
+                        Clicked="BuyTickets_Clicked" />
+
+                <Button Text="Recenzija filma (+5 bodova)"
+                        Clicked="ReviewMovie_Clicked" />
+            </StackLayout>
+
+        </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>
