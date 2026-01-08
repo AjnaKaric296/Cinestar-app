@@ -1,7 +1,7 @@
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-using Cinestar_app; // Za Movie
+using Cinestar_app;
 
 namespace Cinestar_app;
 
@@ -19,49 +19,94 @@ public partial class HomePage : ContentPage
         InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
 
-        string savedCity = Preferences.Get("SelectedCity", "Izaberi grad");
+        string savedCity = Preferences.Get("SelectedCity", "Sarajevo");
         if (CityPickerButton != null)
-            CityPickerButton.Text = savedCity;
+            CityPickerButton.Text = $"{savedCity} ✓";
 
         BindingContext = this;
-        _ = LoadFeaturedMovies();
+        _ = LoadFeaturedMoviesByCity();
     }
 
-    private async Task LoadFeaturedMovies()
+    private async Task LoadFeaturedMoviesByCity()
+    {
+        string city = Preferences.Get("SelectedCity", "Sarajevo");
+        var cityMovies = await GetMoviesByCity(city, 8);
+
+        FeaturedMovies.Clear();
+        foreach (var movie in cityMovies)
+        {
+            FeaturedMovies.Add(movie);
+        }
+    }
+
+    private static async Task<List<Movie>> GetMoviesByCity(string city, int count)
     {
         var http = new HttpClient();
-        FeaturedMovies.Clear();
+        var movies = new List<Movie>();
 
-        FeaturedMovies.Add(await GetMovie(http, "Inception"));
-        FeaturedMovies.Add(await GetMovie(http, "Oppenheimer"));
-        FeaturedMovies.Add(await GetMovie(http, "Dune"));
-        FeaturedMovies.Add(await GetMovie(http, "Godfather"));
-    }
-
-    private static async Task<Movie> GetMovie(HttpClient http, string title)
-    {
-        try
+        string[] cityGenres = city switch
         {
-            var json = await http.GetStringAsync($"http://www.omdbapi.com/?t={Uri.EscapeDataString(title)}&apikey=5d3a9b7a");
-            var data = JsonSerializer.Deserialize<JsonElement>(json);
+            "Sarajevo" => new[] { "action 2023", "drama 2023", "top 2023" },
+            "Mostar" => new[] { "comedy 2023", "romance", "family" },
+            "Banja Luka" => new[] { "thriller 2023", "crime", "mystery" },
+            "Zenica" => new[] { "horror 2023", "fantasy", "sci-fi" },
+            "Tuzla" => new[] { "top 2024", "blockbuster" },
+            "Bihać" => new[] { "adventure", "action" },
+            "Prijedor" => new[] { "drama", "war" },
+            "Gračanica" => new[] { "comedy", "romance" },
+            _ => new[] { "top 2023", "action", "drama" }
+        };
 
-            return new Movie
+        foreach (string genre in cityGenres)
+        {
+            try
             {
-                Title = data.GetProperty("Title").GetString() ?? title,
-                Poster = data.GetProperty("Poster").GetString() ?? "",
-                Year = data.GetProperty("Year").GetString() ?? "",
-                ImdbRating = data.GetProperty("imdbRating").GetString() ?? ""
-            };
+                var json = await http.GetStringAsync($"http://www.omdbapi.com/?s={Uri.EscapeDataString(genre)}&apikey=5d3a9b7a");
+                var data = JsonSerializer.Deserialize<JsonElement>(json);
+
+                if (data.TryGetProperty("Response", out var responseProp) && responseProp.GetString() == "True")
+                {
+                    var searchResults = data.GetProperty("Search").EnumerateArray();
+                    foreach (var movie in searchResults.Take(3))
+                    {
+                        var imdbId = movie.GetProperty("imdbID").GetString() ?? "";
+                        var title = movie.GetProperty("Title").GetString() ?? "";
+
+                        var detailsJson = await http.GetStringAsync($"http://www.omdbapi.com/?i={imdbId}&apikey=5d3a9b7a");
+                        var details = JsonSerializer.Deserialize<JsonElement>(detailsJson);
+
+                        movies.Add(new Movie
+                        {
+                            Title = details.GetProperty("Title").GetString() ?? title,
+                            Poster = details.GetProperty("Poster").GetString() ?? "",
+                            Year = details.GetProperty("Year").GetString() ?? "",
+                            ImdbRating = details.GetProperty("imdbRating").GetString() ?? "",
+                            ImdbID = imdbId
+                        });
+
+                        if (movies.Count >= count) break;
+                    }
+                }
+            }
+            catch { }
+            if (movies.Count >= count) break;
         }
-        catch
-        {
-            return new Movie { Title = title };
-        }
+        return movies;
     }
 
     private async void OnCittySelected(object sender, EventArgs e)
     {
         var cityPickerPage = new CityPickerPage();
         await Navigation.PushModalAsync(cityPickerPage);
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // AUTO REFRESH kad se vratiš na stranicu
+        string savedCity = Preferences.Get("SelectedCity", "Sarajevo");
+        if (CityPickerButton != null)
+            CityPickerButton.Text = $"{savedCity} ✓";
+        _ = LoadFeaturedMoviesByCity();
     }
 }

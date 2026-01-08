@@ -23,7 +23,9 @@ public partial class CityPickerPage : ContentPage
         if (e.SelectedItem is string selectedCity)
         {
             Preferences.Set("SelectedCity", selectedCity);
-            await Navigation.PopModalAsync(); // Vrati se na HomePage
+            await Navigation.PopModalAsync();
         }
     }
+
+
 }
