@@ -21,77 +21,73 @@ public partial class HomePage : ContentPage
 
         string savedCity = Preferences.Get("SelectedCity", "Sarajevo");
         if (CityPickerButton != null)
-            CityPickerButton.Text = $"{savedCity} ✓";
+            CityPickerButton.Text = savedCity;
 
         BindingContext = this;
-        _ = LoadFeaturedMoviesByCity();
+        _ = LoadFeaturedMovies();
     }
 
-    private async Task LoadFeaturedMoviesByCity()
+    private async Task LoadFeaturedMovies()
     {
         string city = Preferences.Get("SelectedCity", "Sarajevo");
-        var cityMovies = await GetMoviesByCity(city, 8);
-
-        FeaturedMovies.Clear();
-        foreach (var movie in cityMovies)
-        {
-            FeaturedMovies.Add(movie);
-        }
-    }
-
-    private static async Task<List<Movie>> GetMoviesByCity(string city, int count)
-    {
         var http = new HttpClient();
-        var movies = new List<Movie>();
+        FeaturedMovies.Clear();
 
-        string[] cityGenres = city switch
+        string[] cityMovies = city switch
         {
-            "Sarajevo" => new[] { "action 2023", "drama 2023", "top 2023" },
-            "Mostar" => new[] { "comedy 2023", "romance", "family" },
-            "Banja Luka" => new[] { "thriller 2023", "crime", "mystery" },
-            "Zenica" => new[] { "horror 2023", "fantasy", "sci-fi" },
-            "Tuzla" => new[] { "top 2024", "blockbuster" },
-            "Bihać" => new[] { "adventure", "action" },
-            "Prijedor" => new[] { "drama", "war" },
-            "Gračanica" => new[] { "comedy", "romance" },
+            "Sarajevo" => new[] { "action 2023", "drama 2023" },
+            "Mostar" => new[] { "comedy 2023", "romance" },
+            "Banja Luka" => new[] { "thriller 2023", "crime" },
+            "Zenica" => new[] { "horror 2023", "fantasy" },
+            "Tuzla" => new[] { "top 2024" },
             _ => new[] { "top 2023", "action", "drama" }
         };
 
-        foreach (string genre in cityGenres)
+        foreach (string searchTerm in cityMovies.Take(4))
         {
             try
             {
-                var json = await http.GetStringAsync($"http://www.omdbapi.com/?s={Uri.EscapeDataString(genre)}&apikey=5d3a9b7a");
+                var json = await http.GetStringAsync($"http://www.omdbapi.com/?s={Uri.EscapeDataString(searchTerm)}&apikey=75ace56d");
                 var data = JsonSerializer.Deserialize<JsonElement>(json);
 
-                if (data.TryGetProperty("Response", out var responseProp) && responseProp.GetString() == "True")
+                if (data.TryGetProperty("Response", out var response) && response.GetString() == "True")
                 {
-                    var searchResults = data.GetProperty("Search").EnumerateArray();
-                    foreach (var movie in searchResults.Take(3))
+                    var search = data.GetProperty("Search").EnumerateArray().FirstOrDefault();
+                    if (search.ValueKind != JsonValueKind.Undefined)
                     {
-                        var imdbId = movie.GetProperty("imdbID").GetString() ?? "";
-                        var title = movie.GetProperty("Title").GetString() ?? "";
-
-                        var detailsJson = await http.GetStringAsync($"http://www.omdbapi.com/?i={imdbId}&apikey=5d3a9b7a");
-                        var details = JsonSerializer.Deserialize<JsonElement>(detailsJson);
-
-                        movies.Add(new Movie
+                        FeaturedMovies.Add(new Movie
                         {
-                            Title = details.GetProperty("Title").GetString() ?? title,
-                            Poster = details.GetProperty("Poster").GetString() ?? "",
-                            Year = details.GetProperty("Year").GetString() ?? "",
-                            ImdbRating = details.GetProperty("imdbRating").GetString() ?? "",
-                            ImdbID = imdbId
+                            Title = search.GetProperty("Title").GetString() ?? searchTerm,
+                            Poster = search.GetProperty("Poster").GetString() ?? "",
+                            Year = search.GetProperty("Year").GetString() ?? "",
+                            ImdbRating = "N/A"
                         });
-
-                        if (movies.Count >= count) break;
                     }
                 }
             }
             catch { }
-            if (movies.Count >= count) break;
         }
-        return movies;
+    }
+
+    private static async Task<Movie> GetMovie(HttpClient http, string title)
+    {
+        try
+        {
+            var json = await http.GetStringAsync($"http://www.omdbapi.com/?t={Uri.EscapeDataString(title)}&apikey=75ace56d");
+            var data = JsonSerializer.Deserialize<JsonElement>(json);
+
+            return new Movie
+            {
+                Title = data.GetProperty("Title").GetString() ?? title,
+                Poster = data.GetProperty("Poster").GetString() ?? "",
+                Year = data.GetProperty("Year").GetString() ?? "",
+                ImdbRating = data.GetProperty("imdbRating").GetString() ?? ""
+            };
+        }
+        catch
+        {
+            return new Movie { Title = title };
+        }
     }
 
     private async void OnCittySelected(object sender, EventArgs e)
@@ -103,10 +99,9 @@ public partial class HomePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        // AUTO REFRESH kad se vratiš na stranicu
         string savedCity = Preferences.Get("SelectedCity", "Sarajevo");
         if (CityPickerButton != null)
-            CityPickerButton.Text = $"{savedCity} ✓";
-        _ = LoadFeaturedMoviesByCity();
+            CityPickerButton.Text = savedCity;
+        _ = LoadFeaturedMovies();
     }
 }

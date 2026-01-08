@@ -1,75 +1,79 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage x:Class="Cinestar_app.HomePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cinestar_app.HomePage"
-             Title="">
+             xmlns:local="clr-namespace:Cinestar_app"
+             x:DataType="local:HomePage"
+             Title="Cinestar Home">
 
     <ScrollView>
-        <StackLayout BackgroundColor="#051851">
-            <!-- Tvoj header sa CityPickerButton -->
-            <StackLayout Orientation="Horizontal">
-                <Image Source="logo.png"
-                       HeightRequest="30"
-                       HorizontalOptions="Start"
-                       VerticalOptions="Center" />
+        <VerticalStackLayout Spacing="20" Padding="20">
 
-                <Button x:Name="CityPickerButton"
-                        BackgroundColor="#051851"
-                        Clicked="OnCittySelected"
-                        TextColor="White"
-                        HeightRequest="1"
-                        Padding="5"
-                        HorizontalOptions="EndAndExpand"/>
+            <!-- City Picker Button -->
+            <Button x:Name="CityPickerButton"
+                    Text="Izaberi grad"
+                    BackgroundColor="#051851"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Clicked="OnCittySelected"/>
 
-                <Image Source="strelica.png" HeightRequest="10"/>
-            </StackLayout>
+            <!-- Featured Movies -->
+            <Label Text="Featured Filmovi" 
+                   FontSize="20" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
 
-            <!-- Tvoj carousel -->
-            <StackLayout>
-                <CarouselView ItemsSource="{Binding Images}"
-                              IndicatorView="indicator"
-                              HeightRequest="220"
-                              IsSwipeEnabled="True">
+            <!-- Carousel + Indicators -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <CarouselView x:Name="FeaturedCarousel"
+                              Grid.Row="0"
+                              ItemsSource="{Binding FeaturedMovies}"
+                              Loop="True"
+                              IndicatorView="FeaturedIndicator">
                     <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding}" Aspect="AspectFill" />
+                        <DataTemplate x:DataType="local:Movie">
+                            <Border Stroke="#051851" StrokeThickness="2" Padding="10">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Image Grid.Row="0" 
+                                           Source="{Binding Poster}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="250"/>
+
+                                    <VerticalStackLayout Grid.Row="1" Margin="5">
+                                        <Label Text="{Binding Title}" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold"/>
+                                        <Label Text="{Binding Year}" 
+                                               FontSize="14" 
+                                               TextColor="Gray"/>
+                                        <Label Text="{Binding ImdbRating}" 
+                                               FontSize="14" 
+                                               TextColor="Gold"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
 
-                <IndicatorView x:Name="indicator"
-                               HorizontalOptions="Center"
-                               Margin="0,5"
+                <IndicatorView x:Name="FeaturedIndicator"
+                               Grid.Row="1"
                                IndicatorColor="LightGray"
-                               SelectedIndicatorColor="White"/>
-            </StackLayout>
-
-            <Label Text="Na programu" TextTransform="Uppercase" TextColor="White" Margin="10" />
-
-            <!-- API FILMOVI - ZAMJENI TVOJ GRID -->
-            <CollectionView ItemsSource="{Binding FeaturedMovies}" Margin="10">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="2"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="LightGray" Margin="5" Padding="5" HeightRequest="100">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="{Binding Poster}" Grid.Column="0" Aspect="AspectFit"/>
-                                <StackLayout Grid.Column="1" Margin="5,0">
-                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold"/>
-                                    <Label Text="{Binding Year}" FontSize="12"/>
-                                    <Label Text="{Binding ImdbRating}" FontSize="12" TextColor="Gold"/>
-                                </StackLayout>
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+                               SelectedIndicatorColor="#051851"
+                               HorizontalOptions="Center"
+                               Margin="0,10"/>
+            </Grid>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

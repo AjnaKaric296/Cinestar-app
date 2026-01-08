@@ -26,6 +26,4 @@ public partial class CityPickerPage : ContentPage
             await Navigation.PopModalAsync();
         }
     }
-
-
 }
