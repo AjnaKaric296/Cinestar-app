@@ -15,6 +15,7 @@ public class UserDatabase
         var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CinestarUsers.db3");
         _database = new SQLiteAsyncConnection(dbPath);
         _database.CreateTableAsync<User>().Wait();
+        _database.CreateTableAsync<Loyalty>();
     }
 
     public Task<int> AddUserAsync(User user)
@@ -34,4 +35,33 @@ public class UserDatabase
     {
         return _database.Table<User>().ToListAsync();
     }
+
+    // UserDatabase.cs
+    public async Task<Loyalty?> GetLoyaltyAsync(string email)
+    {
+        return await _database.Table<Loyalty>()
+            .FirstOrDefaultAsync(l => l.UserEmail == email);
+    }
+
+    public async Task AddPointsAsync(string email, int points)
+    {
+        var loyalty = await GetLoyaltyAsync(email);
+
+        if (loyalty == null)
+        {
+            loyalty = new Loyalty
+            {
+                UserEmail = email,
+                Bodovi = points
+            };
+            await _database.InsertAsync(loyalty);
+        }
+        else
+        {
+            loyalty.Bodovi += points;
+            await _database.UpdateAsync(loyalty);
+        }
+    }
+
+
 }
