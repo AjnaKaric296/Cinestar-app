@@ -1,11 +1,12 @@
-namespace Cinestar_app.Pages
+﻿using Microsoft.Maui.Controls;
+
+namespace Cinestar_app
 {
     public partial class MainTabbedPage : TabbedPage
     {
         public MainTabbedPage()
         {
             InitializeComponent();
-
         }
     }
 }

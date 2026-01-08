@@ -1,29 +1,37 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
-namespace Cinestar_app;
-
-public partial class CityPickerPage : ContentPage
+namespace Cinestar_app
 {
-    private readonly string[] _cities =
+    public partial class CityPickerPage : ContentPage
     {
-        "Mostar", "Bihać", "Tuzla", "Banja Luka", "Zenica",
-        "Sarajevo", "Prijedor", "Gračanica"
-    };
-
-    public CityPickerPage()
-    {
-        InitializeComponent();
-        CitiesListView.ItemsSource = _cities;
-        CitiesListView.ItemSelected += OnCitySelected;
-    }
-
-    private async void OnCitySelected(object? sender, SelectedItemChangedEventArgs e)
-    {
-        if (e.SelectedItem is string selectedCity)
+        private readonly string[] _cities =
         {
-            Preferences.Set("SelectedCity", selectedCity);
-            await Navigation.PopModalAsync();
+            "Mostar", "Bihać", "Tuzla","Banja Luka", "Zenica",
+            "Sarajevo", "Prijedor", "Gračanica"
+        };
+
+        public CityPickerPage()
+        {
+            InitializeComponent();
+            CitiesListView.ItemsSource = _cities;
+            CitiesListView.ItemSelected += OnCitySelected;
         }
+
+        private async void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem is string selectedCity)
+            {
+                Preferences.Set("SelectedCity", selectedCity);
+
+                // ✅ Tvoj Splash pristup - UPDATE WINDOW PAGE
+                var window = Application.Current?.Windows?.FirstOrDefault();
+                if (window != null)
+                {
+                    window.Page = new MainTabbedPage();
+                }
+            }
+        }
+
     }
 }

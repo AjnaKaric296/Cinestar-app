@@ -1,79 +1,93 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="Cinestar_app.HomePage"
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Cinestar_app"
-             x:DataType="local:HomePage"
-             Title="Cinestar Home">
+             xmlns:pages="clr-namespace:Cinestar_app.Pages"
+             x:Class="Cinestar_app.HomePage"
+             Title="">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="20" Padding="20">
+        <StackLayout BackgroundColor="#051851">
+            <StackLayout Orientation="Horizontal">
+                <Image Source="logo.png"
+                       HeightRequest="30"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center" />
 
-            <!-- City Picker Button -->
-            <Button x:Name="CityPickerButton"
-                    Text="Izaberi grad"
-                    BackgroundColor="#051851"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="50"
-                    Clicked="OnCittySelected"/>
+                <Button x:Name="CityPickerButton"
+                        BackgroundColor="#051851"
+                        Clicked="OnCittySelected"
+                        TextColor="White"
+                        HeightRequest="1"
+                        Padding="5"
+                        HorizontalOptions="EndAndExpand"/>
 
-            <!-- Featured Movies -->
-            <Label Text="Featured Filmovi" 
-                   FontSize="20" 
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
+                <Image Source="strelica.png" HeightRequest="10"/>
+            </StackLayout>
 
-            <!-- Carousel + Indicators -->
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <CarouselView x:Name="FeaturedCarousel"
-                              Grid.Row="0"
-                              ItemsSource="{Binding FeaturedMovies}"
-                              Loop="True"
-                              IndicatorView="FeaturedIndicator">
+            <StackLayout>
+                <CarouselView
+                    ItemsSource="{Binding Images}"
+                    IndicatorView="indicator"
+                    HeightRequest="220"
+                    IsSwipeEnabled="True">
                     <CarouselView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Movie">
-                            <Border Stroke="#051851" StrokeThickness="2" Padding="10">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Image Grid.Row="0" 
-                                           Source="{Binding Poster}"
-                                           Aspect="AspectFill"
-                                           HeightRequest="250"/>
-
-                                    <VerticalStackLayout Grid.Row="1" Margin="5">
-                                        <Label Text="{Binding Title}" 
-                                               FontSize="16" 
-                                               FontAttributes="Bold"/>
-                                        <Label Text="{Binding Year}" 
-                                               FontSize="14" 
-                                               TextColor="Gray"/>
-                                        <Label Text="{Binding ImdbRating}" 
-                                               FontSize="14" 
-                                               TextColor="Gold"/>
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </Border>
+                        <DataTemplate>
+                            <Image
+                                Source="{Binding}"
+                                Aspect="AspectFill" />
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
 
-                <IndicatorView x:Name="FeaturedIndicator"
-                               Grid.Row="1"
-                               IndicatorColor="LightGray"
-                               SelectedIndicatorColor="#051851"
-                               HorizontalOptions="Center"
-                               Margin="0,10"/>
+                <IndicatorView
+                    x:Name="indicator"
+                    HorizontalOptions="Center"
+                    Margin="0,5"
+                    IndicatorColor="LightGray"
+                    SelectedIndicatorColor="White"/>
+            </StackLayout>
+
+            <Label Text="Na programu" TextTransform="Uppercase" TextColor="White" Margin="10" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Featured Movies - DYNAMIC! -->
+                <Frame Grid.Row="0" Grid.Column="0" x:Name="FeaturedMovie1" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Image x:Name="Movie1Image" Aspect="AspectFit" HeightRequest="100"/>
+                        <Label x:Name="Movie1Title" Text="Film 1" FontSize="10" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Grid.Row="0" Grid.Column="1" x:Name="FeaturedMovie2" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Image x:Name="Movie2Image" Aspect="AspectFit" HeightRequest="100"/>
+                        <Label x:Name="Movie2Title" Text="Film 2" FontSize="10" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="0" x:Name="FeaturedMovie3" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Image x:Name="Movie3Image" Aspect="AspectFit" HeightRequest="100"/>
+                        <Label x:Name="Movie3Title" Text="Film 3" FontSize="10" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="1" x:Name="FeaturedMovie4" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Image x:Name="Movie4Image" Aspect="AspectFit" HeightRequest="100"/>
+                        <Label x:Name="Movie4Title" Text="Film 4" FontSize="10" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
             </Grid>
-        </VerticalStackLayout>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

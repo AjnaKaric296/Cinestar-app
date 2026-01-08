@@ -1,39 +1,29 @@
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 
-namespace Cinestar_app.Pages;
-
-public partial class Profil : ContentPage
+namespace Cinestar_app  // ✅ BEZ .Pages!
 {
-    public Profil()
+    public partial class Profil : ContentPage
     {
-        InitializeComponent();
-
-        NavigationPage.SetHasNavigationBar(this, false);
-    }
-
-   
-
-    private async void Prijava_Clicked(object sender, EventArgs e)
-    {
-        if (!App.IsUserRegistered)
+        public Profil()
         {
-            await DisplayAlert(
-                "Prijava",
-                "Nemate nalog. Molimo vas da se prvo registrujete.",
-                "OK");
-            return;
+            InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        await DisplayAlert(
-            "Prijava",
-            "Uspje�na prijava!",
-            "OK");
+        private async void Prijava_Clicked(object sender, EventArgs e)
+        {
+            if (!App.IsUserRegistered)  // ✅ SADA RADI!
+            {
+                await DisplayAlert("Prijava", "Nemate nalog. Molimo vas da se prvo registrujete.", "OK");
+                return;
+            }
+
+            await DisplayAlert("Prijava", "Uspješna prijava!", "OK");
+        }
+
+        private async void Registracija_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RegistracijaPage());
+        }
     }
-
-    private async void Registracija_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new RegistracijaPage());
-    }
-
-
 }
