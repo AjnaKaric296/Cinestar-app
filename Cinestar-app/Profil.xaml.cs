@@ -10,6 +10,8 @@ public partial class Profil : ContentPage
     public Profil()
     {
         InitializeComponent();
+        _db = new UserDatabase();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     private async void Prijava_Clicked(object sender, EventArgs e)

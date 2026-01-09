@@ -13,6 +13,7 @@ public partial class RegistracijaPage : ContentPage
     {
         InitializeComponent();
         _db = new UserDatabase();
+      
     }
 
     private async void RegistrujSe_Clicked(object sender, EventArgs e)
