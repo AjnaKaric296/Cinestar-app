@@ -1,34 +1,62 @@
+﻿using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 
 namespace Cinestar_app.Pages;
 
 public partial class Profil : ContentPage
 {
+    private UserDatabase _db;
     public Profil()
     {
         InitializeComponent();
+<<<<<<< HEAD
 
         NavigationPage.SetHasNavigationBar(this, false);
     }
 
    
 
+=======
+        _db = new UserDatabase();
+
+    }
+>>>>>>> eacfb305a03c30f1b5fc898db1181e123eaaefe4
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
-        if (!App.IsUserRegistered)
+        // Dobijamo email i lozinku od korisnika
+        string email = (await DisplayPromptAsync("Email", "Unesite svoj email"))?.Trim().ToLower();
+        string lozinka = (await DisplayPromptAsync("Lozinka", "Unesite lozinku", "OK", "Cancel", keyboard: Keyboard.Text))?.Trim();
+
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(lozinka))
         {
-            await DisplayAlert(
-                "Prijava",
-                "Nemate nalog. Molimo vas da se prvo registrujete.",
-                "OK");
+            await DisplayAlert("Greška", "Morate unijeti email i lozinku", "OK");
             return;
         }
 
-        await DisplayAlert(
-            "Prijava",
-            "Uspje�na prijava!",
-            "OK");
+        var user = await _db.GetUserByEmailAsync(email);
+
+        if (user == null)
+        {
+            await DisplayAlert("Greška", "Email nije registrovan", "OK");
+            return;
+        }
+
+        if (user.Lozinka.Trim() != lozinka)
+        {
+            await DisplayAlert("Greška", "Lozinka nije tačna", "OK");
+            return;
+        }
+
+        await DisplayAlert("Uspjeh", $"Dobrodošli, {user.Ime}!", "OK");
+
+        // ⬇⬇⬇ KLJUČNO
+        UserSession.Login(user);
+
+        // Navigacija na profil
+        await Navigation.PushAsync(new UserProfilPage());
+
     }
+
 
     private async void Registracija_Clicked(object sender, EventArgs e)
     {

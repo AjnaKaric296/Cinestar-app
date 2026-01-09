@@ -5,7 +5,7 @@
              Shell.NavBarIsVisible="False">
 
     <Grid>
-        <Image Source="background.jpg"
+        <Image Source="proba1.jpg."
                Aspect="AspectFill"
                />
 
@@ -19,7 +19,8 @@
                    TextColor="#fff" 
                    FontSize="24"
                    HorizontalOptions="Center"
-                   Opacity="0"/>
+                   Opacity="0"
+                   FontFamily="Arial"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
