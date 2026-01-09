@@ -1,4 +1,4 @@
-using Cinestar_app.Pages;
+using Cinestar_app;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -8,8 +8,8 @@ namespace Cinestar_app
     {
         private readonly string[] _cities =
         {
-            "Mostar", "Bihaæ", "Tuzla","Banja Luka", "Zenica",
-            "Sarajevo", "Prijedor", "Graèanica"
+            "Mostar", "Bihac", "Tuzla","Banja Luka", "Zenica",
+            "Sarajevo", "Prijedor", "Gracanica"
         };
 
         public CityPickerPage()

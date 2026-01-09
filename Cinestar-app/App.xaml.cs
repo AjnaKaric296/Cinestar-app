@@ -1,4 +1,4 @@
-﻿using Cinestar_app.Pages;
+﻿using Cinestar_app;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -15,7 +15,7 @@ namespace Cinestar_app
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            // *** TEMPORARNO OBRIŠI OVO ZA TEST ***
+            // *** TEMPORARNO OBRIsI OVO ZA TEST ***
             Preferences.Clear(); // ODKOMENTIRAJ OVO 1 PUT
 
             if (Preferences.ContainsKey("SelectedCity"))

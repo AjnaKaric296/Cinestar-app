@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cinestar_app.Pages.LoyaltyBodovi"
+             x:Class="Cinestar_app.LoyaltyBodovi"
              Title="">
 
     <ScrollView>
@@ -38,8 +38,8 @@
                                    Aspect="AspectFit" />
                         </HorizontalStackLayout>
 
-                        <Label Text="Predstavljamo ti novo digitalno članstvo u kojem mogu sudjelovati svi registrirani korisnici CineStar aplikacije. Registruj se sada i počni skupljati zvjezdice koje možeš mijenjati za nagrade!
-Očekuju te i zvjezdice dobrodošlice. Jednom kada si registriran online ili putem CineStar aplikacije, svaku tvoju potrošnju nagrađujemo – bilo da kupuješ ulaznice, kokice, nachose, piće ili poklon kartice, bilo kako, online ili na blagajni – skupljaš zvjezdice koje možeš zamijeniti za razne nagrade u našoj trgovini s kuponima"
+                        <Label Text="Predstavljamo ti novo digitalno clanstvo u kojem mogu sudjelovati svi registrirani korisnici CineStar aplikacije. Registruj se sada i pocni skupljati zvjezdice koje mozes mijenjati za nagrade!
+Ocekuju te i zvjezdice dobrodoslice. Jednom kada si registriran online ili putem CineStar aplikacije, svaku tvoju potrosnju nagrađujemo – bilo da kupujes ulaznice, kokice, nachose, pice ili poklon kartice, bilo kako, online ili na blagajni – skupljas zvjezdice koje mozes zamijeniti za razne nagrade u nasoj trgovini s kuponima"
                                TextColor="White"
                                FontSize="14"
                                LineBreakMode="WordWrap"/>
@@ -70,8 +70,8 @@ Očekuju te i zvjezdice dobrodošlice. Jednom kada si registriran online ili put
                             
                         </HorizontalStackLayout>
 
-                        <Label Text="🎟️ ČLANSTVO - Članstvo je besplatno i njemu  prvom registracijom                                                
-                               ⭐ SKUPLJANJE ZVJEZDICA - Kupuj ulaznice i proizvode koristeći članstvo jer za svaki potrošeni 1 BAM dobivaš 1 zvjezdicu. Zvjezdice vrijede godinu dana.                                                                                                      
+                        <Label Text="🎟️ cLANSTVO - clanstvo je besplatno i njemu  prvom registracijom                                                
+                               ⭐ SKUPLJANJE ZVJEZDICA - Kupuj ulaznice i proizvode koristeci clanstvo jer za svaki potroseni 1 BAM dobivas 1 zvjezdicu. Zvjezdice vrijede godinu dana.                                                                                                      
                                🔄 ZAMJENA ZVJEZDICA ZA KUPONE -  Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene."
                                
                         FontSize="14"
@@ -85,7 +85,7 @@ Očekuju te i zvjezdice dobrodošlice. Jednom kada si registriran online ili put
 
             <!-- PRIJAVLJEN KORISNIK -->
             <StackLayout x:Name="UserView" IsVisible="False" Spacing="10">
-                <Label Text="Vaši loyalty bodovi"
+                <Label Text="Vasi loyalty bodovi"
                        FontSize="22"
                        FontAttributes="Bold" />
 

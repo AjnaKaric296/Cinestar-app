@@ -15,7 +15,7 @@
             <Image x:Name="LogoImage" Source="logo.png"
                    WidthRequest="200" HeightRequest="200"
                    Opacity="0" Scale="0.8"/>
-            <Label x:Name="WelcomeLabel" Text="Dobrodošli u CineStar App" 
+            <Label x:Name="WelcomeLabel" Text="Dobrodosli u CineStar App" 
                    TextColor="#fff" 
                    FontSize="24"
                    HorizontalOptions="Center"

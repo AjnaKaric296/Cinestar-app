@@ -1,6 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cinestar_app.Pages.Profil"
+             x:Class="Cinestar_app.Profil"
              Title=""
              BackgroundColor="#051851">
     <ScrollView>
@@ -35,7 +35,7 @@
                     />
 
 
-            <!-- REGISTRACIJA FORMA (sakrivena na početku) -->
+            <!-- REGISTRACIJA FORMA (sakrivena na pocetku) -->
             <VerticalStackLayout x:Name="RegistracijaForma"
                                  IsVisible="False"
                                  Spacing="10"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:Cinestar_app.Pages"
-             x:Class="Cinestar_app.Pages.HomePage"
+             xmlns:pages="clr-namespace:Cinestar_app"
+             x:Class="Cinestar_app.HomePage"
              Title="">
 
     <ScrollView>

@@ -2,34 +2,36 @@
 <TabbedPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pages="clr-namespace:Cinestar_app.Pages"
+    xmlns:pages="clr-namespace:Cinestar_app"
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-    x:Class="Cinestar_app.Pages.MainTabbedPage"
+    x:Class="Cinestar_app.MainTabbedPage"
     android:TabbedPage.ToolbarPlacement="Bottom"
-     BarBackgroundColor="#051851"        
-    BarTextColor="White"  
-    
-    >
+    BarBackgroundColor="#051851"
+    BarTextColor="White">
 
     <TabbedPage.Children>
-        <NavigationPage Title="Pocetna"  IconImageSource="home.png">
+        <!-- Pocetna / Home -->
+        <NavigationPage Title="Pocetna" IconImageSource="home.png">
             <x:Arguments>
                 <pages:HomePage />
             </x:Arguments>
         </NavigationPage>
 
+        <!-- Filmovi -->
         <NavigationPage Title="Filmovi" IconImageSource="film.png">
             <x:Arguments>
                 <pages:Filmovi />
             </x:Arguments>
         </NavigationPage>
 
+        <!-- Bodovi -->
         <NavigationPage Title="Bodovi" IconImageSource="bodovi.png">
             <x:Arguments>
                 <pages:LoyaltyBodovi />
             </x:Arguments>
         </NavigationPage>
 
+        <!-- Profil -->
         <NavigationPage Title="Profil" IconImageSource="profil.png">
             <x:Arguments>
                 <pages:Profil />

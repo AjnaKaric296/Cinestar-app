@@ -1,7 +1,7 @@
 
 using Microsoft.Maui.Controls;
 ﻿using Cinestar_app.Services;
-namespace Cinestar_app.Pages;
+namespace Cinestar_app;
 
 public partial class LoyaltyBodovi : ContentPage
 {

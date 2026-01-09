@@ -1,7 +1,7 @@
 ﻿using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 
-namespace Cinestar_app.Pages;
+namespace Cinestar_app;
 
 public partial class Profil : ContentPage
 {
@@ -26,7 +26,7 @@ public partial class Profil : ContentPage
 
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(lozinka))
         {
-            await DisplayAlert("Greška", "Morate unijeti email i lozinku", "OK");
+            await DisplayAlert("Greska", "Morate unijeti email i lozinku", "OK");
             return;
         }
 
@@ -34,17 +34,17 @@ public partial class Profil : ContentPage
 
         if (user == null)
         {
-            await DisplayAlert("Greška", "Email nije registrovan", "OK");
+            await DisplayAlert("Greska", "Email nije registrovan", "OK");
             return;
         }
 
         if (user.Lozinka.Trim() != lozinka)
         {
-            await DisplayAlert("Greška", "Lozinka nije tačna", "OK");
+            await DisplayAlert("Greska", "Lozinka nije tacna", "OK");
             return;
         }
 
-        await DisplayAlert("Uspjeh", $"Dobrodošli, {user.Ime}!", "OK");
+        await DisplayAlert("Uspjeh", $"Dobrodosli, {user.Ime}!", "OK");
 
         UserSession.Login(user);
 
