@@ -6,26 +6,23 @@ namespace Cinestar_app.Pages;
 public partial class Profil : ContentPage
 {
     private UserDatabase _db;
+
     public Profil()
     {
         InitializeComponent();
-<<<<<<< HEAD
-
-        NavigationPage.SetHasNavigationBar(this, false);
     }
 
-   
-
-=======
-        _db = new UserDatabase();
-
-    }
->>>>>>> eacfb305a03c30f1b5fc898db1181e123eaaefe4
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
-        // Dobijamo email i lozinku od korisnika
+        NavigationPage.SetHasNavigationBar(this, false);
+
         string email = (await DisplayPromptAsync("Email", "Unesite svoj email"))?.Trim().ToLower();
-        string lozinka = (await DisplayPromptAsync("Lozinka", "Unesite lozinku", "OK", "Cancel", keyboard: Keyboard.Text))?.Trim();
+        string lozinka = (await DisplayPromptAsync(
+            "Lozinka",
+            "Unesite lozinku",
+            "OK",
+            "Cancel",
+            keyboard: Keyboard.Text))?.Trim();
 
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(lozinka))
         {
@@ -49,19 +46,13 @@ public partial class Profil : ContentPage
 
         await DisplayAlert("Uspjeh", $"Dobrodošli, {user.Ime}!", "OK");
 
-        // ⬇⬇⬇ KLJUČNO
         UserSession.Login(user);
 
-        // Navigacija na profil
         await Navigation.PushAsync(new UserProfilPage());
-
     }
-
 
     private async void Registracija_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new RegistracijaPage());
     }
-
-
 }

@@ -1,27 +1,19 @@
-<<<<<<< HEAD
-using Microsoft.Maui.Controls;
-=======
-﻿using Cinestar_app.Services;
 
->>>>>>> eacfb305a03c30f1b5fc898db1181e123eaaefe4
+using Microsoft.Maui.Controls;
+﻿using Cinestar_app.Services;
 namespace Cinestar_app.Pages;
 
 public partial class LoyaltyBodovi : ContentPage
 {
-<<<<<<< HEAD
-	public LoyaltyBodovi()
-	{
-		InitializeComponent();
-        NavigationPage.SetHasNavigationBar(this, false);
-    }
-}
-=======
+
+
     private UserDatabase _db;
 
     public LoyaltyBodovi()
     {
         InitializeComponent();
         _db = new UserDatabase();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     protected override async void OnAppearing()
@@ -69,4 +61,4 @@ public partial class LoyaltyBodovi : ContentPage
         await DisplayAlert("Hvala ⭐", "Dobili ste 5 loyalty bodova!", "OK");
     }
 }
->>>>>>> eacfb305a03c30f1b5fc898db1181e123eaaefe4
+
