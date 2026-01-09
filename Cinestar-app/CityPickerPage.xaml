@@ -10,7 +10,7 @@
                    HeightRequest="90"
                    HorizontalOptions="Center"
                    />
-            <Label Text="ODABERI GRAD:" TextDecorations="Underline" TextColor="White" HorizontalOptions="Center"/>
+            <Label Text="ODABERI GRAD:" TextDecorations="Underline" TextColor="White" FontSize="20" Margin="0,0,0,20" HorizontalOptions="Center"/>
             <ListView x:Name="CitiesListView"
           BackgroundColor="Transparent"
           SeparatorVisibility="None"
@@ -19,11 +19,13 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout>
-                            <BoxView HeightRequest="1" Color="Gray" HorizontalOptions="FillAndExpand" Margin="0,10"/>
+                                <BoxView HeightRequest="1" Color="#363d39" HorizontalOptions="FillAndExpand" />
                             <Label Text="{Binding}" 
                        FontSize="22"
                        FontAttributes="Bold"
                        TextColor="White"
+                        HorizontalOptions="Center"
+                        TextTransform="Uppercase"
                        Padding="30,20"
                        VerticalOptions="Center" />
                            </StackLayout>
