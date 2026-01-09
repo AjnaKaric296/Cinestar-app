@@ -16,6 +16,7 @@ public partial class Profil : ContentPage
 
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
+<<<<<<< HEAD
         NavigationPage.SetHasNavigationBar(this, false);
 
         string email = (await DisplayPromptAsync("Email", "Unesite svoj email"))?.Trim().ToLower();
@@ -51,6 +52,9 @@ public partial class Profil : ContentPage
         UserSession.Login(user);
 
         await Navigation.PushAsync(new UserProfilPage());
+=======
+        await Navigation.PushAsync(new PrijavaPage());
+>>>>>>> fca82010772c9ba67bbfa1ee01072578c2bdc4bd
     }
 
     private async void Registracija_Clicked(object sender, EventArgs e)

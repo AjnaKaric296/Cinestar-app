@@ -11,6 +11,18 @@
                FontSize="24"
                TextColor="#FFD700"
                HorizontalOptions="Center"/>
+        <Frame WidthRequest="120"
+               HeightRequest="120"
+               CornerRadius="60"
+               HasShadow="True"
+               BackgroundColor="White"
+               HorizontalOptions="Center">
+            <Image Source="icon.png"  
+                Aspect="AspectFill"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Frame>
+
 
         <Label x:Name="ImeLabel" TextColor="White"/>
         <Label x:Name="PrezimeLabel" TextColor="White"/>
