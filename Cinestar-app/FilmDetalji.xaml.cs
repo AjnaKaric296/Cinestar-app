@@ -1,4 +1,4 @@
-using Cinestar_app;
+using Cinestar_app.Models;
 
 namespace Cinestar_app;
 

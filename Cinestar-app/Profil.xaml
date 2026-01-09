@@ -1,64 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cinestar_app.Pages.Profil"
-             Title=""
+             x:Class="Cinestar_app.Profil"
+             Title="Profil"
              BackgroundColor="#051851">
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#051851" VerticalOptions="Center">
 
-            <Label Text="PRIJAVA"
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label x:Name="StatusLabel"
+                   Text="PRIJAVA"
                    FontSize="24"
                    HorizontalOptions="Center"
                    TextColor="White"
-                   FontFamily="Arial"
                    Padding="10"/>
+
             <BoxView HeightRequest="1" 
                      BackgroundColor="#FFD700" 
-                    HorizontalOptions="FillAndExpand"
-                    Margin="5,5"/>
+                     HorizontalOptions="FillAndExpand"
+                     Margin="5,5"/>
 
-            <!-- BUTTONI -->
-            <Button Text="Prijavi se"
+            <Button x:Name="PrijavaButton"
+                    Text="Prijavi se"
                     BackgroundColor="#FFD700"
                     TextColor="White"
                     Clicked="Prijava_Clicked"
-                    FontFamily="Arial"
                     Margin="10"
-                    />
+                    HeightRequest="55"
+                    FontSize="16"
+                    FontAttributes="Bold"/>
 
-            <Button Text="Registruj se"
+            <Button x:Name="RegistracijaButton"
+                    Text="Registruj se"
                     BackgroundColor="#FFD700"
                     TextColor="White"
-                    Clicked="Registracija_Clicked"
-                    FontFamily="Arial"
-                    Margin="5,0"
-                    />
+                    Clicked="ToggleRegistracija"
+                    Margin="10"
+                    HeightRequest="55"
+                    FontSize="16"
+                    FontAttributes="Bold"/>
 
+            <Frame x:Name="RegistracijaForma"
+                   IsVisible="False"
+                   BackgroundColor="#1A2A4A"
+                   Padding="20"
+                   CornerRadius="15"
+                   Margin="0,20,0,0">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="REGISTRACIJA"
+                           FontSize="20"
+                           HorizontalOptions="Center"
+                           TextColor="White"
+                           FontAttributes="Bold"/>
 
-            <!-- REGISTRACIJA FORMA (sakrivena na početku) -->
-            <VerticalStackLayout x:Name="RegistracijaForma"
-                                 IsVisible="False"
-                                 Spacing="10"
-                                 Margin="0,20,0,0">
+                    <Entry x:Name="ImeEntry" 
+                           Placeholder="Ime" 
+                           TextColor="White" 
+                           BackgroundColor="Transparent"
+                           PlaceholderColor="Gray"/>
 
-                <Label Text="Registracija"
-                       FontSize="20"
-                       HorizontalOptions="Center"
-                       TextColor="White"
-                       FontFamily="Arial"/>
+                    <Entry x:Name="PrezimeEntry" 
+                           Placeholder="Prezime" 
+                           TextColor="White" 
+                           BackgroundColor="Transparent"
+                           PlaceholderColor="Gray"/>
 
-                <Entry Placeholder="Ime" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Prezime" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Email" Keyboard="Email" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Lozinka" IsPassword="True" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Potvrdi lozinku" IsPassword="True" TextColor="White" FontFamily="Arial"/>
+                    <Entry x:Name="EmailEntry" 
+                           Placeholder="Email" 
+                           Keyboard="Email"
+                           TextColor="White" 
+                           BackgroundColor="Transparent"
+                           PlaceholderColor="Gray"/>
 
-                <Button Text="Registruj se"
-                        BackgroundColor="Green"
-                        TextColor="White"
-                        FontFamily="Arial"
-                        />
-            </VerticalStackLayout>
+                    <Entry x:Name="LozinkaEntry" 
+                           Placeholder="Lozinka" 
+                           IsPassword="True"
+                           TextColor="White" 
+                           BackgroundColor="Transparent"
+                           PlaceholderColor="Gray"/>
+
+                    <Entry x:Name="PotvrdaLozinkaEntry" 
+                           Placeholder="Potvrdi lozinku" 
+                           IsPassword="True"
+                           TextColor="White" 
+                           BackgroundColor="Transparent"
+                           PlaceholderColor="Gray"/>
+
+                    <Button x:Name="RegistrujButton"
+                            Text="REGISTRUJ SE"
+                            BackgroundColor="#28A745"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            HeightRequest="50"
+                            Clicked="RegistrujSe_Clicked"/>
+
+                    <Button x:Name="NazadButton"
+                            Text="NAZAD"
+                            BackgroundColor="Transparent"
+                            TextColor="White"
+                            FontSize="14"
+                            Clicked="ToggleRegistracija"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame x:Name="ProfilInfo" 
+                   IsVisible="False"
+                   BackgroundColor="#1A2A4A"
+                   Padding="20"
+                   CornerRadius="15"
+                   Margin="0,20,0,0">
+                <VerticalStackLayout Spacing="15">
+                    <Label x:Name="ImeLabel" 
+                           Text="Ime: N/A"
+                           FontSize="18"
+                           TextColor="White"
+                           FontAttributes="Bold"/>
+
+                    <Label x:Name="EmailProfilLabel" 
+                           Text="Email: N/A"
+                           FontSize="16"
+                           TextColor="White"/>
+
+                    <Button Text="ODJAVI SE"
+                            BackgroundColor="#DC3545"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            HeightRequest="50"
+                            Clicked="Logout_Clicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

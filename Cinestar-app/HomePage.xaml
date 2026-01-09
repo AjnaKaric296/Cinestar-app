@@ -1,93 +1,87 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:Cinestar_app.Pages"
              x:Class="Cinestar_app.HomePage"
-             Title="">
+             BackgroundColor="#051851">
 
     <ScrollView>
-        <StackLayout BackgroundColor="#051851">
-            <StackLayout Orientation="Horizontal">
-                <Image Source="logo.png"
-                       HeightRequest="30"
-                       HorizontalOptions="Start"
-                       VerticalOptions="Center" />
-
-                <Button x:Name="CityPickerButton"
-                        BackgroundColor="#051851"
-                        Clicked="OnCittySelected"
-                        TextColor="White"
-                        HeightRequest="1"
-                        Padding="5"
-                        HorizontalOptions="EndAndExpand"/>
-
-                <Image Source="strelica.png" HeightRequest="10"/>
-            </StackLayout>
-
-            <StackLayout>
-                <CarouselView
-                    ItemsSource="{Binding Images}"
-                    IndicatorView="indicator"
-                    HeightRequest="220"
-                    IsSwipeEnabled="True">
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <Image
-                                Source="{Binding}"
-                                Aspect="AspectFill" />
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
-
-                <IndicatorView
-                    x:Name="indicator"
-                    HorizontalOptions="Center"
-                    Margin="0,5"
-                    IndicatorColor="LightGray"
-                    SelectedIndicatorColor="White"/>
-            </StackLayout>
-
-            <Label Text="Na programu" TextTransform="Uppercase" TextColor="White" Margin="10" />
+        <VerticalStackLayout Spacing="15" Padding="20">
 
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="logo.png" HeightRequest="40" Grid.Column="0"/>
+                <Button x:Name="CityPickerButton" Text="Sarajevo"
+                        BackgroundColor="Transparent" TextColor="White"
+                        FontSize="16" FontAttributes="Bold" 
+                        Clicked="OnCitySelected"
+                        Grid.Column="1"/>
+            </Grid>
+
+            <!-- CAROUSEL - prvih 3 filma -->
+            <CarouselView ItemsSource="{Binding Movies}" 
+                          HeightRequest="200"
+                          IndicatorView="IndicatorCarousel">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Poster}" Aspect="AspectFill"/>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <IndicatorView x:Name="IndicatorCarousel"
+                           IndicatorColor="Gray"
+                           SelectedIndicatorColor="White"
+                           HorizontalOptions="Center"/>
+
+            <Label Text="NA PROGRAMU" FontSize="20" FontAttributes="Bold" 
+                   TextColor="White" HorizontalOptions="Center" Margin="0,20,0,10"/>
+
+            <!-- 2x2 GRID -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
 
-                <!-- Featured Movies - DYNAMIC! -->
-                <Frame Grid.Row="0" Grid.Column="0" x:Name="FeaturedMovie1" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
-                    <StackLayout>
-                        <Image x:Name="Movie1Image" Aspect="AspectFit" HeightRequest="100"/>
-                        <Label x:Name="Movie1Title" Text="Film 1" FontSize="10" HorizontalOptions="Center"/>
-                    </StackLayout>
+                <Frame x:Name="FeaturedMovie1" Grid.Row="0" Grid.Column="0" 
+                       CornerRadius="15" Padding="10" BackgroundColor="#1A2A4A">
+                    <VerticalStackLayout>
+                        <Image x:Name="Movie1Image" Aspect="AspectFill" HeightRequest="120"/>
+                        <Label x:Name="Movie1Title" TextColor="White" FontSize="14" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Row="0" Grid.Column="1" x:Name="FeaturedMovie2" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
-                    <StackLayout>
-                        <Image x:Name="Movie2Image" Aspect="AspectFit" HeightRequest="100"/>
-                        <Label x:Name="Movie2Title" Text="Film 2" FontSize="10" HorizontalOptions="Center"/>
-                    </StackLayout>
+                <Frame x:Name="FeaturedMovie2" Grid.Row="0" Grid.Column="1" 
+                       CornerRadius="15" Padding="10" BackgroundColor="#1A2A4A">
+                    <VerticalStackLayout>
+                        <Image x:Name="Movie2Image" Aspect="AspectFill" HeightRequest="120"/>
+                        <Label x:Name="Movie2Title" TextColor="White" FontSize="14" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Row="1" Grid.Column="0" x:Name="FeaturedMovie3" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
-                    <StackLayout>
-                        <Image x:Name="Movie3Image" Aspect="AspectFit" HeightRequest="100"/>
-                        <Label x:Name="Movie3Title" Text="Film 3" FontSize="10" HorizontalOptions="Center"/>
-                    </StackLayout>
+                <Frame x:Name="FeaturedMovie3" Grid.Row="1" Grid.Column="0" 
+                       CornerRadius="15" Padding="10" BackgroundColor="#1A2A4A">
+                    <VerticalStackLayout>
+                        <Image x:Name="Movie3Image" Aspect="AspectFill" HeightRequest="120"/>
+                        <Label x:Name="Movie3Title" TextColor="White" FontSize="14" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Row="1" Grid.Column="1" x:Name="FeaturedMovie4" Margin="10" Padding="0" HeightRequest="100" BackgroundColor="LightGray">
-                    <StackLayout>
-                        <Image x:Name="Movie4Image" Aspect="AspectFit" HeightRequest="100"/>
-                        <Label x:Name="Movie4Title" Text="Film 4" FontSize="10" HorizontalOptions="Center"/>
-                    </StackLayout>
+                <Frame x:Name="FeaturedMovie4" Grid.Row="1" Grid.Column="1" 
+                       CornerRadius="15" Padding="10" BackgroundColor="#1A2A4A">
+                    <VerticalStackLayout>
+                        <Image x:Name="Movie4Image" Aspect="AspectFill" HeightRequest="120"/>
+                        <Label x:Name="Movie4Title" TextColor="White" FontSize="14" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
                 </Frame>
             </Grid>
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

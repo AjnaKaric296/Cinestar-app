@@ -2,29 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.CityPickerPage"
-             BackgroundColor="#051851">
-    <ScrollView>
-    <VerticalStackLayout Padding="20" Spacing="20">
+             BackgroundColor="#051851"
+             Title="Izaberi grad">
 
-        <!-- LOGO -->
-        <Image Source="logo.png"
-        <ListView x:Name="CitiesListView"
-                  BackgroundColor="Transparent"
-                  SeparatorVisibility="None"
-                  RowHeight="70">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                            <StackLayout>
-                                <BoxView HeightRequest="1" Color="Gray" HorizontalOptions="FillAndExpand" Margin="0,10"/>
-                        <Label Text="{Binding}" 
-                               FontSize="22"
-                               FontAttributes="Bold"
-                               TextColor="White"
-                               Padding="30,20"
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text="Izaberi grad" 
+                   FontSize="28" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="White"/>
+
+            <ListView x:Name="CitiesListView" 
+                      ItemSelected="OnCitySelected"
+                      BackgroundColor="#051851"
+                      RowHeight="65"
+                      Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="#051851" 
+                                   HasShadow="False" 
+                                   CornerRadius="10" 
+                                   Margin="5">
+                                <Label Text="{Binding}" 
+                                       FontSize="20" 
+                                       TextColor="#051851"
+                                       Padding="20,15"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

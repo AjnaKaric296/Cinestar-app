@@ -1,10 +1,9 @@
-﻿namespace Cinestar_app
+﻿namespace Cinestar_app;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

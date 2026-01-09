@@ -1,58 +1,135 @@
-﻿using Cinestar_app.Services;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-namespace Cinestar_app.Pages;
+namespace Cinestar_app;
 
 public partial class Profil : ContentPage
 {
-    private UserDatabase _db;
+    private bool _showingRegistration = false;
+    private bool _isLoggedIn = false;
+
     public Profil()
     {
         InitializeComponent();
-        _db = new UserDatabase();
-
+        NavigationPage.SetHasNavigationBar(this, false);
+        LoadUserSession();
+        UpdateUI();
     }
+
+    private void LoadUserSession()
+    {
+        _isLoggedIn = Preferences.Get("IsLoggedIn", false);
+    }
+
+    private void UpdateUI()
+    {
+        if (_isLoggedIn)
+        {
+            PrijavaButton.Text = "ODJAVA";
+            PrijavaButton.BackgroundColor = Colors.Red;
+            RegistracijaButton.IsVisible = false;
+            RegistracijaForma.IsVisible = false;
+            ProfilInfo.IsVisible = true;
+            StatusLabel.Text = "DOBRODOSAO!";
+
+            string savedName = Preferences.Get("UserName", "Korisnik");
+            string savedEmail = Preferences.Get("UserEmail", "email@example.com");
+            ImeLabel.Text = $"Ime: {savedName}";
+            EmailProfilLabel.Text = $"Email: {savedEmail}";
+        }
+        else
+        {
+            PrijavaButton.Text = "Prijavi se";
+            PrijavaButton.BackgroundColor = Colors.Gold;
+            RegistracijaButton.IsVisible = true;
+            RegistracijaForma.IsVisible = _showingRegistration;
+            ProfilInfo.IsVisible = false;
+            StatusLabel.Text = "PRIJAVA";
+        }
+    }
+
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
-        // Dobijamo email i lozinku od korisnika
-        string email = (await DisplayPromptAsync("Email", "Unesite svoj email"))?.Trim().ToLower();
-        string lozinka = (await DisplayPromptAsync("Lozinka", "Unesite lozinku", "OK", "Cancel", keyboard: Keyboard.Text))?.Trim();
-
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(lozinka))
+        if (_isLoggedIn)
         {
-            await DisplayAlert("Greška", "Morate unijeti email i lozinku", "OK");
-            return;
+            Preferences.Set("IsLoggedIn", false);
+            _isLoggedIn = false;
+            UpdateUI();
+            await DisplayAlert("Odjava", "Uspjesno odjavljen!", "OK");
         }
-
-        var user = await _db.GetUserByEmailAsync(email);
-
-        if (user == null)
+        else
         {
-            await DisplayAlert("Greška", "Email nije registrovan", "OK");
-            return;
+            string email = await DisplayPromptAsync("Email", "Unesi email:", keyboard: Keyboard.Email);
+            string password = await DisplayPromptAsync("Lozinka", "Unesi lozinku:", keyboard: Keyboard.Text);
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                await DisplayAlert("Greska", "Unesi email i lozinku!", "OK");
+                return;
+            }
+
+            _isLoggedIn = true;
+            Preferences.Set("IsLoggedIn", true);
+            Preferences.Set("UserEmail", email);
+            Preferences.Set("UserName", email.Split('@')[0]);
+
+            StatusLabel.Text = $"DOBRODOSAO {email.Split('@')[0].ToUpper()}!";
+            UpdateUI();
+            await DisplayAlert("Uspjeh", $"Dobrodosao {email.Split('@')[0]}!", "OK");
         }
-
-        if (user.Lozinka.Trim() != lozinka)
-        {
-            await DisplayAlert("Greška", "Lozinka nije tačna", "OK");
-            return;
-        }
-
-        await DisplayAlert("Uspjeh", $"Dobrodošli, {user.Ime}!", "OK");
-
-        // ⬇⬇⬇ KLJUČNO
-        UserSession.Login(user);
-
-        // Navigacija na profil
-        await Navigation.PushAsync(new UserProfilPage());
-
     }
 
-
-    private async void Registracija_Clicked(object sender, EventArgs e)
+    private void ToggleRegistracija(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new RegistracijaPage());
+        _showingRegistration = !_showingRegistration;
+        RegistracijaForma.IsVisible = _showingRegistration;
+        StatusLabel.Text = _showingRegistration ? "REGISTRACIJA" : "PRIJAVA";
     }
 
+    private async void RegistrujSe_Clicked(object sender, EventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(ImeEntry.Text) ||
+            string.IsNullOrWhiteSpace(PrezimeEntry.Text) ||
+            string.IsNullOrWhiteSpace(EmailEntry.Text) ||
+            string.IsNullOrWhiteSpace(LozinkaEntry.Text))
+        {
+            await DisplayAlert("Greska", "Sva polja su obavezna!", "OK");
+            return;
+        }
 
+        if (LozinkaEntry.Text != PotvrdaLozinkaEntry.Text)
+        {
+            await DisplayAlert("Greska", "Lozinke se ne podudaraju!", "OK");
+            return;
+        }
+
+        Preferences.Set("IsLoggedIn", true);
+        Preferences.Set("UserName", $"{ImeEntry.Text} {PrezimeEntry.Text}");
+        Preferences.Set("UserEmail", EmailEntry.Text);
+
+        _isLoggedIn = true;
+        UpdateUI();
+
+        ImeEntry.Text = PrezimeEntry.Text = EmailEntry.Text = LozinkaEntry.Text = PotvrdaLozinkaEntry.Text = "";
+        _showingRegistration = false;
+        RegistracijaForma.IsVisible = false;
+
+        await DisplayAlert("Uspjeh", "Registracija uspjesna!", "OK");
+    }
+
+    private async void Logout_Clicked(object sender, EventArgs e)
+    {
+        Preferences.Set("IsLoggedIn", false);
+        _isLoggedIn = false;
+        UpdateUI();
+        await DisplayAlert("Odjava", "Uspjesno odjavljen!", "OK");
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        UpdateUI();
+    }
 }

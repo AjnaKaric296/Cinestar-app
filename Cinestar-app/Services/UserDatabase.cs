@@ -3,6 +3,7 @@ using Cinestar_app.Models;
 using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.Maui.Storage;
 
 namespace Cinestar_app.Services;
 
@@ -12,15 +13,37 @@ public class UserDatabase
 
     public UserDatabase()
     {
+        InitializeAsync();
+    }
+
+    private void InitializeAsync()
+    {
+        if (_database != null)
+            return;
+
+        var dbPath = Path.Combine(FileSystem.AppDataDirectory, "cinestar.db3");
+        _database = new SQLiteAsyncConnection(dbPath);
+        _database.CreateTableAsync<User>().Wait();
+        _database.CreateTableAsync<Loyalty>().Wait();
     }
 
 
-     public Task<User> GetUserByEmailAsync(string email)
+     public Task<User?> GetUserByEmailAsync(string email)
      {
+        // Ensure database connection is initialized
+        // Normalize email and query the Users table
         email = email.Trim().ToLower();
-                        .Where(u => u.Email.ToLower() == email)
-                        .FirstOrDefaultAsync();
+        return _database.Table<User>()
+            .Where(u => u.Email.ToLower() == email)
+            .FirstOrDefaultAsync();
      }
+
+    public Task AddUserAsync(User user)
+    {
+        // Ensure normalized email
+        user.Email = user.Email?.Trim().ToLower() ?? "";
+        return _database.InsertAsync(user);
+    }
 
     public Task<List<User>> GetAllUsersAsync()
     {

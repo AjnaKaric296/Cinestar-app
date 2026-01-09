@@ -1,87 +1,104 @@
 ﻿using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Text.Json;
 
 namespace Cinestar_app;
 
 public partial class HomePage : ContentPage
 {
-    public List<string> Images { get; set; } = new()
+    public ObservableCollection<Movie> Movies { get; set; } = new();
+
+    public class Movie
     {
-        "film1.png", "film2.jpg", "film3.webp"
-    };
+        public string Title { get; set; } = "";
+        public string Poster { get; set; } = "";
+    }
 
     public HomePage()
     {
         InitializeComponent();
-        NavigationPage.SetHasNavigationBar(this, false);
-
-        string savedCity = Preferences.Get("SelectedCity", "Izaberi grad");
-        CityPickerButton.Text = savedCity;
-
         BindingContext = this;
-        _ = LoadFeaturedMovies();
+        // ❌ UKLONIO NavigationPage.SetHasNavigationBar() - koristi Shell!
+        _ = LoadMoviesAsync();
     }
 
-    private async Task LoadFeaturedMovies()
+    private async Task LoadMoviesAsync()
     {
         try
         {
             string city = Preferences.Get("SelectedCity", "Sarajevo");
-            var http = new HttpClient();
+            CityPickerButton.Text = city;
 
-            string[] cityGenres = city switch
+            using var http = new HttpClient();
+            string[] genres = city switch
             {
-                "Sarajevo" => new[] { "action 2023", "drama 2023" },
-                "Mostar" => new[] { "comedy 2023", "romance" },
-                "Banja Luka" => new[] { "thriller 2023", "crime" },
-                _ => new[] { "top 2023" }
+                "Mostar" => new[] { "comedy 2023", "romance", "top 2023" },
+                _ => new[] { "top 2023", "action 2023", "drama 2023" }
             };
 
-            var movies = new List<Movie>();
-            foreach (string genre in cityGenres.Take(4))
-            {
-                try
-                {
-                    var json = await http.GetStringAsync($"http://www.omdbapi.com/?s={Uri.EscapeDataString(genre)}&apikey=75ace56d");
-                    var data = JsonSerializer.Deserialize<JsonElement>(json);
+            Movies.Clear();
+            var featuredMovies = new List<Movie>();
 
-                    if (data.TryGetProperty("Response", out var response) && response.GetString() == "True")
+            foreach (string genre in genres.Take(7))
+            {
+                string url = $"http://www.omdbapi.com/?s={Uri.EscapeDataString(genre)}&apikey=75ace56d";
+                var json = await http.GetStringAsync(url);
+                var data = JsonSerializer.Deserialize<JsonElement>(json);
+
+                if (data.TryGetProperty("Search", out var search) && search.GetArrayLength() > 0)
+                {
+                    var movie = search.EnumerateArray().First();
+                    var poster = movie.GetProperty("Poster").GetString();
+                    if (poster != "N/A")
                     {
-                        var search = data.GetProperty("Search").EnumerateArray().FirstOrDefault();
-                        if (search.ValueKind != JsonValueKind.Undefined)
+                        var newMovie = new Movie
                         {
-                            movies.Add(new Movie
-                            {
-                                Title = search.GetProperty("Title").GetString() ?? genre,
-                                Poster = search.GetProperty("Poster").GetString() ?? ""
-                            });
-                        }
+                            Title = movie.GetProperty("Title").GetString() ?? genre,
+                            Poster = poster
+                        };
+                        Movies.Add(newMovie);
+                        featuredMovies.Add(newMovie);
                     }
                 }
-                catch { }
             }
 
-            // ✅ POPUNI 4 Frame-a dinamički
-            if (movies.Count > 0) { Movie1Image.Source = movies[0].Poster; Movie1Title.Text = movies[0].Title; }
-            if (movies.Count > 1) { Movie2Image.Source = movies[1].Poster; Movie2Title.Text = movies[1].Title; }
-            if (movies.Count > 2) { Movie3Image.Source = movies[2].Poster; Movie3Title.Text = movies[2].Title; }
-            if (movies.Count > 3) { Movie4Image.Source = movies[3].Poster; Movie4Title.Text = movies[3].Title; }
+            // Update featured movies
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                UpdateFeaturedMovies(featuredMovies);
+            });
         }
-        catch { }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 
-    private async void OnCittySelected(object sender, EventArgs e)
+    private void UpdateFeaturedMovies(List<Movie> movies)
     {
-        var cityPickerPage = new Cinestar_app.CityPickerPage();
-        await Navigation.PushModalAsync(cityPickerPage);
+        Movie1Title.Text = movies.Count > 0 ? movies[0].Title : "Film 1";
+        Movie1Image.Source = movies.Count > 0 ? movies[0].Poster : null;
+
+        Movie2Title.Text = movies.Count > 1 ? movies[1].Title : "Film 2";
+        Movie2Image.Source = movies.Count > 1 ? movies[1].Poster : null;
+
+        Movie3Title.Text = movies.Count > 2 ? movies[2].Title : "Film 3";
+        Movie3Image.Source = movies.Count > 2 ? movies[2].Poster : null;
+
+        Movie4Title.Text = movies.Count > 3 ? movies[3].Title : "Film 4";
+        Movie4Image.Source = movies.Count > 3 ? movies[3].Poster : null;
     }
+
+    private async void OnCitySelected(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new CityPickerPage());
+    }
+
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        string savedCity = Preferences.Get("SelectedCity", "Izaberi grad");
-        CityPickerButton.Text = savedCity;
-        _ = LoadFeaturedMovies();
+        _ = LoadMoviesAsync();
     }
 }
