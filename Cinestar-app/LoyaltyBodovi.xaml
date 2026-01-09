@@ -10,11 +10,11 @@
             <!-- NEPRIJAVLJEN KORISNIK -->
             <StackLayout x:Name="GuestView" IsVisible="False" Spacing="10">
 
-                <Grid HeightRequest="240">
+                <Grid HeightRequest="100">
                     <Image Source="pocetnaloyalty.jpg"
-                           Aspect="AspectFill"
-                           HeightRequest="240"
-                           HorizontalOptions="Fill"/>
+                            WidthRequest="100"
+                           HeightRequest="100"
+                          />
                     <BoxView Color="#62000030" 
                              HeightRequest="240"
                              HorizontalOptions="Fill"/>
