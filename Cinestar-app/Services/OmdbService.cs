@@ -1,39 +1,70 @@
-﻿using Cinestar_app.Models;
+﻿using System.Net.Http;
 using System.Text.Json;
+using Cinestar_app.Models;
+
+namespace Cinestar_app.Services;
 
 public class OmdbService
 {
-    private readonly string apiKey = "75ace56d";
-    private readonly HttpClient client = new();
+    private readonly HttpClient _client;
+    private readonly string _apiKey = "75ace56d"; // tvoj OMDB API key
 
     public OmdbService()
     {
-        client.BaseAddress = new Uri("http://www.omdbapi.com/");
+        _client = new HttpClient();
     }
 
-    public async Task<List<Film>> SearchMoviesAsync(string query, int page = 1)
+    // Klasa za search rezultate
+    private class OmdbSearchResult
     {
-        var url = $"?apikey={apiKey}&s={Uri.EscapeDataString(query)}&type=movie&page={page}";
-        var response = await client.GetAsync(url);
-        var content = await response.Content.ReadAsStringAsync();
-
-        var searchResult = JsonSerializer.Deserialize<SearchResponse>(content);
-        return searchResult?.Search ?? new List<Film>();
+        public OmdbMovieShort[] Search { get; set; } = Array.Empty<OmdbMovieShort>();
+        public string Response { get; set; } = "False";
     }
 
-    public async Task<Film> GetMovieDetailsAsync(string imdbID)
+    // Kratka info o filmu
+    private class OmdbMovieShort
     {
-        var url = $"?apikey={apiKey}&i={imdbID}&plot=short";
-        var response = await client.GetAsync(url);
-        var content = await response.Content.ReadAsStringAsync();
-
-        return JsonSerializer.Deserialize<Film>(content);
+        public string Title { get; set; } = "";
+        public string Year { get; set; } = "";
+        public string ImdbID { get; set; } = "";
+        public string Poster { get; set; } = "";
     }
-}
 
-public class SearchResponse
-{
-    public List<Film> Search { get; set; }
-    public string totalResults { get; set; }
-    public string Response { get; set; }
+    // Detalji filma
+    public class OmdbMovieFull
+    {
+        public string Title { get; set; } = "";
+        public string Year { get; set; } = "";
+        public string Genre { get; set; } = "";
+        public string Plot { get; set; } = "";
+        public string Poster { get; set; } = "";
+        public string ImdbID { get; set; } = "";
+    }
+
+    // Search po naslovu
+    public async Task<List<Film>> SearchMoviesAsync(string query)
+    {
+        var url = $"http://www.omdbapi.com/?apikey={_apiKey}&s={query}&type=movie";
+        var response = await _client.GetStringAsync(url);
+        var result = JsonSerializer.Deserialize<OmdbSearchResult>(response);
+
+        if (result?.Search == null) return new List<Film>();
+
+        return result.Search.Select(m => new Film
+        {
+            Title = m.Title,
+            Year = m.Year,
+            ImdbID = m.ImdbID,
+            Poster = m.Poster
+        }).ToList();
+    }
+
+    // Detalji filma
+    public async Task<OmdbMovieFull> GetMovieDetailsAsync(string imdbID)
+    {
+        var url = $"http://www.omdbapi.com/?apikey={_apiKey}&i={imdbID}&plot=short";
+        var response = await _client.GetStringAsync(url);
+        var result = JsonSerializer.Deserialize<OmdbMovieFull>(response);
+        return result ?? new OmdbMovieFull();
+    }
 }

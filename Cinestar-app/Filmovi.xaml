@@ -5,28 +5,30 @@
              BackgroundColor="#051851"
              Title="Filmovi">
 
-    <StackLayout Padding="10">
-        <!-- Dropdown za zanrove -->
-        <Picker x:Name="GenrePicker" Title="Izaberi zanr" SelectedIndexChanged="OnGenreChanged"/>
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="10">
+            <!-- Dropdown za zanrove -->
+            <Picker x:Name="GenrePicker" Title="Izaberi zanr" SelectedIndexChanged="OnGenreChanged"/>
 
-        <!-- Lista filmova -->
-        <CollectionView x:Name="FilmsCollectionView" SelectionMode="Single" SelectionChanged="OnFilmSelected">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="5" Padding="5" BackgroundColor="#1a1a2e" CornerRadius="10">
-                        <StackLayout Orientation="Horizontal" Spacing="10">
-                            <Image Source="{Binding Poster}" HeightRequest="100" WidthRequest="70"/>
-                            <StackLayout>
-                                <Label Text="{Binding Title}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
-                                <Label Text="{Binding Year}" TextColor="LightGray"/>
-                                <Label Text="{Binding Genre}" TextColor="LightGray" FontSize="12"/>
-                                <Label Text="{Binding City}" TextColor="Orange" FontSize="12"/>
+            <!-- Lista filmova -->
+            <CollectionView x:Name="FilmsCollectionView" SelectionMode="Single" SelectionChanged="OnFilmSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="5" Padding="5" BackgroundColor="#1a1a2e" CornerRadius="10">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Image Source="{Binding Poster}" HeightRequest="100" WidthRequest="70"/>
+                                <StackLayout>
+                                    <Label Text="{Binding Title}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Year}" TextColor="LightGray"/>
+                                    <Label Text="{Binding Genre}" TextColor="LightGray" FontSize="12"/>
+                                    <Label Text="{Binding City}" TextColor="Orange" FontSize="12"/>
+                                    <Label Text="{Binding Plot}" TextColor="White" FontSize="12"/>
+                                </StackLayout>
                             </StackLayout>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
-
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

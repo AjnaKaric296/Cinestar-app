@@ -1,18 +1,20 @@
 using Cinestar_app.Models;
+using Microsoft.Maui.Controls;
 
-namespace Cinestar_app;
-
-public partial class FilmDetalji : ContentPage
+namespace Cinestar_app
 {
-    public FilmDetalji(Film film)
+    public partial class FilmDetalji : ContentPage
     {
-        InitializeComponent();
+        public FilmDetalji(Film film)
+        {
+            InitializeComponent();
 
-        Title = film.Title;
-        PosterImage.Source = film.Poster;
-        GenreLabel.Text = film.Genre;
-        YearLabel.Text = film.Year;
-        CityLabel.Text = film.City;
-        PlotLabel.Text = film.Plot;
+            TitleLabel.Text = film.Title;
+            YearLabel.Text = film.Year;
+            GenreLabel.Text = film.Genre;
+            CityLabel.Text = film.City;
+            PlotLabel.Text = film.Plot;
+            PosterImage.Source = film.Poster;
+        }
     }
 }
