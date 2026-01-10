@@ -3,39 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.Filmovi"
-             BackgroundColor="{StaticResource PrimaryBlue}">
+             BackgroundColor="#0B0F1A"
+             Title="Filmovi">
 
-    <Grid RowDefinitions="Auto,*" Padding="10">
+    <StackLayout Padding="15" Spacing="15">
 
-        <!-- Sticky Picker -->
-        <StackLayout Grid.Row="0" Spacing="10" BackgroundColor="{StaticResource PrimaryBlue}">
-            <Picker x:Name="GenrePicker" 
-                    Title="Odaberi žanr" 
-                    SelectedIndexChanged="OnGenreChanged"/>
-        </StackLayout>
+        <Picker x:Name="GenrePicker"
+                Title="Filter po zanru"
+                TitleColor="#FFC107"
+                TextColor="White"
+                BackgroundColor="#12182B"
+                SelectedIndexChanged="OnGenreChanged"/>
 
-        <!-- CollectionView -->
         <CollectionView x:Name="FilmsCollectionView"
-                        Grid.Row="1"
                         SelectionMode="Single"
                         SelectionChanged="OnFilmSelected">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="2" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Film">
-                    <Frame HasShadow="True" Margin="5" Padding="5">
+                    <Frame BackgroundColor="#12182B"
+                           CornerRadius="10"
+                           Margin="5"
+                           Padding="10">
+
                         <StackLayout>
-                            <Image Source="{Binding Poster}" HeightRequest="200"/>
-                            <Label Text="{Binding Title}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Year}"/>
-                            <StackLayout Orientation="Horizontal" Spacing="5">
-                                <Button Text="{Binding Showtimes[0]}" Clicked="OnShowtimeClicked"/>
-                                <Button Text="{Binding Showtimes[1]}" Clicked="OnShowtimeClicked"/>
-                                <Button Text="{Binding Showtimes[2]}" Clicked="OnShowtimeClicked"/>
-                            </StackLayout>
+                            <Image Source="{Binding Poster}"
+                                   HeightRequest="200"/>
+
+                            <Label Text="{Binding Title}"
+                                   TextColor="White"
+                                   FontAttributes="Bold"
+                                   FontSize="14"/>
+
+                            <Label Text="{Binding Year}"
+                                   TextColor="#FFC107"
+                                   FontSize="12"/>
                         </StackLayout>
+
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-    </Grid>
+    </StackLayout>
 </ContentPage>

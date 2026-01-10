@@ -2,132 +2,89 @@
 using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Cinestar_app
+namespace Cinestar_app;
+
+public partial class Filmovi : ContentPage
 {
-    public partial class Filmovi : ContentPage
+    private OmdbService omdbService = new();
+    private List<Film> allFilms = new();
+    private string selectedCity;
+
+    private Dictionary<string, string[]> cityQueries = new()
     {
-        private OmdbService omdbService = new OmdbService();
-        private ObservableCollection<Film> allFilms = new ObservableCollection<Film>();
-        private string selectedCity;
+                { "Zenica", new[] { "dream", "star" } },
+                { "Banja Luka", new[] { "super", "iron" } },
+                { "Sarajevo", new[] { "good", "dark" } },
+                { "Mostar", new[] { "bad", "war" } },
+                { "Bihac", new[] { "all", "life" } },
+                { "Tuzla", new[] { "time", "future" } },
+                { "Prijedor", new[] { "happy", "fun" } },
+                { "Gracanica", new[] { "sad", "cry" } }
+    };
 
-        private string[] commonQueries = new[] { "zenice" };
-        private Dictionary<string, string[]> cityQueries = new()
+    public Filmovi()
+    {
+        InitializeComponent();
+        selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
+        LoadFilms();
+    }
+
+    private async void LoadFilms()
+    {
+        allFilms.Clear();
+
+        foreach (var q in cityQueries[selectedCity])
         {
-            { "Zenica", new[] { "dream", "star" } },
-            { "Banja Luka", new[] { "super", "iron" } },
-            { "Sarajevo", new[] { "good", "dark" } },
-            { "Mostar", new[] { "bad", "war" } },
-            { "Bihac", new[] { "all", "life" } },
-            { "Tuzla", new[] { "time", "future" } },
-            { "Prijedor", new[] { "happy", "fun" } },
-            { "Gracanica", new[] { "sad", "cry" } }
-        };
-
-        public Filmovi()
-        {
-            InitializeComponent();
-
-            selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
-
-            FilmsCollectionView.ItemsSource = allFilms;
-
-            _ = LoadFilmsAsync();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            // refresh po trenutnom gradu iz Preferences
-            var city = Preferences.Get("SelectedCity", "Sarajevo");
-            if (city != selectedCity)
+            var res = await omdbService.SearchMoviesAsync(q);
+            foreach (var r in res)
             {
-                selectedCity = city;
-                _ = LoadFilmsAsync();
-            }
-        }
+                var d = await omdbService.GetMovieDetailsAsync(r.imdbID);
+                if (d == null) continue;
 
-        private async Task LoadFilmsAsync()
-        {
-            var tempFilms = new List<Film>();
-            var queries = new List<string>();
-            queries.AddRange(commonQueries);
-            if (cityQueries.ContainsKey(selectedCity))
-                queries.AddRange(cityQueries[selectedCity]);
-
-            var tasks = queries.Select(async query =>
-            {
-                var results = await omdbService.SearchMoviesAsync(query);
-                var films = new List<Film>();
-                foreach (var item in results)
+                allFilms.Add(new Film
                 {
-                    var details = await omdbService.GetMovieDetailsAsync(item.imdbID);
-                    if (details == null) continue;
+                    Title = d.Title,
+                    Year = d.Year,
+                    Genre = d.Genre,
+                    Plot = d.Plot,
+                    Poster = d.Poster == "N/A" ? "placeholder.png" : d.Poster,
+                    Showtimes = new() { "12:00", "15:00", "18:00" }
+                });
 
-                    films.Add(new Film
-                    {
-                        Title = details.Title,
-                        Year = details.Year,
-                        Genre = details.Genre,
-                        Plot = details.Plot,
-                        Poster = string.IsNullOrEmpty(details.Poster) || details.Poster == "N/A" ? "placeholder.png" : details.Poster,
-                        City = selectedCity,
-                        ImdbID = details.imdbID,
-                        Showtimes = new List<string> { "12:00", "15:00", "18:00" }
-                    });
-
-                    if (films.Count >= 5) break;
-                }
-                return films;
-            });
-
-            var resultsPerQuery = await Task.WhenAll(tasks);
-
-            tempFilms = resultsPerQuery.SelectMany(f => f).Take(20).ToList();
-
-            allFilms.Clear();
-            foreach (var f in tempFilms)
-                allFilms.Add(f);
-        }
-
-        void OnGenreChanged(object sender, EventArgs e)
-        {
-            string selectedGenre = GenrePicker.SelectedItem?.ToString() ?? "Svi";
-            if (selectedGenre == "Svi")
-            {
-                FilmsCollectionView.ItemsSource = allFilms;
+                if (allFilms.Count >= 20) break;
             }
-            else
-            {
-                FilmsCollectionView.ItemsSource = new ObservableCollection<Film>(
-                    allFilms.Where(f => f.Genre != null && f.Genre.Contains(selectedGenre))
-                );
-            }
+            if (allFilms.Count >= 20) break;
         }
 
-        async void OnFilmSelected(object sender, SelectionChangedEventArgs e)
-        {
-            var film = e.CurrentSelection.FirstOrDefault() as Film;
-            if (film == null) return;
+        FilmsCollectionView.ItemsSource = allFilms;
 
-            await Navigation.PushAsync(new FilmDetalji(film));
-            FilmsCollectionView.SelectedItem = null;
-        }
+        var genres = allFilms
+            .SelectMany(f => (f.Genre ?? "").Split(','))
+            .Select(g => g.Trim())
+            .Distinct()
+            .ToList();
 
-        async void OnShowtimeClicked(object sender, EventArgs e)
-        {
-            if (sender is Button btn)
-            {
-                var film = btn.BindingContext as Film;
-                if (film != null)
-                    await DisplayAlert("Termin", $"{film.Title} - {btn.Text}", "OK");
-            }
-        }
+        genres.Insert(0, "Svi");
+        GenrePicker.ItemsSource = genres;
+        GenrePicker.SelectedIndex = 0;
+    }
+
+    private void OnGenreChanged(object sender, System.EventArgs e)
+    {
+        var g = GenrePicker.SelectedItem?.ToString();
+        FilmsCollectionView.ItemsSource =
+            g == "Svi" ? allFilms : allFilms.Where(f => f.Genre.Contains(g)).ToList();
+    }
+
+    private async void OnFilmSelected(object sender, SelectionChangedEventArgs e)
+    {
+        var film = e.CurrentSelection.FirstOrDefault() as Film;
+        if (film == null) return;
+
+        await Navigation.PushAsync(new FilmDetalji(film));
+        FilmsCollectionView.SelectedItem = null;
     }
 }

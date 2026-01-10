@@ -1,41 +1,95 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.HomePage"
-             BackgroundColor="{StaticResource PrimaryBlue}">
+             BackgroundColor="#0B0F1A"
+             Title="Pocetna">
 
     <ScrollView>
-        <StackLayout Padding="10" Spacing="15">
+        <StackLayout Padding="15" Spacing="20">
 
-            <!-- City Picker -->
-            <Picker x:Name="CityPicker" Title="Odaberite grad" SelectedIndexChanged="OnCityChanged"/>
+            <!-- Grad -->
+            <Picker x:Name="CityPicker"
+                    Title="Odaberi grad"
+                    TitleColor="#FFC107"
+                    TextColor="White"
+                    BackgroundColor="#12182B"
+                    SelectedIndexChanged="OnCityChanged"/>
 
-            <!-- Carousel za top filmove -->
-            <CollectionView x:Name="CarouselFilms" ItemsLayout="HorizontalList" HeightRequest="220"
-                            SelectionMode="Single" SelectionChanged="OnCarouselSelected">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Film">
-                        <Frame Padding="0" HasShadow="True">
-                            <Image Source="{Binding Poster}" HeightRequest="200"/>
+            <!-- Featured -->
+            <Label Text="U BIOSKOPIMA"
+                   TextColor="#FFC107"
+                   FontAttributes="Bold"
+                   FontSize="18"/>
+
+            <CarouselView x:Name="CarouselFilms"
+                          HeightRequest="350"
+                          ItemsLayout="Linear">
+
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="12"
+                               BackgroundColor="#12182B"
+                               Padding="10"
+                               Margin="5">
+
+                            <StackLayout>
+                                <Image Source="{Binding Poster}"
+                                       HeightRequest="250"
+                                       Aspect="AspectFill"/>
+
+                                <Label Text="{Binding Title}"
+                                       TextColor="White"
+                                       FontAttributes="Bold"
+                                       FontSize="16"/>
+
+                                <Label Text="{Binding Year}"
+                                       TextColor="#FFC107"
+                                       FontSize="12"/>
+                            </StackLayout>
+
                         </Frame>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
 
-            <!-- Naslov -->
-            <Label Text="Preporučeni filmovi" FontSize="20" FontAttributes="Bold"/>
+            <!-- Ostali filmovi -->
+            <Label Text="OSTALI FILMOVI"
+                   TextColor="#FFC107"
+                   FontAttributes="Bold"
+                   FontSize="18"/>
 
-            <!-- Više filmova -->
-            <CollectionView x:Name="MoreFilmsCollectionView" SelectionMode="Single" SelectionChanged="OnFilmSelected">
+            <CollectionView x:Name="MoreFilmsCollectionView"
+                            SelectionMode="Single"
+                            SelectionChanged="OnFilmSelected">
+
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Film">
-                        <Frame>
-                            <StackLayout>
-                                <Image Source="{Binding Poster}" HeightRequest="150"/>
-                                <Label Text="{Binding Title}" FontAttributes="Bold"/>
-                                <Label Text="{Binding Year}"/>
+                    <DataTemplate>
+                        <Frame CornerRadius="10"
+                               BackgroundColor="#12182B"
+                               Margin="5"
+                               Padding="10">
+
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Image Source="{Binding Poster}"
+                                       WidthRequest="80"
+                                       HeightRequest="120"/>
+
+                                <StackLayout>
+                                    <Label Text="{Binding Title}"
+                                           TextColor="White"
+                                           FontAttributes="Bold"/>
+
+                                    <Label Text="{Binding Genre}"
+                                           TextColor="#FFC107"
+                                           FontSize="12"/>
+
+                                    <Label Text="{Binding Year}"
+                                           TextColor="White"
+                                           FontSize="12"/>
+                                </StackLayout>
                             </StackLayout>
+
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

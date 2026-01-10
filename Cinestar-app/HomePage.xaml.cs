@@ -2,118 +2,93 @@
 using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Cinestar_app
+namespace Cinestar_app;
+
+public partial class HomePage : ContentPage
 {
-    public partial class HomePage : ContentPage
+    private OmdbService omdbService = new();
+    private List<Film> allFilms = new();
+    private string selectedCity;
+
+    private Dictionary<string, string[]> cityQueries = new()
     {
-        private OmdbService omdbService = new OmdbService();
-        public ObservableCollection<Film> allFilms { get; private set; } = new ObservableCollection<Film>();
-        private string selectedCity;
+                { "Zenica", new[] { "dream", "star" } },
+                { "Banja Luka", new[] { "super", "iron" } },
+                { "Sarajevo", new[] { "good", "dark" } },
+                { "Mostar", new[] { "bad", "war" } },
+                { "Bihac", new[] { "all", "life" } },
+                { "Tuzla", new[] { "time", "future" } },
+                { "Prijedor", new[] { "happy", "fun" } },
+                { "Gracanica", new[] { "sad", "cry" } }
+    };
 
-        private string[] cities = new[] { "Zenica", "Banja Luka", "Sarajevo", "Mostar", "Bihac", "Tuzla", "Prijedor", "Gracanica" };
+    public HomePage()
+    {
+        InitializeComponent();
 
-        private string[] commonQueries = new[] { "man", "love", "hero" };
-        private Dictionary<string, string[]> cityQueries = new()
+        selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
+        CityPicker.ItemsSource = cityQueries.Keys.ToList();
+        CityPicker.SelectedItem = selectedCity;
+
+        LoadFilms();
+    }
+
+    private async void LoadFilms()
+    {
+        allFilms.Clear();
+
+        foreach (var query in cityQueries[selectedCity])
         {
-            { "Zenica", new[] { "dream", "star" } },
-            { "Banja Luka", new[] { "super", "iron" } },
-            { "Sarajevo", new[] { "good", "dark" } },
-            { "Mostar", new[] { "bad", "war" } },
-            { "Bihac", new[] { "all", "life" } },
-            { "Tuzla", new[] { "time", "future" } },
-            { "Prijedor", new[] { "happy", "fun" } },
-            { "Gracanica", new[] { "sad", "cry" } }
-        };
+            var results = await omdbService.SearchMoviesAsync(query);
 
-        public HomePage()
-        {
-            InitializeComponent();
-
-            selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
-            CityPicker.ItemsSource = cities;
-            CityPicker.SelectedItem = selectedCity;
-
-            CarouselFilms.ItemsSource = allFilms;
-            MoreFilmsCollectionView.ItemsSource = allFilms;
-
-            _ = LoadFilmsAsync();
-        }
-
-        private async Task LoadFilmsAsync()
-        {
-            var tempFilms = new List<Film>();
-            var queries = new List<string>();
-            queries.AddRange(commonQueries);
-            if (cityQueries.ContainsKey(selectedCity))
-                queries.AddRange(cityQueries[selectedCity]);
-
-            // Dohvati filmove paralelno po queryjima
-            var tasks = queries.Select(async query =>
+            foreach (var r in results)
             {
-                var results = await omdbService.SearchMoviesAsync(query);
-                var films = new List<Film>();
-                foreach (var item in results)
+                var d = await omdbService.GetMovieDetailsAsync(r.imdbID);
+                if (d == null) continue;
+
+                allFilms.Add(new Film
                 {
-                    var details = await omdbService.GetMovieDetailsAsync(item.imdbID);
-                    if (details == null) continue;
+                    Title = d.Title,
+                    Year = d.Year,
+                    Genre = d.Genre,
+                    Plot = d.Plot,
+                    Poster = d.Poster == "N/A" ? "placeholder.png" : d.Poster,
+                    Showtimes = new() { "12:00", "15:00", "18:00" }
+                });
 
-                    films.Add(new Film
-                    {
-                        Title = details.Title,
-                        Year = details.Year,
-                        Genre = details.Genre,
-                        Plot = details.Plot,
-                        Poster = string.IsNullOrEmpty(details.Poster) || details.Poster == "N/A" ? "placeholder.png" : details.Poster,
-                        City = selectedCity,
-                        ImdbID = details.imdbID,
-                        Showtimes = new List<string> { "12:00", "15:00", "18:00" }
-                    });
-
-                    if (films.Count >= 5) break; // limit po queryju da ne učitava previše
-                }
-                return films;
-            });
-
-            var resultsPerQuery = await Task.WhenAll(tasks);
-
-            tempFilms = resultsPerQuery.SelectMany(f => f).Take(20).ToList(); // ukupno 20 filmova
-
-            // Update ObservableCollection sigurno za Android
-            allFilms.Clear();
-            foreach (var f in tempFilms)
-                allFilms.Add(f);
+                if (allFilms.Count >= 15) break;
+            }
+            if (allFilms.Count >= 15) break;
         }
 
-        private void OnCityChanged(object sender, EventArgs e)
-        {
-            selectedCity = CityPicker.SelectedItem?.ToString() ?? "Sarajevo";
-            Preferences.Set("SelectedCity", selectedCity);
+        CarouselFilms.ItemsSource = allFilms.Take(5).ToList();
+        MoreFilmsCollectionView.ItemsSource = allFilms.Skip(5).ToList();
+    }
 
-            _ = LoadFilmsAsync(); // refresh HomePage
-        }
+    private void OnCityChanged(object sender, System.EventArgs e)
+    {
+        selectedCity = CityPicker.SelectedItem.ToString();
+        Preferences.Set("SelectedCity", selectedCity);
+        LoadFilms();
+    }
 
-        private async void OnCarouselSelected(object sender, SelectionChangedEventArgs e)
-        {
-            var film = e.CurrentSelection.FirstOrDefault() as Film;
-            if (film == null) return;
+    private async void OnCarouselSelected(object sender, SelectionChangedEventArgs e)
+    {
+        var film = e.CurrentSelection.FirstOrDefault() as Film;
+        if (film == null) return;
 
-            await Navigation.PushAsync(new FilmDetalji(film));
-            CarouselFilms.SelectedItem = null;
-        }
+        await Navigation.PushAsync(new FilmDetalji(film));
+    }
 
-        private async void OnFilmSelected(object sender, SelectionChangedEventArgs e)
-        {
-            var film = e.CurrentSelection.FirstOrDefault() as Film;
-            if (film == null) return;
+    private async void OnFilmSelected(object sender, SelectionChangedEventArgs e)
+    {
+        var film = e.CurrentSelection.FirstOrDefault() as Film;
+        if (film == null) return;
 
-            await Navigation.PushAsync(new FilmDetalji(film));
-            MoreFilmsCollectionView.SelectedItem = null;
-        }
+        await Navigation.PushAsync(new FilmDetalji(film));
+        MoreFilmsCollectionView.SelectedItem = null;
     }
 }
