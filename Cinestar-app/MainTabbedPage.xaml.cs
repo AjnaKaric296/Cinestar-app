@@ -4,19 +4,36 @@ namespace Cinestar_app;
 
 public partial class MainTabbedPage : TabbedPage
 {
-    public HomePage Home { get; private set; }
-    public Filmovi Filmovi { get; private set; }
     public MainTabbedPage(string selectedCity)
     {
         InitializeComponent();
 
+
         NavigationPage.SetHasNavigationBar(this, false);
 
-        Home = new HomePage(selectedCity);
-        Filmovi = new Filmovi(selectedCity);
+        // Dodaj tabove
+        Children.Add(new NavigationPage(new HomePage(selectedCity))
+        {
+            Title = "Pocetna",
+            IconImageSource = "home.png"
+        });
 
-        Children.Add(Home);
-        Children.Add(Filmovi);
+        Children.Add(new NavigationPage(new Filmovi(selectedCity))
+        {
+            Title = "Filmovi",
+            IconImageSource = "film.png"
+        });
+
+        Children.Add(new NavigationPage(new LoyaltyBodovi())
+        {
+            Title = "Bodovi",
+            IconImageSource = "bodovi.png"
+        });
+
+        Children.Add(new NavigationPage(new Profil())
+        {
+            Title = "Profil",
+            IconImageSource = "profil.png"
+        });
     }
-
 }

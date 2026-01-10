@@ -17,6 +17,8 @@ public partial class CityPickerPage : ContentPage
 
         CitiesListView.ItemsSource = _cities;
         CitiesListView.ItemSelected += OnCitySelected;
+
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     private async void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
@@ -24,12 +26,11 @@ public partial class CityPickerPage : ContentPage
         if (e.SelectedItem == null) return;
 
         string selectedCity = e.SelectedItem.ToString();
-
-        Microsoft.Maui.Storage.Preferences.Set("SelectedCity", selectedCity);
-
+        Preferences.Set("SelectedCity", selectedCity);
         ((ListView)sender).SelectedItem = null;
 
-        await Navigation.PopAsync(); // vraća na HomePage ili Filmovi
+        // Idi na MainTabbedPage
+        Application.Current.MainPage = new MainTabbedPage(selectedCity);
     }
 
 }

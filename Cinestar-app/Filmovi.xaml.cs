@@ -1,6 +1,7 @@
 ﻿using Cinestar_app.Models;
 using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +12,6 @@ public partial class Filmovi : ContentPage
 {
     private OmdbService omdbService = new();
     private List<Film> allFilms = new();
-
-    // Ovdje definisemo field za odabrani grad
     private string selectedCity;
 
     private Dictionary<string, string[]> cityQueries = new()
@@ -27,18 +26,18 @@ public partial class Filmovi : ContentPage
         { "Gracanica", new[] { "sad", "cry" } }
     };
 
-    // Konstruktor prima grad
+    public Filmovi() : this("Sarajevo") { }
+
     public Filmovi(string selectedCity)
     {
         InitializeComponent();
-
-        // Pohrani u field
         this.selectedCity = selectedCity;
-
         BindingContext = this;
-
         LoadFilms();
+        NavigationPage.SetHasNavigationBar(this, false);
+
     }
+
 
     private async void LoadFilms()
     {
@@ -62,7 +61,7 @@ public partial class Filmovi : ContentPage
                     Genre = d.Genre,
                     Plot = d.Plot,
                     Poster = d.Poster == "N/A" ? "placeholder.png" : d.Poster,
-                    Showtimes = new() { "12:00", "15:00", "18:00" } // placeholder
+                    Showtimes = new() { "12:00", "15:00", "18:00" }
                 });
 
                 if (allFilms.Count >= 20) break;
@@ -98,26 +97,45 @@ public partial class Filmovi : ContentPage
         await Navigation.PushAsync(new FilmDetalji(film));
         FilmsCollectionView.SelectedItem = null;
     }
+
+    // **Samo jedan OnCityTapped**
     private async void OnCityTapped(object sender, EventArgs e)
     {
-        // Otvori CityPickerPage
-        await Navigation.PushAsync(new CityPickerPage());
+        var cityPage = new CityPickerPage();
+        cityPage.Disappearing += (s, args) =>
+        {
+            // Kada se vrati sa CityPickerPage, update grad i reload filmove
+            selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
+            LoadFilms();
+        };
 
-        // Kada se vrati sa CityPickerPage, ponovo učitaj filmove
-        // Možemo koristiti Appearing event
+        await Navigation.PushAsync(cityPage);
+    }
+
+    // OnReserveClicked sa alertom
+    private async void OnReserveClicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button == null) return;
+
+        var film = button.BindingContext as Film;
+        if (film == null) return;
+
+        string selectedTime = button.Text;
+
+        await DisplayAlert("Rezervacija",
+            $"Film: {film.Title}\nTermin: {selectedTime}",
+            "OK");
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
-        // Učitaj grad iz Preferences
-        var city = Microsoft.Maui.Storage.Preferences.Get("SelectedCity", null);
+        var city = Preferences.Get("SelectedCity", null);
         if (!string.IsNullOrEmpty(city) && city != selectedCity)
         {
             selectedCity = city;
-            LoadFilms(); // ponovo učitaj filmove za novi grad
+            LoadFilms();
         }
     }
-
 }

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Cinestar_app.Models"
@@ -5,26 +6,91 @@
              BackgroundColor="#051851"
              Title="Home">
 
-    <StackLayout Padding="10" Spacing="20">
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="20">
 
-        <Label Text="{Binding SelectedCity}"
-               TextColor="#FFD200"
-               FontAttributes="Bold"
-               FontSize="18">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnCityTapped"/>
-            </Label.GestureRecognizers>
-        </Label>
+            <!-- Grad -->
+            <Label x:Name="CityLabel"
+                   Text="{Binding SelectedCity}"
+                   TextColor="#FFD200"
+                   FontAttributes="Bold"
+                   FontSize="18">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCityTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
 
-        <CarouselView x:Name="HeroCarousel"
-                      HeightRequest="220"/>
+            <!-- Carousel -->
+            <CarouselView x:Name="HeroCarousel"
+                          HeightRequest="300"
+                          ItemsLayout="HorizontalList"
+                          IsSwipeEnabled="True">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Image Source="{Binding Image}" Aspect="AspectFill"/>
+                            <StackLayout BackgroundColor="#66000000"
+                                         Padding="15"
+                                         WidthRequest="220"
+                                         HorizontalOptions="Start"
+                                         VerticalOptions="Center">
+                                <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="{Binding Year}" FontSize="14" TextColor="White"/>
+                                <Label Text="{Binding Description}" FontSize="12" TextColor="White" LineBreakMode="WordWrap"/>
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
 
-        <CollectionView x:Name="FeaturedFilmsCollection"
-                        SelectionChanged="OnFilmSelected"/>
+            <!-- Comedy sekcija -->
+            <StackLayout>
+                <Label Text="Comedy" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                <CollectionView x:Name="ComedyCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False">
+                                <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
 
-        <Button Text="Pogledaj sve filmove"
-                Clicked="OnGoToFilmovi"
-                Margin="10"/>
+            <!-- Adventure sekcija -->
+            <StackLayout>
+                <Label Text="Adventure" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                <CollectionView x:Name="AdventureCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False">
+                                <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
 
-    </StackLayout>
+            <!-- Action sekcija -->
+            <StackLayout>
+                <Label Text="Action" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                <CollectionView x:Name="ActionCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False">
+                                <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+
+            <!-- Call to action -->
+            <Button Text="Vidi sve filmove"
+                    BackgroundColor="#FFD200"
+                    TextColor="#051851"
+                    FontAttributes="Bold"
+                    CornerRadius="10"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

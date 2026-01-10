@@ -10,11 +10,8 @@ namespace Cinestar_app;
 
 public partial class HomePage : ContentPage
 {
-    private readonly OmdbService omdbService = new();
-    private readonly List<Film> allFilms = new();
-
+    private OmdbService omdbService = new();
     public string SelectedCity { get; set; }
-    public List<CarouselItem> CarouselImages { get; set; }
 
     private Dictionary<string, string[]> cityQueries = new()
     {
@@ -28,41 +25,42 @@ public partial class HomePage : ContentPage
         { "Gracanica", new[] { "sad", "cry" } }
     };
 
+    public HomePage() : this("Sarajevo") { }
+
     public HomePage(string selectedCity)
     {
         InitializeComponent();
         SelectedCity = selectedCity;
         BindingContext = this;
 
-        LoadCarouselImages();
-        LoadFilms();
+        LoadCarousel();
+        _ = LoadFilmSections();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
-
-    public void LoadCarouselImages()
+    // Carousel sa 3 improvizovane slike
+    private void LoadCarousel()
     {
-        CarouselImages = new()
+        var carouselItems = new List<CarouselItem>
         {
-            new CarouselItem
-            {
-                Image = $"{SelectedCity.ToLower()}1.jpg",
-                Title = "Greenland 2: Migracija",
-                Description = "Borba za opstanak u novom svijetu."
-            },
-            new CarouselItem
-            {
-                Image = $"{SelectedCity.ToLower()}2.jpg",
-                Title = "Veliki povratak",
-                Description = "Spektakl koji se ne propusta."
-            }
+            new CarouselItem { Image="film1.png", Title="Film 1", Year="2023", Description="Opis 1" },
+            new CarouselItem { Image="film2.jpg", Title="Film 2", Year="2022", Description="Opis 2" },
+            new CarouselItem { Image="film3.webp", Title="Film 3", Year="2024", Description="Opis 3" }
         };
-
-        HeroCarousel.ItemsSource = CarouselImages;
+        HeroCarousel.ItemsSource = carouselItems;
     }
 
-    private async Task LoadFilms()
+    // Horizontalne sekcije po kategorijama
+    private async Task LoadFilmSections()
     {
-        allFilms.Clear();
+        if (!cityQueries.ContainsKey(SelectedCity)) return;
+
+        var sections = new Dictionary<string, List<Film>>
+        {
+            { "Comedy", new List<Film>() },
+            { "Adventure", new List<Film>() },
+            { "Action", new List<Film>() }
+        };
 
         foreach (var query in cityQueries[SelectedCity])
         {
@@ -73,48 +71,44 @@ public partial class HomePage : ContentPage
                 var d = await omdbService.GetMovieDetailsAsync(r.imdbID);
                 if (d == null) continue;
 
-                allFilms.Add(new Film
+                var film = new Film
                 {
                     Title = d.Title,
                     Year = d.Year,
                     Genre = d.Genre,
-                    Plot = d.Plot,
                     Poster = d.Poster == "N/A" ? "placeholder.png" : d.Poster,
-                    Showtimes = new() { "12:00", "15:00", "18:00" }
-                });
+                    City = SelectedCity
+                };
 
-                if (allFilms.Count >= 6) break;
+                if (sections["Comedy"].Count < 6 && (d.Genre?.ToLower().Contains("comedy") ?? false))
+                    sections["Comedy"].Add(film);
+
+                if (sections["Adventure"].Count < 6 && (d.Genre?.ToLower().Contains("adventure") ?? false))
+                    sections["Adventure"].Add(film);
+
+                if (sections["Action"].Count < 6 && (d.Genre?.ToLower().Contains("action") ?? false))
+                    sections["Action"].Add(film);
+
+                if (sections.All(s => s.Value.Count >= 6)) break;
             }
-            if (allFilms.Count >= 6) break;
         }
 
-        FeaturedFilmsCollection.ItemsSource = null;
-        FeaturedFilmsCollection.ItemsSource = allFilms;
+        ComedyCollection.ItemsSource = sections["Comedy"];
+        AdventureCollection.ItemsSource = sections["Adventure"];
+        ActionCollection.ItemsSource = sections["Action"];
     }
 
-    private async void OnFilmSelected(object sender, SelectionChangedEventArgs e)
+    // Promjena grada
+    private async void OnCityTapped(object sender, System.EventArgs e)
     {
-        var film = e.CurrentSelection.FirstOrDefault() as Film;
-        if (film == null) return;
-
-        await Navigation.PushAsync(new FilmDetalji(film));
-        FeaturedFilmsCollection.SelectedItem = null;
+        var cityPage = new CityPickerPage();
+        cityPage.Disappearing += async (s, args) =>
+        {
+            SelectedCity = Preferences.Get("SelectedCity", "Sarajevo");
+            CityLabel.Text = SelectedCity;
+            LoadCarousel();
+            await LoadFilmSections();
+        };
+        await Navigation.PushAsync(cityPage);
     }
-
-    private async void OnGoToFilmovi(object sender, EventArgs e)
-    {
-        var parent = this.Parent as TabbedPage;
-        parent.CurrentPage = parent.Children[1]; // idi na Filmovi tab
-    }
-    private async void OnHomeTapped(object sender, EventArgs e)
-    {
-        // Otvori CityPickerPage
-        await Navigation.PushAsync(new CityPickerPage());
-    }
-    private async void OnCityTapped(object sender, EventArgs e)
-    {
-        // Otvori CityPickerPage
-        await Navigation.PushAsync(new CityPickerPage());
-    }
-
 }
