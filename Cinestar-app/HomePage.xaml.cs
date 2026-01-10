@@ -28,15 +28,16 @@ public partial class HomePage : ContentPage
         { "Gracanica", new[] { "sad", "cry" } }
     };
 
-    public HomePage(string city)
+    public HomePage(string selectedCity)
     {
         InitializeComponent();
-        SelectedCity = city;
+        SelectedCity = selectedCity;
         BindingContext = this;
 
         LoadCarouselImages();
         LoadFilms();
     }
+
 
     public void LoadCarouselImages()
     {
@@ -105,4 +106,15 @@ public partial class HomePage : ContentPage
         var parent = this.Parent as TabbedPage;
         parent.CurrentPage = parent.Children[1]; // idi na Filmovi tab
     }
+    private async void OnHomeTapped(object sender, EventArgs e)
+    {
+        // Otvori CityPickerPage
+        await Navigation.PushAsync(new CityPickerPage());
+    }
+    private async void OnCityTapped(object sender, EventArgs e)
+    {
+        // Otvori CityPickerPage
+        await Navigation.PushAsync(new CityPickerPage());
+    }
+
 }

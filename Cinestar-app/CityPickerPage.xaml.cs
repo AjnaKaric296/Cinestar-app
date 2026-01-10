@@ -14,20 +14,22 @@ public partial class CityPickerPage : ContentPage
     public CityPickerPage()
     {
         InitializeComponent();
+
         CitiesListView.ItemsSource = _cities;
         CitiesListView.ItemSelected += OnCitySelected;
     }
 
-    private void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
+    private async void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
     {
         if (e.SelectedItem == null) return;
 
         string selectedCity = e.SelectedItem.ToString();
-        Preferences.Set("SelectedCity", selectedCity);
 
-        // Pokreni MainTabbedPage sa odabranim gradom
-        Application.Current.MainPage = new MainTabbedPage(selectedCity);
+        Microsoft.Maui.Storage.Preferences.Set("SelectedCity", selectedCity);
 
         ((ListView)sender).SelectedItem = null;
+
+        await Navigation.PopAsync(); // vraća na HomePage ili Filmovi
     }
+
 }

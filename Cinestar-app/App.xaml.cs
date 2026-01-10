@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
 
 namespace Cinestar_app;
 
@@ -9,7 +8,7 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        // Start app sa SplashPage
+        // Startaj sa SplashPage
         MainPage = new SplashPage();
     }
 }
