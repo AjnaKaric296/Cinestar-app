@@ -1,96 +1,130 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.HomePage"
              BackgroundColor="#051851"
              Title="Home">
 
-    <ScrollView>
-        <StackLayout Padding="10" Spacing="20">
+    <Grid>
 
-            <!-- Grad -->
-            <Label x:Name="CityLabel"
-                   Text="{Binding SelectedCity}"
-                   TextColor="#FFD200"
-                   FontAttributes="Bold"
-                   FontSize="18">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnCityTapped"/>
-                </Label.GestureRecognizers>
-            </Label>
+        <ScrollView>
+            <StackLayout Padding="10" Spacing="25">
 
-            <!-- Carousel -->
-            <CarouselView x:Name="HeroCarousel"
-                          HeightRequest="300"
-                          ItemsLayout="HorizontalList"
-                          IsSwipeEnabled="True">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Image Source="{Binding Image}" Aspect="AspectFill"/>
-                            <StackLayout BackgroundColor="#66000000"
-                                         Padding="15"
-                                         WidthRequest="220"
-                                         HorizontalOptions="Start"
-                                         VerticalOptions="Center">
-                                <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
-                                <Label Text="{Binding Year}" FontSize="14" TextColor="White"/>
-                                <Label Text="{Binding Description}" FontSize="12" TextColor="White" LineBreakMode="WordWrap"/>
-                            </StackLayout>
-                        </Grid>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
+                <!-- Grad -->
+                <Label x:Name="CityLabel"
+                       Text="{Binding SelectedCity}"
+                       TextColor="#FFD200"
+                       FontAttributes="Bold"
+                       FontSize="20">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCityTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
 
-            <!-- Comedy sekcija -->
-            <StackLayout>
-                <Label Text="Comedy" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                <CollectionView x:Name="ComedyCollection" HeightRequest="200" ItemsLayout="HorizontalList">
-                    <CollectionView.ItemTemplate>
+                <!-- Carousel -->
+                <CarouselView x:Name="HeroCarousel"
+                              HeightRequest="300"
+                              ItemsLayout="HorizontalList"
+                              IsSwipeEnabled="True"
+                              Margin="0,10,0,0">
+                    <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False">
-                                <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
-                            </Frame>
+                            <Grid>
+                                <Image Source="{Binding Image}" Aspect="AspectFill"/>
+                                <StackLayout BackgroundColor="#66000000"
+                                             Padding="10"
+                                             WidthRequest="220"
+                                             HorizontalOptions="Start"
+                                             VerticalOptions="Center">
+                                    <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                    <Label Text="{Binding Year}" FontSize="14" TextColor="White"/>
+                                    <Label Text="{Binding Description}" FontSize="12" TextColor="White" LineBreakMode="WordWrap"/>
+                                </StackLayout>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCarouselTapped"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
 
-            <!-- Adventure sekcija -->
-            <StackLayout>
-                <Label Text="Adventure" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                <CollectionView x:Name="AdventureCollection" HeightRequest="200" ItemsLayout="HorizontalList">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False">
-                                <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+                <!-- Comedy sekcija -->
+                <StackLayout>
+                    <Label Text="Comedy" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView x:Name="ComedyCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12">
+                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnFilmTapped"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
 
-            <!-- Action sekcija -->
-            <StackLayout>
-                <Label Text="Action" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                <CollectionView x:Name="ActionCollection" HeightRequest="200" ItemsLayout="HorizontalList">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False">
-                                <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+                <!-- Adventure sekcija -->
+                <StackLayout>
+                    <Label Text="Adventure" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView x:Name="AdventureCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12">
+                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnFilmTapped"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
 
-            <!-- Call to action -->
-            <Button Text="Vidi sve filmove"
-                    BackgroundColor="#FFD200"
-                    TextColor="#051851"
-                    FontAttributes="Bold"
-                    CornerRadius="10"/>
-        </StackLayout>
-    </ScrollView>
+                <!-- Action sekcija -->
+                <StackLayout>
+                    <Label Text="Action" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView x:Name="ActionCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12">
+                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnFilmTapped"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+
+                <!-- Call to action -->
+                <Button Text="Vidi sve filmove"
+                        BackgroundColor="#FFD200"
+                        TextColor="#051851"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Clicked="OnSeeAllClicked"/>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Overlay za skrivanje bijelog ekrana -->
+        <Grid x:Name="OverlayGrid"
+              BackgroundColor="#80000000"
+              IsVisible="False"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="True" Color="#FFD200" WidthRequest="60" HeightRequest="60"/>
+                <Label Text="Učitavanje..."
+                       TextColor="White"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+
+    </Grid>
 </ContentPage>

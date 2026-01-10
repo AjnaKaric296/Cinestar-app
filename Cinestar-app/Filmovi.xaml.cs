@@ -33,18 +33,23 @@ public partial class Filmovi : ContentPage
         InitializeComponent();
         this.selectedCity = selectedCity;
         BindingContext = this;
-        LoadFilms();
+        LoadFilmsWithOverlay();
         NavigationPage.SetHasNavigationBar(this, false);
-
     }
 
-
-    private async void LoadFilms()
+    // ================= Loading overlay + filmovi =================
+    private async Task LoadFilmsWithOverlay()
     {
+        LoadingOverlay.IsVisible = true;
+        await Task.Delay(100); // kratki delay da se overlay prikaže
+
         allFilms.Clear();
 
         if (!cityQueries.ContainsKey(selectedCity))
+        {
+            LoadingOverlay.IsVisible = false;
             return;
+        }
 
         foreach (var q in cityQueries[selectedCity])
         {
@@ -71,15 +76,17 @@ public partial class Filmovi : ContentPage
 
         FilmsCollectionView.ItemsSource = allFilms;
 
+        // zanrovi
         var genres = allFilms
             .SelectMany(f => (f.Genre ?? "").Split(','))
             .Select(g => g.Trim())
             .Distinct()
             .ToList();
-
         genres.Insert(0, "Svi");
         GenrePicker.ItemsSource = genres;
         GenrePicker.SelectedIndex = 0;
+
+        LoadingOverlay.IsVisible = false;
     }
 
     private void OnGenreChanged(object sender, System.EventArgs e)
@@ -89,30 +96,31 @@ public partial class Filmovi : ContentPage
             g == "Svi" ? allFilms : allFilms.Where(f => f.Genre.Contains(g)).ToList();
     }
 
-    private async void OnFilmSelected(object sender, SelectionChangedEventArgs e)
+    private async void OnFilmTapped(object sender, EventArgs e)
     {
-        var film = e.CurrentSelection.FirstOrDefault() as Film;
-        if (film == null) return;
-
-        await Navigation.PushAsync(new FilmDetalji(film));
-        FilmsCollectionView.SelectedItem = null;
+        var frame = sender as Frame;
+        if (frame?.BindingContext is Film film)
+        {
+            await Navigation.PushAsync(new FilmDetalji(film));
+        }
     }
 
-    // **Samo jedan OnCityTapped**
     private async void OnCityTapped(object sender, EventArgs e)
     {
         var cityPage = new CityPickerPage();
-        cityPage.Disappearing += (s, args) =>
+        cityPage.Disappearing += async (s, args) =>
         {
-            // Kada se vrati sa CityPickerPage, update grad i reload filmove
-            selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
-            LoadFilms();
+            var city = Preferences.Get("SelectedCity", "Sarajevo");
+            if (city != selectedCity)
+            {
+                selectedCity = city;
+                await LoadFilmsWithOverlay();
+            }
         };
 
         await Navigation.PushAsync(cityPage);
     }
 
-    // OnReserveClicked sa alertom
     private async void OnReserveClicked(object sender, EventArgs e)
     {
         var button = sender as Button;
@@ -128,14 +136,14 @@ public partial class Filmovi : ContentPage
             "OK");
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         var city = Preferences.Get("SelectedCity", null);
         if (!string.IsNullOrEmpty(city) && city != selectedCity)
         {
             selectedCity = city;
-            LoadFilms();
+            await LoadFilmsWithOverlay();
         }
     }
 }

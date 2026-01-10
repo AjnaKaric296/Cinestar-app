@@ -8,15 +8,15 @@ public partial class MainTabbedPage : TabbedPage
     {
         InitializeComponent();
 
-
         NavigationPage.SetHasNavigationBar(this, false);
 
-        // Dodaj tabove
-        Children.Add(new NavigationPage(new HomePage(selectedCity))
+        var homeTab = new NavigationPage(new HomePage(selectedCity))
         {
             Title = "Pocetna",
             IconImageSource = "home.png"
-        });
+        };
+
+        Children.Add(homeTab);
 
         Children.Add(new NavigationPage(new Filmovi(selectedCity))
         {
@@ -35,5 +35,8 @@ public partial class MainTabbedPage : TabbedPage
             Title = "Profil",
             IconImageSource = "profil.png"
         });
+
+        // 🔥 KLJUČNO
+        CurrentPage = homeTab;
     }
 }

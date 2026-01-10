@@ -21,16 +21,17 @@ public partial class CityPickerPage : ContentPage
         NavigationPage.SetHasNavigationBar(this, false);
     }
 
-    private async void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
+    private void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
     {
-        if (e.SelectedItem == null) return;
+        if (e.SelectedItem == null)
+            return;
 
         string selectedCity = e.SelectedItem.ToString();
         Preferences.Set("SelectedCity", selectedCity);
+
         ((ListView)sender).SelectedItem = null;
 
-        // Idi na MainTabbedPage
+        // 🔥 KLJUČNO: bez async, bez modala, bez delay-a
         Application.Current.MainPage = new MainTabbedPage(selectedCity);
     }
-
 }

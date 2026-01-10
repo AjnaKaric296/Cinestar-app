@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.Filmovi"
@@ -29,8 +29,7 @@
         <!-- Filmovi -->
         <CollectionView Grid.Row="2"
                         x:Name="FilmsCollectionView"
-                        SelectionMode="Single"
-                        SelectionChanged="OnFilmSelected">
+                        SelectionMode="None">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Film">
@@ -39,8 +38,12 @@
                            Padding="10"
                            Margin="5">
 
-                        <Grid ColumnDefinitions="120,*">
+                        <!-- TapGesture za navigaciju -->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFilmTapped"/>
+                        </Frame.GestureRecognizers>
 
+                        <Grid ColumnDefinitions="120,*">
                             <Image Source="{Binding Poster}"
                                    HeightRequest="180"
                                    Aspect="AspectFill"/>
@@ -76,6 +79,26 @@
             </CollectionView.ItemTemplate>
 
         </CollectionView>
+
+        <!-- Loading overlay -->
+        <Grid x:Name="LoadingOverlay"
+              BackgroundColor="#80000000"
+              IsVisible="False"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand"
+              RowSpan="3">
+
+            <StackLayout VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         Spacing="10">
+                <ActivityIndicator IsRunning="True" Color="#FFD200" WidthRequest="60" HeightRequest="60"/>
+                <Label Text="Učitavanje filmova..."
+                       TextColor="White"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
 
     </Grid>
 </ContentPage>
