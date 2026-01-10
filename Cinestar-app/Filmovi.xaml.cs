@@ -4,6 +4,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cinestar_app;
 
@@ -15,20 +16,20 @@ public partial class Filmovi : ContentPage
 
     private Dictionary<string, string[]> cityQueries = new()
     {
-                { "Zenica", new[] { "dream", "star" } },
-                { "Banja Luka", new[] { "super", "iron" } },
-                { "Sarajevo", new[] { "good", "dark" } },
-                { "Mostar", new[] { "bad", "war" } },
-                { "Bihac", new[] { "all", "life" } },
-                { "Tuzla", new[] { "time", "future" } },
-                { "Prijedor", new[] { "happy", "fun" } },
-                { "Gracanica", new[] { "sad", "cry" } }
+        { "Zenica", new[] { "dream", "star" } },
+        { "Banja Luka", new[] { "super", "iron" } },
+        { "Sarajevo", new[] { "good", "dark" } },
+        { "Mostar", new[] { "bad", "war" } },
+        { "Bihac", new[] { "all", "life" } },
+        { "Tuzla", new[] { "time", "future" } },
+        { "Prijedor", new[] { "happy", "fun" } },
+        { "Gracanica", new[] { "sad", "cry" } }
     };
 
-    public Filmovi()
+    public Filmovi(string city)
     {
         InitializeComponent();
-        selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
+        selectedCity = city;
         LoadFilms();
     }
 
@@ -51,7 +52,7 @@ public partial class Filmovi : ContentPage
                     Genre = d.Genre,
                     Plot = d.Plot,
                     Poster = d.Poster == "N/A" ? "placeholder.png" : d.Poster,
-                    Showtimes = new() { "12:00", "15:00", "18:00" }
+                    Showtimes = new() { "12:00", "15:00", "18:00" } // placeholder rezervacije
                 });
 
                 if (allFilms.Count >= 20) break;

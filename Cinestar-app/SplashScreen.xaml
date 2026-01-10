@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cinestar_app.SplashPage"
-             Shell.NavBarIsVisible="False">
+             x:Class="Cinestar_app.CityPickerPage"
+             BackgroundColor="#051851"
+             Title="Izaberi grad">
 
-    <Grid>
-        <Image Source="background.jpg"
-               Aspect="AspectFill"
-               />
-
-        <BoxView Color="#051851" Opacity="0.5" />
-
-        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
-            <Image x:Name="LogoImage" Source="logo.png"
-                   WidthRequest="200" HeightRequest="200"
-                   Opacity="0" Scale="0.8"/>
-            <Label x:Name="WelcomeLabel" Text="Dobrodosli u CineStar App" 
-                   TextColor="#fff" 
-                   FontSize="24"
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+            <Image Source="logo.png"
+                   HeightRequest="90"
                    HorizontalOptions="Center"
-                   Opacity="0"
-                   FontFamily="Arial"/>
-        </VerticalStackLayout>
-    </Grid>
+                   Margin="0,20"/>
+            <Label Text="ODABERI GRAD:"
+                   TextColor="White"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+            <ListView x:Name="CitiesListView"
+                      BackgroundColor="Transparent"
+                      SeparatorVisibility="None"
+                      RowHeight="60">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <BoxView HeightRequest="1"
+                                         Color="#363d39"
+                                         HorizontalOptions="FillAndExpand"/>
+                                <Label Text="{Binding .}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       Padding="0,10"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

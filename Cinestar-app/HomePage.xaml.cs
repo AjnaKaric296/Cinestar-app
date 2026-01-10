@@ -4,43 +4,66 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cinestar_app;
 
 public partial class HomePage : ContentPage
 {
-    private OmdbService omdbService = new();
-    private List<Film> allFilms = new();
-    private string selectedCity;
+    private readonly OmdbService omdbService = new();
+    private readonly List<Film> allFilms = new();
+
+    public string SelectedCity { get; set; }
+    public List<CarouselItem> CarouselImages { get; set; }
 
     private Dictionary<string, string[]> cityQueries = new()
     {
-                { "Zenica", new[] { "dream", "star" } },
-                { "Banja Luka", new[] { "super", "iron" } },
-                { "Sarajevo", new[] { "good", "dark" } },
-                { "Mostar", new[] { "bad", "war" } },
-                { "Bihac", new[] { "all", "life" } },
-                { "Tuzla", new[] { "time", "future" } },
-                { "Prijedor", new[] { "happy", "fun" } },
-                { "Gracanica", new[] { "sad", "cry" } }
+        { "Zenica", new[] { "dream", "star" } },
+        { "Banja Luka", new[] { "super", "iron" } },
+        { "Sarajevo", new[] { "good", "dark" } },
+        { "Mostar", new[] { "bad", "war" } },
+        { "Bihac", new[] { "all", "life" } },
+        { "Tuzla", new[] { "time", "future" } },
+        { "Prijedor", new[] { "happy", "fun" } },
+        { "Gracanica", new[] { "sad", "cry" } }
     };
 
-    public HomePage()
+    public HomePage(string city)
     {
         InitializeComponent();
+        SelectedCity = city;
+        BindingContext = this;
 
-        selectedCity = Preferences.Get("SelectedCity", "Sarajevo");
-        CityPicker.ItemsSource = cityQueries.Keys.ToList();
-        CityPicker.SelectedItem = selectedCity;
-
+        LoadCarouselImages();
         LoadFilms();
     }
 
-    private async void LoadFilms()
+    public void LoadCarouselImages()
+    {
+        CarouselImages = new()
+        {
+            new CarouselItem
+            {
+                Image = $"{SelectedCity.ToLower()}1.jpg",
+                Title = "Greenland 2: Migracija",
+                Description = "Borba za opstanak u novom svijetu."
+            },
+            new CarouselItem
+            {
+                Image = $"{SelectedCity.ToLower()}2.jpg",
+                Title = "Veliki povratak",
+                Description = "Spektakl koji se ne propusta."
+            }
+        };
+
+        HeroCarousel.ItemsSource = CarouselImages;
+    }
+
+    private async Task LoadFilms()
     {
         allFilms.Clear();
 
-        foreach (var query in cityQueries[selectedCity])
+        foreach (var query in cityQueries[SelectedCity])
         {
             var results = await omdbService.SearchMoviesAsync(query);
 
@@ -59,28 +82,13 @@ public partial class HomePage : ContentPage
                     Showtimes = new() { "12:00", "15:00", "18:00" }
                 });
 
-                if (allFilms.Count >= 15) break;
+                if (allFilms.Count >= 6) break;
             }
-            if (allFilms.Count >= 15) break;
+            if (allFilms.Count >= 6) break;
         }
 
-        CarouselFilms.ItemsSource = allFilms.Take(5).ToList();
-        MoreFilmsCollectionView.ItemsSource = allFilms.Skip(5).ToList();
-    }
-
-    private void OnCityChanged(object sender, System.EventArgs e)
-    {
-        selectedCity = CityPicker.SelectedItem.ToString();
-        Preferences.Set("SelectedCity", selectedCity);
-        LoadFilms();
-    }
-
-    private async void OnCarouselSelected(object sender, SelectionChangedEventArgs e)
-    {
-        var film = e.CurrentSelection.FirstOrDefault() as Film;
-        if (film == null) return;
-
-        await Navigation.PushAsync(new FilmDetalji(film));
+        FeaturedFilmsCollection.ItemsSource = null;
+        FeaturedFilmsCollection.ItemsSource = allFilms;
     }
 
     private async void OnFilmSelected(object sender, SelectionChangedEventArgs e)
@@ -89,6 +97,12 @@ public partial class HomePage : ContentPage
         if (film == null) return;
 
         await Navigation.PushAsync(new FilmDetalji(film));
-        MoreFilmsCollectionView.SelectedItem = null;
+        FeaturedFilmsCollection.SelectedItem = null;
+    }
+
+    private async void OnGoToFilmovi(object sender, EventArgs e)
+    {
+        var parent = this.Parent as TabbedPage;
+        parent.CurrentPage = parent.Children[1]; // idi na Filmovi tab
     }
 }
