@@ -1,36 +1,20 @@
-﻿using Cinestar_app;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
+﻿using Microsoft.Maui.Controls;
 
-namespace Cinestar_app
+namespace Cinestar_app;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
 
-        
+        // SplashPage je startna stranica
+        MainPage = new SplashPage();
+    }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            // *** TEMPORARNO OBRIsI OVO ZA TEST ***
-            Preferences.Clear(); // ODKOMENTIRAJ OVO 1 PUT
-
-            if (Preferences.ContainsKey("SelectedCity"))
-            {
-                return new Window(new NavigationPage(new MainTabbedPage()));
-            }
-            else
-            {
-                return new Window(new SplashPage());
-            }
-        }
-
-        public static bool IsUserRegistered { get; set; } = false;
-
-       
-
+    public void OpenHomePage()
+    {
+        // MainTabbedPage uvijek sa navigation barom
+        MainPage = new MainTabbedPage();
     }
 }

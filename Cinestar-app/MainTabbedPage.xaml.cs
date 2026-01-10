@@ -1,3 +1,5 @@
+
+
 namespace Cinestar_app
 {
     public partial class MainTabbedPage : TabbedPage

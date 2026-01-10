@@ -1,70 +1,76 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
-using Cinestar_app.Models;
 
 namespace Cinestar_app.Services;
 
 public class OmdbService
 {
-    private readonly HttpClient _client;
-    private readonly string _apiKey = "75ace56d"; // tvoj OMDB API key
+    private readonly string apiKey = "fa0b2c6c";
+    private readonly HttpClient client = new();
 
-    public OmdbService()
+    private Dictionary<string, OmdbMovieDetails> cache = new();
+
+    public class OmdbMovieShort
     {
-        _client = new HttpClient();
+        public string Title { get; set; }
+        public string Year { get; set; }
+        public string imdbID { get; set; }
+        public string Poster { get; set; }
     }
 
-    // Klasa za search rezultate
-    private class OmdbSearchResult
+    public class OmdbMovieDetails
     {
-        public OmdbMovieShort[] Search { get; set; } = Array.Empty<OmdbMovieShort>();
-        public string Response { get; set; } = "False";
+        public string Title { get; set; }
+        public string Year { get; set; }
+        public string Genre { get; set; }
+        public string Plot { get; set; }
+        public string Poster { get; set; }
+        public string imdbID { get; set; }
     }
 
-    // Kratka info o filmu
-    private class OmdbMovieShort
+    public async Task<List<OmdbMovieShort>> SearchMoviesAsync(string query)
     {
-        public string Title { get; set; } = "";
-        public string Year { get; set; } = "";
-        public string ImdbID { get; set; } = "";
-        public string Poster { get; set; } = "";
-    }
+        var url = $"https://www.omdbapi.com/?apikey={apiKey}&s={query}";
+        var response = await client.GetStringAsync(url);
+        var json = JsonDocument.Parse(response);
 
-    // Detalji filma
-    public class OmdbMovieFull
-    {
-        public string Title { get; set; } = "";
-        public string Year { get; set; } = "";
-        public string Genre { get; set; } = "";
-        public string Plot { get; set; } = "";
-        public string Poster { get; set; } = "";
-        public string ImdbID { get; set; } = "";
-    }
-
-    // Search po naslovu
-    public async Task<List<Film>> SearchMoviesAsync(string query)
-    {
-        var url = $"http://www.omdbapi.com/?apikey={_apiKey}&s={query}&type=movie";
-        var response = await _client.GetStringAsync(url);
-        var result = JsonSerializer.Deserialize<OmdbSearchResult>(response);
-
-        if (result?.Search == null) return new List<Film>();
-
-        return result.Search.Select(m => new Film
+        var list = new List<OmdbMovieShort>();
+        if (json.RootElement.TryGetProperty("Search", out var searchResults))
         {
-            Title = m.Title,
-            Year = m.Year,
-            ImdbID = m.ImdbID,
-            Poster = m.Poster
-        }).ToList();
+            foreach (var item in searchResults.EnumerateArray())
+            {
+                list.Add(new OmdbMovieShort
+                {
+                    Title = item.GetProperty("Title").GetString(),
+                    Year = item.GetProperty("Year").GetString(),
+                    imdbID = item.GetProperty("imdbID").GetString(),
+                    Poster = item.TryGetProperty("Poster", out var p) ? p.GetString() : "placeholder.png"
+                });
+            }
+        }
+        return list;
     }
 
-    // Detalji filma
-    public async Task<OmdbMovieFull> GetMovieDetailsAsync(string imdbID)
+    public async Task<OmdbMovieDetails> GetMovieDetailsAsync(string imdbID)
     {
-        var url = $"http://www.omdbapi.com/?apikey={_apiKey}&i={imdbID}&plot=short";
-        var response = await _client.GetStringAsync(url);
-        var result = JsonSerializer.Deserialize<OmdbMovieFull>(response);
-        return result ?? new OmdbMovieFull();
+        if (cache.ContainsKey(imdbID))
+            return cache[imdbID];
+
+        var url = $"https://www.omdbapi.com/?apikey={apiKey}&i={imdbID}";
+        var response = await client.GetStringAsync(url);
+        var json = JsonDocument.Parse(response).RootElement;
+
+        var details = new OmdbMovieDetails
+        {
+            Title = json.GetProperty("Title").GetString(),
+            Year = json.GetProperty("Year").GetString(),
+            Genre = json.GetProperty("Genre").GetString(),
+            Plot = json.GetProperty("Plot").GetString(),
+            Poster = json.GetProperty("Poster").GetString(),
+            imdbID = json.GetProperty("imdbID").GetString()
+        };
+
+        cache[imdbID] = details;
+        return details;
     }
 }

@@ -5,7 +5,7 @@
              Shell.NavBarIsVisible="False">
 
     <Grid>
-        <Image Source="proba1.jpg."
+        <Image Source="background.jpg"
                Aspect="AspectFill"
                />
 

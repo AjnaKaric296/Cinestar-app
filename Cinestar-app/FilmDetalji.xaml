@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.FilmDetalji"
-             Title="Detalji filma"
-             BackgroundColor="#051851">
+             BackgroundColor="{StaticResource PrimaryBlue}">
 
     <ScrollView>
         <StackLayout Padding="10" Spacing="10">
+
             <Image x:Name="PosterImage" HeightRequest="300"/>
-            <Label x:Name="TitleLabel" FontSize="22" FontAttributes="Bold" TextColor="White"/>
-            <Label x:Name="YearLabel" TextColor="LightGray"/>
-            <Label x:Name="GenreLabel" TextColor="LightGray"/>
-            <Label x:Name="CityLabel" TextColor="Orange"/>
-            <Label x:Name="PlotLabel" TextColor="White"/>
+            <Label x:Name="TitleLabel" FontSize="24" FontAttributes="Bold"/>
+            <Label x:Name="GenreLabel"/>
+            <Label x:Name="YearLabel"/>
+            <Label x:Name="PlotLabel"/>
+
+            <Label Text="Termini" FontSize="20" FontAttributes="Bold"/>
+            <StackLayout x:Name="ShowtimesLayout" Orientation="Horizontal" Spacing="5"/>
+
         </StackLayout>
     </ScrollView>
 </ContentPage>

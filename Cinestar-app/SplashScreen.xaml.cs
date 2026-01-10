@@ -26,7 +26,13 @@ namespace Cinestar_app
 
             await Task.Delay(1500);
 
-            Application.Current.MainPage = new CityPickerPage();
+            // Ovdje stavljamo CityPickerPage unutar NavigationPage 
+            // da kasnije možeš navigirati ka Home sa navigation barom
+            Application.Current.MainPage = new NavigationPage(new CityPickerPage())
+            {
+                BarBackgroundColor = Color.FromArgb("#051851"),
+                BarTextColor = Colors.White
+            };
         }
     }
 }

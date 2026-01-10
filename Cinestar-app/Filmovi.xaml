@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.Filmovi"
-             BackgroundColor="#051851"
-             Title="Filmovi">
+             BackgroundColor="{StaticResource PrimaryBlue}">
 
-    <ScrollView>
-        <StackLayout Padding="10" Spacing="10">
-            <!-- Dropdown za zanrove -->
-            <Picker x:Name="GenrePicker" Title="Izaberi zanr" SelectedIndexChanged="OnGenreChanged"/>
+    <Grid RowDefinitions="Auto,*" Padding="10">
 
-            <!-- Lista filmova -->
-            <CollectionView x:Name="FilmsCollectionView" SelectionMode="Single" SelectionChanged="OnFilmSelected">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Margin="5" Padding="5" BackgroundColor="#1a1a2e" CornerRadius="10">
-                            <StackLayout Orientation="Horizontal" Spacing="10">
-                                <Image Source="{Binding Poster}" HeightRequest="100" WidthRequest="70"/>
-                                <StackLayout>
-                                    <Label Text="{Binding Title}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
-                                    <Label Text="{Binding Year}" TextColor="LightGray"/>
-                                    <Label Text="{Binding Genre}" TextColor="LightGray" FontSize="12"/>
-                                    <Label Text="{Binding City}" TextColor="Orange" FontSize="12"/>
-                                    <Label Text="{Binding Plot}" TextColor="White" FontSize="12"/>
-                                </StackLayout>
-                            </StackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+        <!-- Sticky Picker -->
+        <StackLayout Grid.Row="0" Spacing="10" BackgroundColor="{StaticResource PrimaryBlue}">
+            <Picker x:Name="GenrePicker" 
+                    Title="Odaberi žanr" 
+                    SelectedIndexChanged="OnGenreChanged"/>
         </StackLayout>
-    </ScrollView>
+
+        <!-- CollectionView -->
+        <CollectionView x:Name="FilmsCollectionView"
+                        Grid.Row="1"
+                        SelectionMode="Single"
+                        SelectionChanged="OnFilmSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Film">
+                    <Frame HasShadow="True" Margin="5" Padding="5">
+                        <StackLayout>
+                            <Image Source="{Binding Poster}" HeightRequest="200"/>
+                            <Label Text="{Binding Title}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Year}"/>
+                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                <Button Text="{Binding Showtimes[0]}" Clicked="OnShowtimeClicked"/>
+                                <Button Text="{Binding Showtimes[1]}" Clicked="OnShowtimeClicked"/>
+                                <Button Text="{Binding Showtimes[2]}" Clicked="OnShowtimeClicked"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
 </ContentPage>
