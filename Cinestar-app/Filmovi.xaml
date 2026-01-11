@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Logo lijevo -->
-            <Image Source="logo.png" HeightRequest="60" WidthRequest="60" Grid.Column="0" VerticalOptions="Center"/>
+            <Image Source="logo.png" HeightRequest="100" WidthRequest="100" Grid.Column="0" VerticalOptions="Center"/>
 
             <!-- Spacer -->
             <BoxView Grid.Column="1" WidthRequest="10"/>
@@ -41,8 +41,8 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <Image Source="strelica.png"
-                       HeightRequest="12"
-                       WidthRequest="12"
+                       HeightRequest="10"
+                       WidthRequest="10"
                        VerticalOptions="Center"/>
             </StackLayout>
         </Grid>
@@ -54,7 +54,6 @@
                 TextColor="White"
                 SelectedIndexChanged="OnGenreChanged"
                 HorizontalOptions="Fill"
-                BackgroundColor="#0B2A6F"
                 Margin="0,10,0,0"/>
 
         <!-- Filmovi -->
@@ -102,13 +101,15 @@
                                        TextColor="White"
                                        FontSize="13"/>
 
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="8"
-                                             Margin="0,10,0,0">
-                                    <Button Text="12:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
-                                    <Button Text="15:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
-                                    <Button Text="18:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
-                                </StackLayout>
+                                <ScrollView Orientation="Horizontal" Margin="0,10,0,0">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Button Text="12:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
+                                        <Button Text="15:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
+                                        <Button Text="18:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
+                                        <!-- Možeš dodati još termina -->
+                                        <Button Text="21:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
+                                    </HorizontalStackLayout>
+                                </ScrollView>
 
                             </StackLayout>
                         </Grid>

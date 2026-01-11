@@ -1,4 +1,5 @@
-﻿using Cinestar_app.Models;
+﻿using Android.Service.QuickSettings;
+using Cinestar_app.Models;
 using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
 {
     private readonly OmdbService omdbService = new();
     public event PropertyChangedEventHandler PropertyChanged;
+    private readonly FilmService filmService = new FilmService();
+
 
     private string selectedCity;
     public string SelectedCity
@@ -24,14 +27,14 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
             {
                 selectedCity = value;
                 OnPropertyChanged(nameof(SelectedCity));
-                _ = LoadFilmsWithOverlay();
+                _ = ReloadFilmsForCity();
             }
         }
     }
 
     public ObservableCollection<Film> Films { get; set; } = new();
 
-    private Dictionary<string, string[]> cityQueries = new()
+    private readonly Dictionary<string, string[]> cityQueries = new()
     {
         { "Zenica", new[] { "dream", "star" } },
         { "Banja Luka", new[] { "super", "iron" } },
@@ -62,55 +65,76 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
         NavigationPage.SetHasNavigationBar(this, false);
     }
 
-    private async Task LoadFilmsWithOverlay()
+    protected override async void OnAppearing()
     {
-        LoadingOverlay.IsVisible = true;
-        await Task.Delay(50);
-        await LoadFilms();
-        LoadingOverlay.IsVisible = false;
+        base.OnAppearing();
+        await ReloadFilmsForCity();
     }
 
-    private async Task LoadFilms()
+    private async Task ReloadFilmsForCity()
     {
-        Films.Clear();
-        if (!cityQueries.ContainsKey(SelectedCity)) return;
+        LoadingOverlay.IsVisible = true;
 
-        var allFilmsTemp = new List<Film>();
-
-        foreach (var query in cityQueries[SelectedCity])
+        try
         {
-            var results = await omdbService.SearchMoviesAsync(query);
-            foreach (var r in results)
+            Films.Clear();
+            if (!cityQueries.ContainsKey(SelectedCity)) return;
+
+            var allFilms = new List<Film>();
+
+            foreach (var query in cityQueries[SelectedCity])
             {
-                var d = await omdbService.GetMovieDetailsAsync(r.imdbID);
-                if (d == null) continue;
-
-                allFilmsTemp.Add(new Film
+                var results = await omdbService.SearchMoviesAsync(query);
+                foreach (var r in results.Take(5))
                 {
-                    Title = d.Title,
-                    Year = d.Year,
-                    Genre = d.Genre,
-                    Plot = d.Plot,
-                    Poster = d.Poster == "N/A" ? "placeholder.png" : d.Poster,
-                    Showtimes = new() { "12:00", "15:00", "18:00" }
-                });
+                    var details = await omdbService.GetMovieDetailsAsync(r.imdbID);
+                    if (details == null) continue;
 
-                if (allFilmsTemp.Count >= 20) break;
+                    var film = new Film
+                    {
+                        Title = details.Title,
+                        Year = details.Year,
+                        Genre = details.Genre,
+                        Plot = details.Plot,
+                        Poster = details.Poster == "N/A" ? "placeholder.png" : details.Poster,
+                        ImdbID = details.imdbID,
+                        Actors = (details.Actors ?? "")
+                                    .Split(", ")
+                                    .Where(a => !string.IsNullOrWhiteSpace(a) && a != "N/A")
+                                    .Select(a => new Actor
+                                    {
+                                        Name = a,
+                                        Photo = "https://thispersondoesnotexist.com/image"
+                                    })
+                                    .ToList(),
+                        Showtimes = new List<string> { "12:00", "15:00", "18:00", "21:00" }
+                    };
+
+                    allFilms.Add(film);
+                }
             }
-            if (allFilmsTemp.Count >= 20) break;
+
+            foreach (var f in allFilms)
+                Films.Add(f);
+
+            // Popuni GenrePicker
+            var genres = Films
+                .SelectMany(f => (f.Genre ?? "").Split(','))
+                .Select(g => g.Trim())
+                .Distinct()
+                .ToList();
+            genres.Insert(0, "Svi");
+            GenrePicker.ItemsSource = genres;
+            GenrePicker.SelectedIndex = 0;
         }
-
-        foreach (var f in allFilmsTemp)
-            Films.Add(f);
-
-        var genres = Films
-            .SelectMany(f => (f.Genre ?? "").Split(','))
-            .Select(g => g.Trim())
-            .Distinct()
-            .ToList();
-        genres.Insert(0, "Svi");
-        GenrePicker.ItemsSource = genres;
-        GenrePicker.SelectedIndex = 0;
+        catch (System.Exception ex)
+        {
+            await DisplayAlert("Greška", ex.Message, "OK");
+        }
+        finally
+        {
+            LoadingOverlay.IsVisible = false;
+        }
     }
 
     private void OnGenreChanged(object sender, System.EventArgs e)
@@ -119,13 +143,25 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
         if (g == "Svi")
             FilmsCollectionView.ItemsSource = Films;
         else
-            FilmsCollectionView.ItemsSource = new ObservableCollection<Film>(Films.Where(f => f.Genre.Contains(g)));
+            FilmsCollectionView.ItemsSource = new ObservableCollection<Film>(
+                Films.Where(f => f.Genre != null && f.Genre.Contains(g))
+            );
     }
 
     private async void OnFilmTapped(object sender, System.EventArgs e)
     {
         if ((sender as Frame)?.BindingContext is Film film)
+        {
+            // Ako film Actors nisu popunjeni, uzmi puni film preko ImdbID
+            if (film.Actors == null || film.Actors.Count == 0)
+            {
+                var fullFilm = await filmService.GetFilmFromApi(film.ImdbID);
+                if (fullFilm != null)
+                    film = fullFilm; // zamijeni sa punim
+            }
+
             await Navigation.PushAsync(new FilmDetalji(film));
+        }
     }
 
     private async void OnCityTapped(object sender, System.EventArgs e)
@@ -133,12 +169,20 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
 
     private async void OnReserveClicked(object sender, System.EventArgs e)
     {
-        if ((sender as Button)?.BindingContext is Film film)
+        if (sender is Button btn)
         {
-            string selectedTime = (sender as Button).Text;
-            await DisplayAlert("Rezervacija",
-                $"Film: {film.Title}\nTermin: {selectedTime}",
-                "OK");
+            if (btn.Parent is HorizontalStackLayout hStack &&
+                hStack.Parent is ScrollView scroll &&
+                scroll.Parent is StackLayout stack &&
+                stack.Parent is Grid grid &&
+                grid.Parent is Frame frame &&
+                frame.BindingContext is Film film)
+            {
+                string selectedTime = btn.Text;
+                await DisplayAlert("Rezervacija",
+                    $"Film: {film.Title}\nTermin: {selectedTime}",
+                    "OK");
+            }
         }
     }
 

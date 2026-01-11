@@ -1,5 +1,11 @@
 ﻿namespace Cinestar_app.Models;
 
+public class Actor
+{
+    public string Name { get; set; }
+    public string Photo { get; set; } = "https://via.placeholder.com/80";
+}
+
 public class Film
 {
     public string Title { get; set; }
@@ -9,6 +15,6 @@ public class Film
     public string City { get; set; }
     public string Plot { get; set; }
     public string ImdbID { get; set; }
-
     public List<string> Showtimes { get; set; } = new();
+    public List<Actor> Actors { get; set; } = new();
 }

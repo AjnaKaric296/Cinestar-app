@@ -1,4 +1,4 @@
-using Cinestar_app.Models;
+﻿using Cinestar_app.Models;
 using Microsoft.Maui.Controls;
 
 namespace Cinestar_app;
@@ -9,8 +9,14 @@ public partial class FilmDetalji : ContentPage
     {
         InitializeComponent();
         BindingContext = film;
+        NavigationPage.SetHasNavigationBar(this, false);
+
+
         PosterImage.Source = film.Poster;
         TitleLabel.Text = film.Title;
         PlotLabel.Text = film.Plot;
+
+        ActorsCollectionView.ItemsSource = film.Actors; // ovo je ključno
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using Cinestar_app.Models;
+﻿using Android.Service.QuickSettings;
+using Cinestar_app.Models;
 using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
@@ -12,6 +13,8 @@ public partial class HomePage : ContentPage
 {
     private readonly OmdbService omdbService = new();
     private bool _isLoaded;
+    private readonly FilmService filmService = new FilmService();
+
 
     private string selectedCity;
     public string SelectedCity
@@ -186,7 +189,8 @@ public partial class HomePage : ContentPage
     {
         if ((sender as Frame)?.BindingContext is Film film)
         {
-            await Navigation.PushAsync(new FilmDetalji(film));
+            var fullFilm = await filmService.GetFilmFromApi(film.ImdbID);
+            await Navigation.PushAsync(new FilmDetalji(fullFilm));
         }
     }
 

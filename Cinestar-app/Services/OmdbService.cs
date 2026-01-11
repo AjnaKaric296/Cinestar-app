@@ -5,7 +5,7 @@ namespace Cinestar_app.Services;
 
 public class OmdbService
 {
-    private readonly string apiKey = "75ace56d";
+    private readonly string apiKey = "cdcbfd60";
     private readonly HttpClient client = new();
 
     private Dictionary<string, OmdbMovieDetails> cache = new();
@@ -26,6 +26,7 @@ public class OmdbService
         public string Plot { get; set; }
         public string Poster { get; set; }
         public string imdbID { get; set; }
+        public string Actors { get; set; }
     }
 
     public async Task<List<OmdbMovieShort>> SearchMoviesAsync(string query)

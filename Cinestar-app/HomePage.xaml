@@ -41,7 +41,7 @@
                                HeightRequest="10"
                                WidthRequest="10"
                                VerticalOptions="Center"
-                               Margin="10"/>
+                               Margin="8"/>
                     </StackLayout>
                 </Grid>
 
