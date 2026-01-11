@@ -85,11 +85,37 @@ public partial class HomePage : ContentPage
     private void LoadCarousel()
     {
         HeroCarousel.ItemsSource = new List<CarouselItem>
-        {
-            new CarouselItem { Image="film1.png", Title="Film 1", Year="2023", Description="Opis 1" },
-            new CarouselItem { Image="film2.jpg", Title="Film 2", Year="2022", Description="Opis 2" },
-            new CarouselItem { Image="film3.jpg", Title="Film 3", Year="2024", Description="Opis 3" }
-        };
+{
+    new CarouselItem
+    {
+        Image="martysupreme.png",
+        Title="Marty Supreme",
+        Year="2026",
+        Description="Avantura i humor koji spaja generacije u nezaboravnu filmsku odiseju."
+    },
+    new CarouselItem
+    {
+        Image="neboiznadzenice.png",
+        Title="Nebo iznad Zenice",
+        Year="2026",
+        Description="Emotivna priča o ljubavi i životu u srcu Bosne i Hercegovine."
+    },
+    new CarouselItem
+    {
+        Image="spongebob.png",
+        Title="Spužva Bob: Potraga za skockanim",
+        Year="2025",
+        Description="Animirana pustolovina puna smijeha i prijateljstva — za cijelu obitelj."
+    },
+    new CarouselItem
+    {
+        Image="testament.png",
+        Title="Testament",
+        Year="2026",
+        Description="Duboka drama koja propituje vjeru, sudbinu i ljudsku snagu."
+    }
+};
+
     }
 
     private async Task LoadFilmSections()

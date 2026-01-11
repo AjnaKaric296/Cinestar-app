@@ -7,36 +7,55 @@
 
     <Grid>
 
+        <!-- Glavni sadržaj -->
         <ScrollView>
-            <StackLayout Padding="10" Spacing="25">
+            <StackLayout Spacing="20" Padding="10">
 
-                <!-- Grad -->
-                <Label x:Name="CityLabel"
-                       Text="{Binding SelectedCity}"
-                       TextColor="#FFD200"
-                       FontAttributes="Bold"
-                       FontSize="20">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnCityTapped"/>
-                    </Label.GestureRecognizers>
-                </Label>
+                <!-- Header: logo + city label + strelica -->
+                <Grid HeightRequest="60" Padding="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="logo.png" HeightRequest="50" WidthRequest="50" Grid.Column="0" VerticalOptions="Center"/>
+
+                    <Label x:Name="CityLabel"
+                           Text="{Binding SelectedCity}"
+                           TextColor="#FFD200"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           VerticalOptions="Center"
+                           Grid.Column="1">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCityTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Image Source="strelica.png"
+                           HeightRequest="20"
+                           WidthRequest="20"
+                           VerticalOptions="Center"
+                           Grid.Column="2"/>
+                </Grid>
 
                 <!-- Carousel -->
                 <CarouselView x:Name="HeroCarousel"
-                              HeightRequest="300"
+                              HeightRequest="250"
                               ItemsLayout="HorizontalList"
                               IsSwipeEnabled="True"
-                              Margin="0,10,0,0">
+                              Margin="0">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Image Source="{Binding Image}" Aspect="AspectFill"/>
                                 <StackLayout BackgroundColor="#66000000"
                                              Padding="10"
-                                             WidthRequest="220"
+                                             WidthRequest="250"
                                              HorizontalOptions="Start"
                                              VerticalOptions="Center">
-                                    <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                    <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" TextColor="White"/>
                                     <Label Text="{Binding Year}" FontSize="14" TextColor="White"/>
                                     <Label Text="{Binding Description}" FontSize="12" TextColor="White" LineBreakMode="WordWrap"/>
                                 </StackLayout>
@@ -48,14 +67,14 @@
                     </CarouselView.ItemTemplate>
                 </CarouselView>
 
-                <!-- Comedy sekcija -->
+                <!-- Comedy Section -->
                 <StackLayout>
-                    <Label Text="Comedy" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                    <CollectionView x:Name="ComedyCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                    <Label Text="Najgledanije komedije" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView x:Name="ComedyCollection" HeightRequest="180" ItemsLayout="HorizontalList">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12">
-                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="180" Aspect="AspectFill"/>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnFilmTapped"/>
                                     </Frame.GestureRecognizers>
@@ -65,14 +84,14 @@
                     </CollectionView>
                 </StackLayout>
 
-                <!-- Adventure sekcija -->
+                <!-- Adventure Section -->
                 <StackLayout>
-                    <Label Text="Adventure" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                    <CollectionView x:Name="AdventureCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                    <Label Text="Pustolovine za cijelu porodicu" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView x:Name="AdventureCollection" HeightRequest="180" ItemsLayout="HorizontalList">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12">
-                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="180" Aspect="AspectFill"/>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnFilmTapped"/>
                                     </Frame.GestureRecognizers>
@@ -82,14 +101,14 @@
                     </CollectionView>
                 </StackLayout>
 
-                <!-- Action sekcija -->
+                <!-- Action Section -->
                 <StackLayout>
-                    <Label Text="Action" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                    <CollectionView x:Name="ActionCollection" HeightRequest="200" ItemsLayout="HorizontalList">
+                    <Label Text="Najuzbudljiviji akcioni hitovi" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <CollectionView x:Name="ActionCollection" HeightRequest="180" ItemsLayout="HorizontalList">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame Padding="0" Margin="5" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12">
-                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="200" Aspect="AspectFill"/>
+                                    <Image Source="{Binding Poster}" WidthRequest="130" HeightRequest="180" Aspect="AspectFill"/>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnFilmTapped"/>
                                     </Frame.GestureRecognizers>
@@ -107,10 +126,17 @@
                         CornerRadius="12"
                         HeightRequest="50"
                         Clicked="OnSeeAllClicked"/>
+
+                <!-- Footer -->
+                <Label Text="© 2026 Cinestar. All rights reserved."
+                       TextColor="#AAAAAA"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       Margin="0,20,0,20"/>
             </StackLayout>
         </ScrollView>
 
-        <!-- Overlay za skrivanje bijelog ekrana -->
+        <!-- Fullscreen Overlay -->
         <Grid x:Name="OverlayGrid"
               BackgroundColor="#80000000"
               IsVisible="False"
