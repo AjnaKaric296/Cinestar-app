@@ -1,7 +1,6 @@
 ﻿using Cinestar_app.Models;
 using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,7 +15,6 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
 
     private string selectedCity;
-
     public string SelectedCity
     {
         get => selectedCity;
@@ -26,7 +24,7 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
             {
                 selectedCity = value;
                 OnPropertyChanged(nameof(SelectedCity));
-                _ = LoadFilmsWithOverlay(); // automatski refresh kada se grad promijeni
+                _ = LoadFilmsWithOverlay();
             }
         }
     }
@@ -55,13 +53,10 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
 
         FilmsCollectionView.ItemsSource = Films;
 
-        // Subscribe na promjenu grada iz CityPickerPage
         MessagingCenter.Subscribe<CityPickerPage, string>(this, "CityChanged", (sender, newCity) =>
         {
             if (newCity != SelectedCity)
-            {
-                SelectedCity = newCity; // ovo automatski poziva LoadFilmsWithOverlay
-            }
+                SelectedCity = newCity;
         });
 
         NavigationPage.SetHasNavigationBar(this, false);
@@ -78,9 +73,7 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
     private async Task LoadFilms()
     {
         Films.Clear();
-
-        if (!cityQueries.ContainsKey(SelectedCity))
-            return;
+        if (!cityQueries.ContainsKey(SelectedCity)) return;
 
         var allFilmsTemp = new List<Film>();
 
@@ -110,7 +103,6 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
         foreach (var f in allFilmsTemp)
             Films.Add(f);
 
-        // Zanrovi za picker
         var genres = Films
             .SelectMany(f => (f.Genre ?? "").Split(','))
             .Select(g => g.Trim())
@@ -133,15 +125,11 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
     private async void OnFilmTapped(object sender, System.EventArgs e)
     {
         if ((sender as Frame)?.BindingContext is Film film)
-        {
             await Navigation.PushAsync(new FilmDetalji(film));
-        }
     }
 
     private async void OnCityTapped(object sender, System.EventArgs e)
-    {
-        await Navigation.PushAsync(new CityPickerPage(false));
-    }
+        => await Navigation.PushAsync(new CityPickerPage(false));
 
     private async void OnReserveClicked(object sender, System.EventArgs e)
     {

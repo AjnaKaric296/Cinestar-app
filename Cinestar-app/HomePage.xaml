@@ -11,7 +11,7 @@
         <ScrollView>
             <StackLayout Spacing="20" Padding="10">
 
-                <!-- Header: logo + city label + strelica -->
+                <!-- Header: logo + grad + strelica -->
                 <Grid HeightRequest="60" Padding="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -19,30 +19,35 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Source="logo.png" HeightRequest="50" WidthRequest="50" Grid.Column="0" VerticalOptions="Center"/>
+                    <!-- Logo lijevo -->
+                    <Image Source="logo.png" HeightRequest="100" WidthRequest="100" Grid.Column="0" VerticalOptions="Center"/>
 
-                    <Label x:Name="CityLabel"
-                           Text="{Binding SelectedCity}"
-                           TextColor="#FFD200"
-                           FontAttributes="Bold"
-                           FontSize="20"
-                           VerticalOptions="Center"
-                           Grid.Column="1">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCityTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <!-- Spacer -->
+                    <BoxView Grid.Column="1" WidthRequest="10"/>
 
-                    <Image Source="strelica.png"
-                           HeightRequest="20"
-                           WidthRequest="20"
-                           VerticalOptions="Center"
-                           Grid.Column="2"/>
+                    <!-- Grad + strelica desno -->
+                    <StackLayout Orientation="Horizontal" Grid.Column="2" VerticalOptions="Center" Spacing="5">
+                        <Label x:Name="CityLabel"
+                               Text="{Binding SelectedCity}"
+                               TextColor="#FFD200"
+                               FontAttributes="Bold"
+                               FontSize="15"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCityTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Image Source="strelica.png"
+                               HeightRequest="10"
+                               WidthRequest="10"
+                               VerticalOptions="Center"
+                               Margin="10"/>
+                    </StackLayout>
                 </Grid>
 
                 <!-- Carousel -->
                 <CarouselView x:Name="HeroCarousel"
-                              HeightRequest="250"
+                              HeightRequest="240"
                               ItemsLayout="HorizontalList"
                               IsSwipeEnabled="True"
                               Margin="0">
@@ -50,14 +55,13 @@
                         <DataTemplate>
                             <Grid>
                                 <Image Source="{Binding Image}" Aspect="AspectFill"/>
-                                <StackLayout BackgroundColor="#66000000"
-                                             Padding="10"
+                                <StackLayout Padding="10"
                                              WidthRequest="250"
                                              HorizontalOptions="Start"
                                              VerticalOptions="Center">
-                                    <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" TextColor="White"/>
-                                    <Label Text="{Binding Year}" FontSize="14" TextColor="White"/>
-                                    <Label Text="{Binding Description}" FontSize="12" TextColor="White" LineBreakMode="WordWrap"/>
+                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" TextColor="White"/>
+                                    <Label Text="{Binding Year}" FontSize="10" TextColor="#FFD200"/>
+                                    <Label Text="{Binding Description}" FontSize="10" TextColor="White" LineBreakMode="WordWrap"/>
                                 </StackLayout>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnCarouselTapped"/>
@@ -67,9 +71,9 @@
                     </CarouselView.ItemTemplate>
                 </CarouselView>
 
-                <!-- Comedy Section -->
+                <!-- Najgledanije -->
                 <StackLayout>
-                    <Label Text="Najgledanije komedije" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="Najgledanije" TextColor="White" FontSize="18" FontAttributes="Bold"/>
                     <CollectionView x:Name="ComedyCollection" HeightRequest="180" ItemsLayout="HorizontalList">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -84,9 +88,9 @@
                     </CollectionView>
                 </StackLayout>
 
-                <!-- Adventure Section -->
+                <!-- U bioskopima uskoro -->
                 <StackLayout>
-                    <Label Text="Pustolovine za cijelu porodicu" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="U bioskopima uskoro" TextColor="White" FontSize="18" FontAttributes="Bold"/>
                     <CollectionView x:Name="AdventureCollection" HeightRequest="180" ItemsLayout="HorizontalList">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -101,9 +105,9 @@
                     </CollectionView>
                 </StackLayout>
 
-                <!-- Action Section -->
+                <!-- Pravi hitovi -->
                 <StackLayout>
-                    <Label Text="Najuzbudljiviji akcioni hitovi" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="Pravi hitovi" TextColor="White" FontSize="18" FontAttributes="Bold"/>
                     <CollectionView x:Name="ActionCollection" HeightRequest="180" ItemsLayout="HorizontalList">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
