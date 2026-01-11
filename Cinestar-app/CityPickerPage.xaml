@@ -11,7 +11,7 @@
             <!-- Logo -->
             <Image Source="logo.png"
                    HeightRequest="90"
-                   HorizontalOptions="Center"
+                   HorizontalOptions="Start"
                    Margin="0,20"/>
 
             <!-- Naslov -->
@@ -19,7 +19,7 @@
                    TextColor="White"
                    FontSize="22"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Start"/>
 
             <!-- Lista gradova -->
             <ListView x:Name="CitiesListView"
@@ -31,13 +31,13 @@
                         <ViewCell>
                             <StackLayout>
                                 <BoxView HeightRequest="1"
-                                         Color="#363d39"
+                                         Color="#051851"
                                          HorizontalOptions="FillAndExpand"/>
                                 <Label Text="{Binding .}"
                                        FontSize="20"
                                        FontAttributes="Bold"
                                        TextColor="White"
-                                       HorizontalOptions="Center"
+                                       HorizontalOptions="Start"
                                        Padding="0,10"/>
                             </StackLayout>
                         </ViewCell>

@@ -13,7 +13,9 @@
                Text="{Binding SelectedCity}"
                TextColor="#FFD200"
                FontAttributes="Bold"
-               FontSize="18">
+               FontSize="20"
+               VerticalOptions="Center"
+               HorizontalOptions="Center">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnCityTapped"/>
             </Label.GestureRecognizers>
@@ -24,12 +26,14 @@
                 x:Name="GenrePicker"
                 Title="Filter po zanru"
                 TextColor="White"
-                SelectedIndexChanged="OnGenreChanged"/>
+                SelectedIndexChanged="OnGenreChanged"
+                HorizontalOptions="Fill"/>
 
         <!-- Filmovi -->
         <CollectionView Grid.Row="2"
                         x:Name="FilmsCollectionView"
-                        SelectionMode="None">
+                        SelectionMode="None"
+                        Margin="0,10,0,0">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Film">

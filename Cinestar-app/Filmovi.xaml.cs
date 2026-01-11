@@ -3,16 +3,35 @@ using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cinestar_app;
 
-public partial class Filmovi : ContentPage
+public partial class Filmovi : ContentPage, INotifyPropertyChanged
 {
-    private OmdbService omdbService = new();
-    private List<Film> allFilms = new();
+    private readonly OmdbService omdbService = new();
+    public event PropertyChangedEventHandler PropertyChanged;
+
     private string selectedCity;
+
+    public string SelectedCity
+    {
+        get => selectedCity;
+        set
+        {
+            if (selectedCity != value)
+            {
+                selectedCity = value;
+                OnPropertyChanged(nameof(SelectedCity));
+                _ = LoadFilmsWithOverlay(); // automatski refresh kada se grad promijeni
+            }
+        }
+    }
+
+    public ObservableCollection<Film> Films { get; set; } = new();
 
     private Dictionary<string, string[]> cityQueries = new()
     {
@@ -28,38 +47,52 @@ public partial class Filmovi : ContentPage
 
     public Filmovi() : this("Sarajevo") { }
 
-    public Filmovi(string selectedCity)
+    public Filmovi(string city)
     {
         InitializeComponent();
-        this.selectedCity = selectedCity;
         BindingContext = this;
-        LoadFilmsWithOverlay();
+        SelectedCity = city;
+
+        FilmsCollectionView.ItemsSource = Films;
+
+        // Subscribe na promjenu grada iz CityPickerPage
+        MessagingCenter.Subscribe<CityPickerPage, string>(this, "CityChanged", (sender, newCity) =>
+        {
+            if (newCity != SelectedCity)
+            {
+                SelectedCity = newCity; // ovo automatski poziva LoadFilmsWithOverlay
+            }
+        });
+
         NavigationPage.SetHasNavigationBar(this, false);
     }
 
-    // ================= Loading overlay + filmovi =================
     private async Task LoadFilmsWithOverlay()
     {
         LoadingOverlay.IsVisible = true;
-        await Task.Delay(100); // kratki delay da se overlay prikaže
+        await Task.Delay(50);
+        await LoadFilms();
+        LoadingOverlay.IsVisible = false;
+    }
 
-        allFilms.Clear();
+    private async Task LoadFilms()
+    {
+        Films.Clear();
 
-        if (!cityQueries.ContainsKey(selectedCity))
-        {
-            LoadingOverlay.IsVisible = false;
+        if (!cityQueries.ContainsKey(SelectedCity))
             return;
-        }
 
-        foreach (var q in cityQueries[selectedCity])
+        var allFilmsTemp = new List<Film>();
+
+        foreach (var query in cityQueries[SelectedCity])
         {
-            var res = await omdbService.SearchMoviesAsync(q);
-            foreach (var r in res)
+            var results = await omdbService.SearchMoviesAsync(query);
+            foreach (var r in results)
             {
                 var d = await omdbService.GetMovieDetailsAsync(r.imdbID);
                 if (d == null) continue;
 
-                allFilms.Add(new Film
+                allFilmsTemp.Add(new Film
                 {
                     Title = d.Title,
                     Year = d.Year,
@@ -69,15 +102,16 @@ public partial class Filmovi : ContentPage
                     Showtimes = new() { "12:00", "15:00", "18:00" }
                 });
 
-                if (allFilms.Count >= 20) break;
+                if (allFilmsTemp.Count >= 20) break;
             }
-            if (allFilms.Count >= 20) break;
+            if (allFilmsTemp.Count >= 20) break;
         }
 
-        FilmsCollectionView.ItemsSource = allFilms;
+        foreach (var f in allFilmsTemp)
+            Films.Add(f);
 
-        // zanrovi
-        var genres = allFilms
+        // Zanrovi za picker
+        var genres = Films
             .SelectMany(f => (f.Genre ?? "").Split(','))
             .Select(g => g.Trim())
             .Distinct()
@@ -85,65 +119,41 @@ public partial class Filmovi : ContentPage
         genres.Insert(0, "Svi");
         GenrePicker.ItemsSource = genres;
         GenrePicker.SelectedIndex = 0;
-
-        LoadingOverlay.IsVisible = false;
     }
 
     private void OnGenreChanged(object sender, System.EventArgs e)
     {
         var g = GenrePicker.SelectedItem?.ToString();
-        FilmsCollectionView.ItemsSource =
-            g == "Svi" ? allFilms : allFilms.Where(f => f.Genre.Contains(g)).ToList();
+        if (g == "Svi")
+            FilmsCollectionView.ItemsSource = Films;
+        else
+            FilmsCollectionView.ItemsSource = new ObservableCollection<Film>(Films.Where(f => f.Genre.Contains(g)));
     }
 
-    private async void OnFilmTapped(object sender, EventArgs e)
+    private async void OnFilmTapped(object sender, System.EventArgs e)
     {
-        var frame = sender as Frame;
-        if (frame?.BindingContext is Film film)
+        if ((sender as Frame)?.BindingContext is Film film)
         {
             await Navigation.PushAsync(new FilmDetalji(film));
         }
     }
 
-    private async void OnCityTapped(object sender, EventArgs e)
+    private async void OnCityTapped(object sender, System.EventArgs e)
     {
-        var cityPage = new CityPickerPage();
-        cityPage.Disappearing += async (s, args) =>
-        {
-            var city = Preferences.Get("SelectedCity", "Sarajevo");
-            if (city != selectedCity)
-            {
-                selectedCity = city;
-                await LoadFilmsWithOverlay();
-            }
-        };
-
-        await Navigation.PushAsync(cityPage);
+        await Navigation.PushAsync(new CityPickerPage(false));
     }
 
-    private async void OnReserveClicked(object sender, EventArgs e)
+    private async void OnReserveClicked(object sender, System.EventArgs e)
     {
-        var button = sender as Button;
-        if (button == null) return;
-
-        var film = button.BindingContext as Film;
-        if (film == null) return;
-
-        string selectedTime = button.Text;
-
-        await DisplayAlert("Rezervacija",
-            $"Film: {film.Title}\nTermin: {selectedTime}",
-            "OK");
-    }
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        var city = Preferences.Get("SelectedCity", null);
-        if (!string.IsNullOrEmpty(city) && city != selectedCity)
+        if ((sender as Button)?.BindingContext is Film film)
         {
-            selectedCity = city;
-            await LoadFilmsWithOverlay();
+            string selectedTime = (sender as Button).Text;
+            await DisplayAlert("Rezervacija",
+                $"Film: {film.Title}\nTermin: {selectedTime}",
+                "OK");
         }
     }
+
+    protected void OnPropertyChanged(string propertyName)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
