@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Cinestar_app.Platforms.Android.Handlers;
+
 
 namespace Cinestar_app
 {
@@ -13,7 +13,7 @@ namespace Cinestar_app
                 .ConfigureMauiHandlers(handlers =>
                 {
 #if ANDROID
-                    handlers.AddHandler(typeof(TabbedPage), typeof(NoSwipeTabbedPageHandler));
+                    handlers.AddHandler(typeof(TabbedPage), typeof(Platforms.Android.Handlers.NoSwipeTabbedPageHandler));
 #endif
                 })
                 .ConfigureFonts(fonts =>

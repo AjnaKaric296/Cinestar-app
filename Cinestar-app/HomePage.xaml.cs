@@ -1,4 +1,4 @@
-﻿using Android.Service.QuickSettings;
+﻿
 using Cinestar_app.Models;
 using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
