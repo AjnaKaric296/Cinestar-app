@@ -8,7 +8,7 @@ public class OmdbService
 
     public OmdbService()
     {
-        client.BaseAddress = new Uri("http://www.omdbapi.com/");
+        client.BaseAddress = new Uri("https://www.omdbapi.com/");
     }
 
     public async Task<List<Film>> SearchMoviesAsync(string query, int page = 1)
