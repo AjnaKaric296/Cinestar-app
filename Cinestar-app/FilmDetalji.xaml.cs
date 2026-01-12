@@ -9,7 +9,7 @@ public partial class FilmDetalji : ContentPage
     {
         InitializeComponent();
         BindingContext = film;
-        NavigationPage.SetHasNavigationBar(this, false);
+        
 
 
         PosterImage.Source = film.Poster;

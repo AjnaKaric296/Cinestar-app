@@ -5,7 +5,7 @@ namespace Cinestar_app;
 
 public partial class Profil : ContentPage
 {
-    private UserDatabase _db;
+    private readonly UserDatabase _db = new UserDatabase();
 
     public Profil()
     {
@@ -15,19 +15,12 @@ public partial class Profil : ContentPage
 
     private async void Prijava_Clicked(object sender, EventArgs e)
     {
-        NavigationPage.SetHasNavigationBar(this, false);
-
-        string email = (await DisplayPromptAsync("Email", "Unesite svoj email"))?.Trim().ToLower();
-        string lozinka = (await DisplayPromptAsync(
-            "Lozinka",
-            "Unesite lozinku",
-            "OK",
-            "Cancel",
-            keyboard: Keyboard.Text))?.Trim();
+        string email = EmailEntry.Text?.Trim().ToLower();
+        string lozinka = LozinkaEntry.Text?.Trim();
 
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(lozinka))
         {
-            await DisplayAlert("Greska", "Morate unijeti email i lozinku", "OK");
+            await DisplayAlert("Greška", "Morate unijeti email i lozinku", "OK");
             return;
         }
 
@@ -35,19 +28,18 @@ public partial class Profil : ContentPage
 
         if (user == null)
         {
-            await DisplayAlert("Greska", "Email nije registrovan", "OK");
+            await DisplayAlert("Greška", "Email nije registrovan", "OK");
             return;
         }
 
         if (user.Lozinka.Trim() != lozinka)
         {
-            await DisplayAlert("Greska", "Lozinka nije tacna", "OK");
+            await DisplayAlert("Greška", "Lozinka nije tačna", "OK");
             return;
         }
 
-        await DisplayAlert("Uspjeh", $"Dobrodosli, {user.Ime}!", "OK");
-
         UserSession.Login(user);
+        await DisplayAlert("Uspjeh", $"Dobrodošli, {user.Ime}!", "OK");
 
         await Navigation.PushAsync(new UserProfilPage());
     }

@@ -12,7 +12,7 @@ public partial class RegistracijaPage : ContentPage
     public RegistracijaPage()
     {
         InitializeComponent();
-        NavigationPage.SetHasNavigationBar(this, false);
+        
 
         _db = new UserDatabase();
     }
