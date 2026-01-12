@@ -2,107 +2,127 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.LoyaltyBodovi"
-             Title="">
+             Title=" "
+             BackgroundColor="#051851"
+             NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
-        <VerticalStackLayout  Spacing="15" BackgroundColor="#051851">
+        <StackLayout Spacing="0">
 
-            <!-- NEPRIJAVLJEN KORISNIK -->
-            <StackLayout x:Name="GuestView" IsVisible="False" Spacing="10">
+            <!-- Prikaz za neprijavljene korisnike -->
+            <StackLayout x:Name="NonLoggedInLayout" Spacing="0">
 
-                <Grid HeightRequest="240">
-                    <Image Source="pocetnaloyalty.jpg"
-                           Aspect="AspectFill"
-                           HeightRequest="240"
-                           HorizontalOptions="Fill"/>
-                    <BoxView Color="#62000030" 
-                             HeightRequest="240"
-                             HorizontalOptions="Fill"/>
-                </Grid>
+                <!-- LOGO -->
+                <StackLayout Margin="0,30,0,20" HorizontalOptions="Center">
+                    <Image Source="logo.png"
+                           HeightRequest="60"
+                           Aspect="AspectFit"/>
+                </StackLayout>
 
-                <!-- Kartica sa tekstom -->
-                <Frame BackgroundColor="#0A1B3A" 
-                       CornerRadius="15" 
-                       Padding="15"
-                       HasShadow="True"
-                       Margin="0,10">
-                    <VerticalStackLayout Spacing="10">
+                <!-- OPIS -->
+                <StackLayout Padding="25,0,25,25">
+                    <Label Text="Predstavljamo ti novo digitalno članstvo u kojem mogu sudjelovati svi registrirani korisnici CineStar aplikacije. Registriraj se i počni skupljati zvjezdice koje možeš mijenjati za nagrade odmah te i zvjezdice dobrodošlice.
 
-                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
-                            <Label Text="Skupljajte loyalty bodove "
-                                   TextColor="White"
-                                   FontSize="16"
-                                   HorizontalOptions="StartAndExpand"/>
-                            <Image Source="bodovi.png"
-                                   HeightRequest="15"
-                                   Aspect="AspectFit" />
-                        </HorizontalStackLayout>
+Jednom kada si registriran ili putem CineStar aplikacije, svaku tvoju potrošnju nagrađujemo – bilo da kupuješ ulaznice, kokice, nachose, piće ili poklon kartice – online ili na blagajni – skupljaj zvjezdice koje možeš zamijeniti za razne nagrade u našoj trgovini s kuponima."
+                           FontSize="13"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"
+                           LineHeight="1.4"/>
+                </StackLayout>
 
-                        <Label Text="Predstavljamo ti novo digitalno clanstvo u kojem mogu sudjelovati svi registrirani korisnici CineStar aplikacije. Registruj se sada i pocni skupljati zvjezdice koje mozes mijenjati za nagrade!
-Ocekuju te i zvjezdice dobrodoslice. Jednom kada si registriran online ili putem CineStar aplikacije, svaku tvoju potrosnju nagrađujemo – bilo da kupujes ulaznice, kokice, nachose, pice ili poklon kartice, bilo kako, online ili na blagajni – skupljas zvjezdice koje mozes zamijeniti za razne nagrade u nasoj trgovini s kuponima"
-                               TextColor="White"
-                               FontSize="14"
-                               LineBreakMode="WordWrap"/>
-                    </VerticalStackLayout>
-                </Frame>
-                <Grid HeightRequest="240">
+                <!-- ŽUTA TRAKA -->
+                <StackLayout BackgroundColor="#FFD600"
+                             HeightRequest="30"
+                             Margin="0,0,0,25">
+                    <Image Source="bodovi.png"
+                           HeightRequest="30"
+                           WidthRequest="40"
+                           HorizontalOptions="Start"
+                           Margin="0,-25,20,0"
+                           Rotation="20"/>
+                    <Image Source="bodovi.png"
+                           HeightRequest="50"
+                           WidthRequest="40"
+                           HorizontalOptions="End"
+                           Margin="0,-30,20,0"
+                           Rotation="20"/>
+                </StackLayout>
+
+                <!-- DONJI DIO -->
+                <StackLayout Orientation="Horizontal"
+                             Padding="20,0,20,30"
+                             Spacing="15">
                     <Image Source="beba.jpg"
-            Aspect="AspectFill"
-            HeightRequest="240"
-            HorizontalOptions="Fill"/>
-                    <BoxView Color="#62000030" 
-              HeightRequest="240"
-              HorizontalOptions="Fill"/>
-                </Grid>
+                           HeightRequest="130"
+                           Aspect="AspectFit"/>
+                    <Label Text="Pogodnosti?"
+                           FontSize="18"
+                           TextColor="White"
+                           Opacity="0.6"/>
+                </StackLayout>
 
-                <Frame BackgroundColor="#0A1B3A" 
-                       CornerRadius="15" 
-                       Padding="15"
-                       HasShadow="True"
-                       Margin="0,10">
-                    <VerticalStackLayout Spacing="10">
+                <!-- INFO TEKST + DUGME -->
+                <StackLayout Padding="25,0,25,40" Spacing="12">
 
-                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
-                            <Label Text="Pogodnosti:"
-                                   TextColor="White"
-                                   FontSize="16"
-                                   HorizontalOptions="StartAndExpand"/>
-                            
-                        </HorizontalStackLayout>
+                    <Label Text="🎟️ ČLANSTVO – Članstvo je besplatno jednom promocijom"
+                           FontSize="12"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="🎁 SKUPlJANJE ZVJEZDICA – Kupuj ulaznice i proizvode koristeći članstvo jer za svaki potrošeni 1 BAM dobivaš 1 zvjezdicu. Zvjezdice vrijede godinu dana."
+                           FontSize="12"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="🔄 ZAMJENA ZVJEZDICA ZA KUPONE – Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene."
+                           FontSize="12"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="🛒 POPUST NA PROIZVODE - PLUS članovi ostvaruju popust na odabrane proizvode." 
+                           FontSize="12"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="🍹 POPUST U BARU - Kao naš član ostvaruješ popust u svim barovima koje posjedujemo!"
+                           FontSize="12"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="🍿 MENI - Posebni Meni samo za članove." 
+                           FontSize="12"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="💌 LIMITED EDITION KUPONI - Članovi imaju priliku dobiti posebne kupone putem posebnih promocija!"
+                           FontSize="12"
+                           TextColor="White"
+                           HorizontalTextAlignment="Center"/>
 
-                        <Label Text="🎟️ cLANSTVO - clanstvo je besplatno i njemu  prvom registracijom                                                
-                               ⭐ SKUPLJANJE ZVJEZDICA - Kupuj ulaznice i proizvode koristeci clanstvo jer za svaki potroseni 1 BAM dobivas 1 zvjezdicu. Zvjezdice vrijede godinu dana.                                                                                                      
-                               🔄 ZAMJENA ZVJEZDICA ZA KUPONE -  Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene."
-                               
-                        FontSize="14"
-                               TextColor="White"
-                               LineBreakMode="WordWrap"/>
-                    </VerticalStackLayout>
-                </Frame>
+                    <Button Text="Prijavi se i počni skupljati bodove"
+                            BackgroundColor="#FFD600"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            Margin="25,20,25,10"
+                            HeightRequest="50"
+                            Clicked="OnPrijavaButtonClicked"/>
+                </StackLayout>
 
             </StackLayout>
-            
 
-            <!-- PRIJAVLJEN KORISNIK -->
-            <StackLayout x:Name="UserView" IsVisible="False" Spacing="10">
-                <Label Text="Vasi loyalty bodovi"
-                       FontSize="22"
-                       FontAttributes="Bold" />
+            <!-- Prikaz za prijavljene korisnike -->
+            <StackLayout x:Name="LoggedInLayout" IsVisible="False" Spacing="0">
 
-                <Label x:Name="BodoviLabel"
-                       Text="0"
-                       FontSize="30"
-                       TextColor="Green"
-                       HorizontalOptions="Center" />
-
-                <Button Text="Kupovina karte (+10 bodova)"
-                        Clicked="BuyTickets_Clicked" />
-
-                <Button Text="Recenzija filma (+5 bodova)"
-                        Clicked="ReviewMovie_Clicked" />
+                <Label Text="Dobrodošao! Sada možeš skupljati zvjezdice."
+                       FontSize="16"
+                       TextColor="White"
+                       HorizontalTextAlignment="Center"
+                       Margin="20"/>
+                <Button Text="Pogledaj svoje bodove"
+                        BackgroundColor="#FFD600"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        Margin="25,10,25,10"
+                        HeightRequest="50"/>
             </StackLayout>
 
-        </VerticalStackLayout>
+        </StackLayout>
     </ScrollView>
 
 </ContentPage>
