@@ -6,31 +6,32 @@ namespace Cinestar_app;
 public partial class CityPickerPage : ContentPage
 {
     private readonly bool _isFirstLaunch;
-    private readonly string[] _cities =
-    {
-        "Mostar", "Bihac", "Tuzla", "Banja Luka", "Zenica",
-        "Sarajevo", "Prijedor", "Gracanica"
-    };
 
-    public CityPickerPage(bool isFirstLaunch = false)
+    // dodaj novi parametar: tabIndex na koji se vraća
+    private readonly int _returnTabIndex;
+
+    public CityPickerPage(bool isFirstLaunch = false, int returnTabIndex = 0)
     {
         InitializeComponent();
         _isFirstLaunch = isFirstLaunch;
+        _returnTabIndex = returnTabIndex;
 
-        CitiesListView.ItemsSource = _cities;
+        CitiesListView.ItemsSource = new[]
+        {
+            "Mostar", "Bihac", "Tuzla", "Banja Luka", "Zenica",
+            "Sarajevo", "Prijedor", "Gracanica"
+        };
         CitiesListView.ItemSelected += OnCitySelected;
 
         NavigationPage.SetHasNavigationBar(this, false);
     }
 
-    private async void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
+    private void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
     {
         if (e.SelectedItem == null) return;
 
         string selectedCity = e.SelectedItem.ToString();
         Preferences.Set("SelectedCity", selectedCity);
-
-        // 🔹 Pošalji signal svim subscriber-ima
         MessagingCenter.Send(this, "CityChanged", selectedCity);
 
         ((ListView)sender).SelectedItem = null;
@@ -41,7 +42,11 @@ public partial class CityPickerPage : ContentPage
         }
         else
         {
-            await Navigation.PopAsync();
+            // vraćamo MainTabbedPage i postavljamo pravi tab
+            Application.Current.MainPage = new MainTabbedPage(selectedCity)
+            {
+                CurrentPage = Application.Current.MainPage is MainTabbedPage main ? main.Children[_returnTabIndex] : null
+            };
         }
     }
 }
