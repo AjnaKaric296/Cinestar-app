@@ -3,6 +3,7 @@
              x:Class="Cinestar_app.Profil"
              Title=""
              BackgroundColor="#051851">
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#051851" VerticalOptions="Center">
 
@@ -14,10 +15,33 @@
                    Padding="10"/>
             <BoxView HeightRequest="1" 
                      BackgroundColor="#FFD700" 
-                    HorizontalOptions="FillAndExpand"
-                    Margin="5,5"/>
+                     HorizontalOptions="FillAndExpand"
+                     Margin="5,5"/>
 
-            <!-- BUTTONI -->
+            <!-- Email Entry -->
+            <Entry x:Name="EmailEntry"
+                   Placeholder="Unesite svoj email"
+                   Keyboard="Email"
+                   TextColor="White"
+                   PlaceholderColor="#AAAAAA"
+                   BackgroundColor="#0A1B3A"
+                   HeightRequest="50"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="0,10"
+                   />
+
+            <!-- Lozinka Entry -->
+            <Entry x:Name="LozinkaEntry"
+                   Placeholder="Unesite lozinku"
+                   IsPassword="True"
+                   TextColor="White"
+                   PlaceholderColor="#AAAAAA"
+                   BackgroundColor="#0A1B3A"
+                   HeightRequest="50"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="0,10"/>
+
+            <!-- Buttoni -->
             <Button Text="Prijavi se"
                     BackgroundColor="#FFD700"
                     TextColor="White"
@@ -34,31 +58,6 @@
                     Margin="5,0"
                     />
 
-
-            <!-- REGISTRACIJA FORMA (sakrivena na pocetku) -->
-            <VerticalStackLayout x:Name="RegistracijaForma"
-                                 IsVisible="False"
-                                 Spacing="10"
-                                 Margin="0,20,0,0">
-
-                <Label Text="Registracija"
-                       FontSize="20"
-                       HorizontalOptions="Center"
-                       TextColor="White"
-                       FontFamily="Arial"/>
-
-                <Entry Placeholder="Ime" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Prezime" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Email" Keyboard="Email" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Lozinka" IsPassword="True" TextColor="White" FontFamily="Arial"/>
-                <Entry Placeholder="Potvrdi lozinku" IsPassword="True" TextColor="White" FontFamily="Arial"/>
-
-                <Button Text="Registruj se"
-                        BackgroundColor="Green"
-                        TextColor="White"
-                        FontFamily="Arial"
-                        />
-            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

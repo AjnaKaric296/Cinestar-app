@@ -6,7 +6,7 @@
              Title="Moj profil">
 
     <VerticalStackLayout Padding="20" Spacing="15">
-
+        <Image Source="profile-icon-9.png" />
         <Label Text="MOJ PROFIL"
                FontSize="24"
                TextColor="#FFD700"
