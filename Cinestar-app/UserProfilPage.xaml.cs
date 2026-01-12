@@ -1,5 +1,4 @@
 using Cinestar_app.Services;
-using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
 namespace Cinestar_app;
@@ -11,26 +10,30 @@ public partial class UserProfilPage : ContentPage
         InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
     }
+
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        LoadUser();
-    }
 
-    private void LoadUser()
-    {
-        var user = UserSession.CurrentUser;
-
-        if (user == null)
-            return;
-
-        ImeLabel.Text = $"Ime: {user.Ime}";
-        PrezimeLabel.Text = $"Prezime: {user.Prezime}";
+        if (UserSession.CurrentUser != null)
+            BindingContext = UserSession.CurrentUser;
     }
 
     private async void Logout_Clicked(object sender, EventArgs e)
     {
-        UserSession.Logout();
-        await Navigation.PopToRootAsync();
+        bool potvrda = await DisplayAlert(
+            "Odjava",
+            "Da li ste sigurni da želite da se odjavite?",
+            "Da",
+            "Ne"
+        );
+
+        if (potvrda) 
+        {
+            UserSession.Logout();
+            await Navigation.PopToRootAsync();
+        }
+       
     }
+
 }
