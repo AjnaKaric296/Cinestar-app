@@ -36,7 +36,7 @@ public partial class MainTabbedPage : TabbedPage
             IconImageSource = "profil.png"
         });
 
-        // 🔥 KLJUČNO
+    
         CurrentPage = homeTab;
     }
 }
