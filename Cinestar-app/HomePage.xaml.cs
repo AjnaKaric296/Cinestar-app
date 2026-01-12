@@ -168,7 +168,18 @@ public partial class HomePage : ContentPage
 
     private async void OnCityTapped(object sender, System.EventArgs e)
     {
-        await Navigation.PushAsync(new CityPickerPage(false));
+        var cityPicker = new CityPickerPage(false);
+
+        Application.Current.MainPage = cityPicker;
+
+        MessagingCenter.Subscribe<CityPickerPage, string>(this, "CityChanged", (senderPage, selectedCity) =>
+        {
+            Preferences.Set("SelectedCity", selectedCity);
+
+            Application.Current.MainPage = new MainTabbedPage(selectedCity);
+
+            MessagingCenter.Unsubscribe<CityPickerPage, string>(this, "CityChanged");
+        });
     }
 
     private async void OnCarouselTapped(object sender, System.EventArgs e)

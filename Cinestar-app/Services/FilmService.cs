@@ -9,7 +9,7 @@ namespace Cinestar_app.Services
 {
     public class FilmService
     {
-        private readonly string apiKey = "cdcbfd60"; // tvoj OMDb ključ
+        private readonly string apiKey = "ebd20d7e"; // OMDb ključ
 
         // globalni Random objekt za sve filmove i glumce
         private static readonly Random rnd = new();
@@ -29,12 +29,12 @@ namespace Cinestar_app.Services
                 .Where(a => !string.IsNullOrWhiteSpace(a) && a != "N/A")
                 .ToList();
 
-            // svaki glumac dobije random sliku
+            // svaki glumac bi trebalo da dobije random silku
             var actorsList = actorNames
                 .Select(a => new Actor
                 {
                     Name = a,
-                    Photo = $"https://thispersondoesnotexist.com?uniq={rnd.Next(1000000)}"
+                    Photo = $"https://thispersondoesnotexist.com"
                 })
                 .ToList();
 

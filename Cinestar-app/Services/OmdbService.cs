@@ -5,7 +5,7 @@ namespace Cinestar_app.Services
 {
     public class OmdbService
     {
-        private const string ApiKey = "cdcbfd60";
+        private const string ApiKey = "ebd20d7e";
         private readonly HttpClient client;
         private readonly Dictionary<string, OmdbMovieDetails> cache = new();
 

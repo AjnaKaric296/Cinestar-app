@@ -163,10 +163,21 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
             await Navigation.PushAsync(new FilmDetalji(film));
         }
     }
-
     private async void OnCityTapped(object sender, System.EventArgs e)
-        => await Navigation.PushAsync(new CityPickerPage(false));
+    {
+        var cityPicker = new CityPickerPage(false);
 
+        Application.Current.MainPage = cityPicker;
+
+        MessagingCenter.Subscribe<CityPickerPage, string>(this, "CityChanged", (senderPage, selectedCity) =>
+        {
+            Preferences.Set("SelectedCity", selectedCity);
+
+            Application.Current.MainPage = new MainTabbedPage(selectedCity);
+
+            MessagingCenter.Unsubscribe<CityPickerPage, string>(this, "CityChanged");
+        });
+    }
     private async void OnReserveClicked(object sender, System.EventArgs e)
     {
         if (sender is Button btn)
