@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Cinestar_app.Platforms.Android.Handlers;
 
 namespace Cinestar_app
 {
@@ -9,6 +10,12 @@ namespace Cinestar_app
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureMauiHandlers(handlers =>
+                {
+#if ANDROID
+                    handlers.AddHandler(typeof(TabbedPage), typeof(NoSwipeTabbedPageHandler));
+#endif
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -16,7 +23,7 @@ namespace Cinestar_app
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

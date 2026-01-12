@@ -1,39 +1,81 @@
-﻿using Cinestar_app.Models;
+﻿using System.Net.Http;
 using System.Text.Json;
+
+namespace Cinestar_app.Services;
 
 public class OmdbService
 {
-    private readonly string apiKey = "75ace56d";
+    private readonly string apiKey = "cdcbfd60";
     private readonly HttpClient client = new();
 
-    public OmdbService()
+    private Dictionary<string, OmdbMovieDetails> cache = new();
+
+    public class OmdbMovieShort
     {
+<<<<<<< HEAD
         client.BaseAddress = new Uri("https://www.omdbapi.com/");
+=======
+        public string Title { get; set; }
+        public string Year { get; set; }
+        public string imdbID { get; set; }
+        public string Poster { get; set; }
+>>>>>>> c5a6af4bfbc7894e91b4e3ac7968175b80eef580
     }
 
-    public async Task<List<Film>> SearchMoviesAsync(string query, int page = 1)
+    public class OmdbMovieDetails
     {
-        var url = $"?apikey={apiKey}&s={Uri.EscapeDataString(query)}&type=movie&page={page}";
-        var response = await client.GetAsync(url);
-        var content = await response.Content.ReadAsStringAsync();
-
-        var searchResult = JsonSerializer.Deserialize<SearchResponse>(content);
-        return searchResult?.Search ?? new List<Film>();
+        public string Title { get; set; }
+        public string Year { get; set; }
+        public string Genre { get; set; }
+        public string Plot { get; set; }
+        public string Poster { get; set; }
+        public string imdbID { get; set; }
+        public string Actors { get; set; }
     }
 
-    public async Task<Film> GetMovieDetailsAsync(string imdbID)
+    public async Task<List<OmdbMovieShort>> SearchMoviesAsync(string query)
     {
-        var url = $"?apikey={apiKey}&i={imdbID}&plot=short";
-        var response = await client.GetAsync(url);
-        var content = await response.Content.ReadAsStringAsync();
+        var url = $"https://www.omdbapi.com/?apikey={apiKey}&s={query}";
+        var response = await client.GetStringAsync(url);
+        var json = JsonDocument.Parse(response);
 
-        return JsonSerializer.Deserialize<Film>(content);
+        var list = new List<OmdbMovieShort>();
+        if (json.RootElement.TryGetProperty("Search", out var searchResults))
+        {
+            foreach (var item in searchResults.EnumerateArray())
+            {
+                list.Add(new OmdbMovieShort
+                {
+                    Title = item.GetProperty("Title").GetString(),
+                    Year = item.GetProperty("Year").GetString(),
+                    imdbID = item.GetProperty("imdbID").GetString(),
+                    Poster = item.TryGetProperty("Poster", out var p) ? p.GetString() : "placeholder.png"
+                });
+            }
+        }
+        return list;
     }
-}
 
-public class SearchResponse
-{
-    public List<Film> Search { get; set; }
-    public string totalResults { get; set; }
-    public string Response { get; set; }
+    public async Task<OmdbMovieDetails> GetMovieDetailsAsync(string imdbID)
+    {
+        if (cache.ContainsKey(imdbID))
+            return cache[imdbID];
+
+        var url = $"https://www.omdbapi.com/?apikey={apiKey}&i={imdbID}";
+        var response = await client.GetStringAsync(url);
+        var json = JsonDocument.Parse(response).RootElement;
+
+        var details = new OmdbMovieDetails
+        {
+            Title = json.GetProperty("Title").GetString(),
+            Year = json.GetProperty("Year").GetString(),
+            Genre = json.GetProperty("Genre").GetString(),
+            Plot = json.GetProperty("Plot").GetString(),
+            Poster = json.GetProperty("Poster").GetString(),
+            imdbID = json.GetProperty("imdbID").GetString()
+        };
+
+        cache[imdbID] = details;
+        return details;
+    }
 }

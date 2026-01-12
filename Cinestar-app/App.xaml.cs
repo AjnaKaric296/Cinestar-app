@@ -1,36 +1,26 @@
-﻿using Cinestar_app;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
-namespace Cinestar_app
+namespace Cinestar_app;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
+        InitializeComponent();
+
+        // Dohvati prethodno odabrani grad
+        var city = Preferences.Get("SelectedCity", null);
+
+        if (string.IsNullOrEmpty(city))
         {
-            InitializeComponent();
+            // Prvo paljenje: CityPickerPage kao root unutar NavigationPage
+            MainPage = new NavigationPage(new CityPickerPage(true));
         }
-
-        
-
-        protected override Window CreateWindow(IActivationState? activationState)
+        else
         {
-            // *** TEMPORARNO OBRIsI OVO ZA TEST ***
-            Preferences.Clear(); // ODKOMENTIRAJ OVO 1 PUT
-
-            if (Preferences.ContainsKey("SelectedCity"))
-            {
-                return new Window(new NavigationPage(new MainTabbedPage()));
-            }
-            else
-            {
-                return new Window(new SplashPage());
-            }
+            // Ako je grad već odabran, odmah TabbedPage
+            MainPage = new MainTabbedPage(city);
         }
-
-        public static bool IsUserRegistered { get; set; } = false;
-
-       
-
     }
 }
