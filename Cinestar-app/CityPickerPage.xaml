@@ -42,6 +42,25 @@
                 </ListView.ItemTemplate>
             </ListView>
 
+            <Label Text="Koristi moju lokaciju"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   TextColor="White"
+                   TextDecorations="Underline"    
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="20,10"
+                   Padding="10"
+                   InputTransparent="False">
+               
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnUseLocationTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+
+
         </StackLayout>
     </ScrollView>
 
