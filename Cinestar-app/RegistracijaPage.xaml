@@ -1,32 +1,124 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.RegistracijaPage"
-             BackgroundColor="#051851"
-             Title="">
+             Title=""
+             BackgroundColor="#051851">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+    <Grid>
+        <!-- Pozadina -->
+        <Image Source="pozadinskaslika.jpg"
+               Aspect="AspectFill"/>
 
-            <Label Text="REGISTRACIJA"
-                   FontSize="24"
-                   TextColor="#FFD700"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="15">
 
-            <Entry x:Name="ImeEntry" Placeholder="Ime" TextColor="White"/>
-            <Entry x:Name="PrezimeEntry" Placeholder="Prezime" TextColor="White"/>
-            <Entry x:Name="EmailEntry" Placeholder="Email"
-                   Keyboard="Email" TextColor="White"/>
-            <Entry x:Name="LozinkaEntry" Placeholder="Lozinka"
-                   IsPassword="True" TextColor="White"/>
-            <Entry x:Name="PotvrdaLozinkeEntry" Placeholder="Potvrdi lozinku"
-                   IsPassword="True" TextColor="White"/>
+                <Label Text="REGISTRACIJA"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       Margin="0,30,0,0"
+                       TextColor="White"
+                       FontFamily="Arial"
+                       Padding="10"/>
 
-            <Button Text="Registruj se"
-                    BackgroundColor="#FFD700"
-                    TextColor="Black"
-                    Clicked="RegistrujSe_Clicked"/>
+                <BoxView HeightRequest="1"
+                         BackgroundColor="White"
+                         HorizontalOptions="FillAndExpand"
+                         Margin="5,5"/>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <!-- Ime -->
+                <Frame Padding="0"
+                       BackgroundColor="#051851"
+                       CornerRadius="20"
+                       HasShadow="False">
+                    <Entry x:Name="ImeEntry"
+                           Placeholder="Ime"
+                           TextColor="White"
+                           PlaceholderColor="#AAAAAA"
+                           BackgroundColor="Transparent"
+                           FontSize="13"
+                           HeightRequest="35"
+                           VerticalTextAlignment="Center"
+                           Margin="12,0"/>
+                </Frame>
+
+                <!-- Prezime -->
+                <Frame Padding="0"
+                       BackgroundColor="#051851"
+                       CornerRadius="20"
+                       HasShadow="False">
+                    <Entry x:Name="PrezimeEntry"
+                           Placeholder="Prezime"
+                           TextColor="White"
+                           PlaceholderColor="#AAAAAA"
+                           BackgroundColor="Transparent"
+                           FontSize="13"
+                           HeightRequest="35"
+                           VerticalTextAlignment="Center"
+                           Margin="12,0"/>
+                </Frame>
+
+                <!-- Email -->
+                <Frame Padding="0"
+                       BackgroundColor="#051851"
+                       CornerRadius="20"
+                       HasShadow="False">
+                    <Entry x:Name="EmailEntry"
+                           Placeholder="Email"
+                           Keyboard="Email"
+                           TextColor="White"
+                           PlaceholderColor="#AAAAAA"
+                           BackgroundColor="Transparent"
+                           FontSize="13"
+                           HeightRequest="35"
+                           VerticalTextAlignment="Center"
+                           Margin="12,0"/>
+                </Frame>
+
+                <!-- Lozinka -->
+                <Frame Padding="0"
+                       BackgroundColor="#051851"
+                       CornerRadius="20"
+                       HasShadow="False">
+                    <Entry x:Name="LozinkaEntry"
+                           Placeholder="Lozinka"
+                           IsPassword="True"
+                           TextColor="White"
+                           PlaceholderColor="#AAAAAA"
+                           BackgroundColor="Transparent"
+                           FontSize="13"
+                           HeightRequest="35"
+                           VerticalTextAlignment="Center"
+                           Margin="12,0"/>
+                </Frame>
+
+                <!-- Potvrda lozinke -->
+                <Frame Padding="0"
+                       BackgroundColor="#051851"
+                       CornerRadius="20"
+                       HasShadow="False">
+                    <Entry x:Name="PotvrdaLozinkeEntry"
+                           Placeholder="Potvrdi lozinku"
+                           IsPassword="True"
+                           TextColor="White"
+                           PlaceholderColor="#AAAAAA"
+                           BackgroundColor="Transparent"
+                           FontSize="13"
+                           HeightRequest="35"
+                           VerticalTextAlignment="Center"
+                           Margin="12,0"/>
+                </Frame>
+
+                <!-- Button -->
+                <Button Text="Registruj se"
+                        BackgroundColor="#0a0733"
+                        TextColor="White"
+                        FontFamily="Arial"
+                        CornerRadius="15"
+                        WidthRequest="200"
+                        HorizontalOptions="Center"
+                        Clicked="RegistrujSe_Clicked"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

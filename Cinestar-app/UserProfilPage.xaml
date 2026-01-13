@@ -22,6 +22,9 @@
                 <StackLayout Spacing="10">
                
                 <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Podaci_Clicked"/>
+                    </StackLayout.GestureRecognizers>
                     <Image Source="slika1.jpg" HeightRequest="20"/>
                     <Label Text="Podaci o računu"/>
                     <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
@@ -31,7 +34,9 @@
          Margin="0,5,0,5"
          HorizontalOptions="FillAndExpand"/>
                 <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
-                        <Image Source="bodovi.png" HeightRequest="20"/>
+                   
+                   
+                    <Image Source="bodovi.png" HeightRequest="20"/>
                         <Label Text="Loyalty Bodovi"/>
                     <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
