@@ -62,6 +62,20 @@ public class UserDatabase
             await _database.UpdateAsync(loyalty);
         }
     }
+    public Task<int> AddReservationAsync(Reservation reservation)
+    {
+        // automatski stvara tablicu ako ne postoji
+        _database.CreateTableAsync<Reservation>().Wait();
+        return _database.InsertAsync(reservation);
+    }
+
+    public Task<List<Reservation>> GetReservationsForUserAsync(string email)
+    {
+        _database.CreateTableAsync<Reservation>().Wait();
+        return _database.Table<Reservation>()
+                        .Where(r => r.UserEmail == email)
+                        .ToListAsync();
+    }
 
 
 

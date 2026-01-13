@@ -46,4 +46,9 @@ public partial class UserProfilPage : ContentPage
         await Navigation.PushAsync(new PodaciORacunu());
     }
 
+    private async void MojeRezervacije_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new MojeRezervacije());
+    }
+
 }
