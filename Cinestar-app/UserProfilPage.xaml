@@ -1,25 +1,59 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.UserProfilPage"
              BackgroundColor="#051851"
              Title="Moj profil">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Image Source="profile-icon-9.png" />
-        <Label Text="MOJ PROFIL"
-               FontSize="24"
-               TextColor="#FFD700"
-               HorizontalOptions="Center"/>
+    <StackLayout Padding="15" >
+        <Image Source="logo.png" HeightRequest="70" WidthRequest="70" Margin="0" HorizontalOptions="Start"/>
 
-        <Label x:Name="ImeLabel" TextColor="White"/>
-        <Label x:Name="PrezimeLabel" TextColor="White"/>
-        <Label x:Name="EmailLabel" TextColor="White"/>
+        <Frame Padding="0" BackgroundColor="Transparent" BorderColor="Gray" WidthRequest="100" Margin="0,0,0,5" HorizontalOptions="Center">
+            <Image Source="profil.png" HeightRequest="100" />
+        </Frame>
 
-        <Button Text="Odjavi se"
-                BackgroundColor="Red"
-                TextColor="White"
-                Clicked="Logout_Clicked"/>
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="15" >
+            <Label Text="{Binding Ime}" TextColor="White" FontSize="30" FontAttributes="Bold" CharacterSpacing="1" />
+            <Label Text="{Binding Prezime}" TextColor="White" FontSize="30" FontAttributes="Bold" CharacterSpacing="1"/>
+        </HorizontalStackLayout>
+        <Label Text="{Binding Email}" Margin="0,0,0,0" TextColor="White" FontSize="16" HorizontalOptions="Center"/>
 
-    </VerticalStackLayout>
+        
+            <Frame BackgroundColor="#212066" Margin="0,30,0,0" Padding="20">
+                <StackLayout Spacing="10">
+               
+                <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
+                    <Image Source="slika1.jpg" HeightRequest="20"/>
+                    <Label Text="Podaci o računu"/>
+                    <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                <BoxView HeightRequest="1"
+         Color="#3e3e57"
+         Margin="0,5,0,5"
+         HorizontalOptions="FillAndExpand"/>
+                <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
+                        <Image Source="bodovi.png" HeightRequest="20"/>
+                        <Label Text="Loyalty Bodovi"/>
+                    <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+
+                <BoxView HeightRequest="1"
+         Color="#3e3e57"
+         Margin="0,5,0,5"
+         HorizontalOptions="FillAndExpand"/>
+                <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Logout_Clicked"/>
+                    </StackLayout.GestureRecognizers>
+
+                    <Image Source="logout.png" HeightRequest="20"/>
+                    <Label Text="Odjavi se"/>
+                    <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+
+
+
+            </StackLayout>
+        </Frame>
+      
+    </StackLayout>
 </ContentPage>
