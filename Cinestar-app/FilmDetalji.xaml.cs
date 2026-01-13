@@ -7,12 +7,16 @@ namespace Cinestar_app;
 public partial class FilmDetalji : ContentPage
 {
     int currentRating = 0;
+    private bool ratingConfirmed = false;
+    private UserDatabase _db;
 
     public FilmDetalji(Film film)
     {
         InitializeComponent();
         BindingContext = film;
         RatingFrame.IsVisible = UserSession.IsLoggedIn;
+
+        _db = new UserDatabase();
 
         if (UserSession.IsLoggedIn)
         {
@@ -27,7 +31,7 @@ public partial class FilmDetalji : ContentPage
         TitleLabel.Text = film.Title;
         PlotLabel.Text = film.Plot;
 
-        ActorsCollectionView.ItemsSource = film.Actors; // ovo je ključno
+        ActorsCollectionView.ItemsSource = film.Actors;
     }
 
     void AddStarTap(Image star, int value)
@@ -56,25 +60,30 @@ public partial class FilmDetalji : ContentPage
         Star5.Source = rating >= 5 ? "star_filled.png" : "star_empty.png";
 
         RatingInfoLabel.Text = $"Dao/la si ocjenu {rating}/5 ⭐";
-
-        AddUserPoints(rating);
     }
 
-
-    void AddUserPoints(int rating)
+    private async Task<int> AddUserPoints(int rating)
     {
         var user = UserSession.CurrentUser;
-        if (user == null) return;
+        if (user == null) return 0;
 
-        // Dodaj bodove u user objekt
-        user.LoyaltyPoints += 1; // 1 bod po ocjeni
+        // Dodaj 1 bod i sačuvaj rezultat u lokalnu varijablu
+        user.LoyaltyPoints += 1;
+        int rezultat = user.LoyaltyPoints; // ovo je trenutni broj bodova nakon dodavanja
 
         // Snimi u bazu
-        var db = new UserDatabase();
-        _ = db.UpdateUserLoyaltyAsync(user.Email, user.LoyaltyPoints); // asinhrono, ne blokira
+        await _db.UpdateUserLoyaltyAsync(user.Email, user.LoyaltyPoints);
+
+        // Pošalji poruku da se labela osvježi na LoyaltyBodovi stranici
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            MessagingCenter.Send(this, "UpdateLoyaltyPoints");
+        });
+
+        // Vrati rezultat tako da ga možeš direktno koristiti
+        return rezultat;
     }
 
-    private bool ratingConfirmed = false;
 
     private async void OnConfirmRatingClicked(object sender, EventArgs e)
     {
@@ -96,13 +105,12 @@ public partial class FilmDetalji : ContentPage
 
         if (!ratingConfirmed)
         {
-            AddUserPoints(currentRating); // update baze i user objekt
+            int trenutniBodovi = await AddUserPoints(currentRating); // ovdje dobijemo rezultat
             ratingConfirmed = true;
 
-            await DisplayAlert("Hvala!", $"Ocijenili ste film {currentRating}/5 ⭐ i osvojili bodove!", "OK");
-
-            // Ako je LoyaltyBodovi trenutno otvorena, možeš odmah osvježiti labelu
-            MessagingCenter.Send(this, "UpdateLoyaltyPoints");
+            await DisplayAlert("Hvala!",
+                $"Ocijenili ste film {currentRating}/5 ⭐ i osvojili bod! 🎉\nTrenutno imate {trenutniBodovi} bodova.",
+                "OK");
         }
         else
         {
@@ -110,9 +118,5 @@ public partial class FilmDetalji : ContentPage
         }
     }
 
+
 }
-
-
-
-
-

@@ -41,13 +41,14 @@ public class UserDatabase
         var user = await _database.Table<User>()
                                   .Where(u => u.Email == email)
                                   .FirstOrDefaultAsync();
-
         if (user != null)
         {
-            user.LoyaltyPoints = newPoints;  // ili Bodovi, kako se zove u tvojoj klasi
+            user.LoyaltyPoints = newPoints;
             await _database.UpdateAsync(user);
         }
     }
+
+
 
     // UserDatabase.cs
     public async Task<Loyalty?> GetLoyaltyAsync(string email)
