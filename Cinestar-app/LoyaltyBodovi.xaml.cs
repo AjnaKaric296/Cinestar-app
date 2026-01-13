@@ -1,15 +1,28 @@
 
-using Microsoft.Maui.Controls;
+using System.Collections.ObjectModel;
+using Cinestar_app.Models;
 ﻿using Cinestar_app.Services;
+using Microsoft.Maui.Controls;
 namespace Cinestar_app;
 
 public partial class LoyaltyBodovi : ContentPage
 {
     private UserDatabase _db;
+    public ObservableCollection<Reward> Rewards { get; set; }
     public LoyaltyBodovi()
     {
         InitializeComponent();
-        _db=new UserDatabase();
+        Rewards = new ObservableCollection<Reward>
+        {
+            new Reward { Name = "Besplatne kokice", Image = "kokica.png", StarsRequired = 50 },
+            new Reward { Name = "Popust na piće", Image = "sokk.png", StarsRequired = 30 },
+            new Reward { Name = "Ulaznica za film", Image = "karte.png", StarsRequired = 100 },
+            new Reward { Name = "VIP Zona", Image = "vip.png", StarsRequired = 120 },
+        };
+
+        BindingContext = this;
+
+        _db =new UserDatabase();
         NavigationPage.SetHasNavigationBar(this, false);
 
     }

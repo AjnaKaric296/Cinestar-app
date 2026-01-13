@@ -223,14 +223,63 @@ TextColor="#FFD600"
             <StackLayout x:Name="LoggedInLayout" IsVisible="False" Spacing="0" Padding="10">
 
                 <!-- Header: Logo i bodovi -->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="15" Margin="0,10,0,20">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Spacing="15" Margin="0,10,0,20">
                    
                     <StackLayout VerticalOptions="Center">
-                        <Label x:Name="PozdravLabel" Text="Dobrodošao/la!" FontSize="20" TextColor="White" Opacity="0.8"/>
+                        <Label x:Name="PozdravLabel" Text="Dobrodošao/la!" FontSize="20" TextColor="White" Opacity="0.8" HorizontalOptions="Center"/>
                         <Label Text="Tvoje zvjezdice" FontSize="14" TextColor="White" Opacity="0.8" HorizontalOptions="Center"/>
-                        <Label x:Name="BodoviLabel" Text="0" FontSize="110"  TextColor="#FFD600" HorizontalOptions="Center"/>
+                        <Frame CornerRadius="24"
+       Padding="0"
+       HasShadow="True"
+       BackgroundColor="#FFD600"
+       Margin="0,20">
+
+                            <Grid HeightRequest="220">
+
+                                <!-- Pozadina kartice -->
+                                <Image Source="kupon1.png"
+               Aspect="AspectFill"
+               Opacity="0.7"/>
+
+                                <!-- Gradient overlay -->
+                                <BoxView>
+                                    <BoxView.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#051851" Offset="0.0"/>
+                                            <GradientStop Color="#80051851" Offset="0.1"/>
+                                        </LinearGradientBrush>
+                                    </BoxView.Background>
+                                </BoxView>
+
+                                <!-- Sadržaj -->
+                                <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="9">
+
+                                   
+
+                                    <Label x:Name="BodoviLabel"
+                   Text="0"
+                   FontSize="90"
+                   FontAttributes="Bold"
+                   TextColor="#FFD600"
+                   HorizontalOptions="Center"/>
+
+                                    <Label Text=" dostupnih bodova"
+                   FontSize="12"
+                   TextColor="White"
+                   Opacity="0.9"
+                   HorizontalOptions="Center"/>
+                                </StackLayout>
+                                
+
+                            </Grid>
+                           
+                        </Frame>
+
+
                     </StackLayout>
+                    
                 </StackLayout>
+                
 
                 <!-- Dugme za pregled bodova -->
                 <Button Text="Pogledaj bodove"
@@ -241,48 +290,51 @@ TextColor="#FFD600"
             HeightRequest="50"
             Clicked="OnViewPointsClicked"
             Margin="0,0,0,20"/>
+                <Label Text="Nagrade koje možeš osvojiti"
+       TextColor="#FFD600"
+       FontSize="18"
+       FontAttributes="Bold"
+       HorizontalOptions="Center"
+       Margin="0,20,0,10"/>
+
+              
+
 
                 <!-- Funkcionalnosti koje dodaju bodove -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="12" Padding="0,20" >
 
                     <Frame BackgroundColor="#081F59"
                CornerRadius="16"
-               Padding="12"
-                           Margin="0"
-                           HeightRequest="50"
-               WidthRequest="190"
+               Padding="5"
+               WidthRequest="130"
                HasShadow="False">
                         <Button Text="🎟️ Kupovina karata"
                     BackgroundColor="Transparent"
                     TextColor="White"
-                    FontSize="12" />
+                    FontSize="9" />
                     </Frame>
 
                     <Frame BackgroundColor="#081F59"
                CornerRadius="16"
-              Padding="12"
-            Margin="0,0"
-            HeightRequest="50"
-WidthRequest="190"
+              Padding="5"
+WidthRequest="130"
                HasShadow="False">
-                        <Button Text="⭐ Ocijeni film"
+                        <Button Text="✨ Ocijeni film"
                     BackgroundColor="Transparent"
                     TextColor="White"
-                    FontSize="12"
+                    FontSize="9"
                    />
                     </Frame>
 
                     <Frame BackgroundColor="#081F59"
                CornerRadius="16"
-               Padding="12"
-            Margin="0,0"
-            HeightRequest="50"
-WidthRequest="190"
+                            Padding="2"
+WidthRequest="130"
                HasShadow="False">
                         <Button Text="🎁 Zamijeni bodove"
                     BackgroundColor="Transparent"
                     TextColor="White"
-                    FontSize="12"
+                    FontSize="9"
                     />
                     </Frame>
 
