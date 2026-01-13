@@ -13,7 +13,8 @@ public partial class MainTabbedPage : TabbedPage
         var homeTab = new NavigationPage(new HomePage(selectedCity))
         {
             Title = "Pocetna",
-            IconImageSource = "home.png"
+            IconImageSource = "home.png",
+            BarBackgroundColor = Color.FromArgb("#051851")
         };
 
         Children.Add(homeTab);
@@ -21,19 +22,22 @@ public partial class MainTabbedPage : TabbedPage
         Children.Add(new NavigationPage(new Filmovi(selectedCity))
         {
             Title = "Filmovi",
-            IconImageSource = "film.png"
+            IconImageSource = "film.png",
+            BarBackgroundColor = Color.FromArgb("#051851")
         });
 
         Children.Add(new NavigationPage(new LoyaltyBodovi())
         {
             Title = "Bodovi",
-            IconImageSource = "bodovi.png"
+            IconImageSource = "bodovi.png",
+            BarBackgroundColor = Color.FromArgb("#051851")
         });
 
         Children.Add(new NavigationPage(new Profil())
         {
             Title = "Profil",
-            IconImageSource = "profil.png"
+            IconImageSource = "profil.png",
+            BarBackgroundColor = Color.FromArgb("#051851")
         });
 
     
