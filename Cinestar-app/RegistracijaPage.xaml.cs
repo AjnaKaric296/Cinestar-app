@@ -22,20 +22,20 @@ public partial class RegistracijaPage : ContentPage
         if (string.IsNullOrWhiteSpace(EmailEntry.Text) ||
             string.IsNullOrWhiteSpace(LozinkaEntry.Text))
         {
-            await DisplayAlert("Greska", "Sva polja su obavezna", "OK");
+            await DisplayAlert("Greška!", "Potrebno je popuniti sva polja! Molimo popunite sva polja.", "OK");
             return;
         }
 
         if (LozinkaEntry.Text != PotvrdaLozinkeEntry.Text)
         {
-            await DisplayAlert("Greska", "Lozinke se ne poklapaju", "OK");
+            await DisplayAlert("Greška!", "Lozinke koje ste unijeli se ne poklapaju! Molimo pokušajte ponovo ", "OK");
             return;
         }
 
         var existingUser = await _db.GetUserByEmailAsync(EmailEntry.Text);
         if (existingUser != null)
         {
-            await DisplayAlert("Greska", "Korisnik s tim emailom veæ postoji", "OK");
+            await DisplayAlert("Greška!", "Korisnièki e-mail veæ postoji. Molimo pokušajte ponovo.", "OK");
             return;
         }
 
@@ -52,7 +52,7 @@ public partial class RegistracijaPage : ContentPage
         // automatski login
         UserSession.Login(user);
 
-        await DisplayAlert("Uspjeh", "Registracija uspjesna!", "OK");
+        await DisplayAlert("", " Uspješno ste Registrovani! ", "OK");
 
         // direktno na profil
         await Navigation.PushAsync(new UserProfilPage());

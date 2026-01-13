@@ -126,6 +126,9 @@
 	  <MauiXaml Update="LoadingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="PodaciORacunu.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="RegistracijaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

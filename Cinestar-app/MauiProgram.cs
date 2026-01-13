@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-
+using Microsoft.Maui.Handlers;
 
 namespace Cinestar_app
 {
@@ -8,6 +8,7 @@ namespace Cinestar_app
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureMauiHandlers(handlers =>
@@ -21,6 +22,14 @@ namespace Cinestar_app
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            // ⬇⬇⬇ OVO IDE OVDJE (IZVAN CHAINA)
+            EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
+            {
+#if ANDROID
+                handler.PlatformView.Background = null;
+#endif
+            });
 
 #if DEBUG
             builder.Logging.AddDebug();

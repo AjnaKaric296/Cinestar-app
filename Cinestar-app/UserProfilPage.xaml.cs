@@ -36,4 +36,14 @@ public partial class UserProfilPage : ContentPage
        
     }
 
+    private async void LoyaltyBodovi_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new LoyaltyBodovi());
+    }
+
+    private async void Podaci_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PodaciORacunu());
+    }
+
 }
