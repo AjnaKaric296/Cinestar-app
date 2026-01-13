@@ -34,8 +34,9 @@
          Margin="0,5,0,5"
          HorizontalOptions="FillAndExpand"/>
                 <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
-                   
-                   
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="LoyaltyBodovi_Clicked"/>
+                    </StackLayout.GestureRecognizers>
                     <Image Source="bodovi.png" HeightRequest="20"/>
                         <Label Text="Loyalty Bodovi"/>
                     <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
