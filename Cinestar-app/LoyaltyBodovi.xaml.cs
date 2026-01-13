@@ -26,11 +26,6 @@ public partial class LoyaltyBodovi : ContentPage
         NavigationPage.SetHasNavigationBar(this, false);
 
     }
-    private async void OnPrijavaButtonClicked(object sender, EventArgs e)
-    {
-        Navigation.InsertPageBefore(new Profil(), this);
-        await Navigation.PopAsync();
-    }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -45,6 +40,11 @@ public partial class LoyaltyBodovi : ContentPage
             BodoviLabel.Text = loyalty?.Bodovi.ToString() ?? "0";
 
             PozdravLabel.Text = $"Dobrodošao/la, {UserSession.CurrentUser.Ime}!";
+
+            MessagingCenter.Subscribe<FilmDetalji>(this, "UpdateLoyaltyPoints", (sender) =>
+            {
+                UpdatePointsLabel();
+            });
         }
         else
         {
@@ -53,12 +53,24 @@ public partial class LoyaltyBodovi : ContentPage
         }
     }
 
+    private async void UpdatePointsLabel()
+    {
+        var loyalty = await _db.GetLoyaltyAsync(UserSession.CurrentUser.Email);
+        BodoviLabel.Text = loyalty?.Bodovi.ToString() ?? "0";
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        MessagingCenter.Unsubscribe<FilmDetalji>(this, "UpdateLoyaltyPoints");
+    }
+
     private async void OnViewPointsClicked(object sender, EventArgs e)
     {
         if (!UserSession.IsLoggedIn) return;
 
         var loyalty = await _db.GetLoyaltyAsync(UserSession.CurrentUser.Email);
-        await DisplayAlert("Tvoje zvjezdice", $"Trenutno imaš {loyalty?.Bodovi ?? 0} zvjezdica ", "OK");
+        await DisplayAlert("Tvoje zvjezdice", $"Trenutno imaš {loyalty?.Bodovi ?? 0} zvjezdica", "OK");
     }
 
 

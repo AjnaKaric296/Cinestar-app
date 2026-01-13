@@ -203,18 +203,13 @@ TextColor="#FFD600"
                            TextColor="White"
                            HorizontalTextAlignment="Center"/>
 
-                    <Button Text="Skupljaj zvjezdice"
-                            BackgroundColor="#FFD600"
-                            TextColor="Black"
-                            FontAttributes="Bold"
-                            CornerRadius="10"
-                            Margin="25,20,25,10"
-                            HeightRequest="50"
-                            Clicked="OnPrijavaButtonClicked"/>
-                    <Label Text="Registruj se i ostvari mogućnost skupljanja zvjezdica"
-                           HorizontalOptions="Center"
-                           Margin="-14"
-                           FontSize="11"/>
+
+                    <Label Text="Registruj se i ostvari mogućnost skupljanja bodova!"
+FontSize="16"
+FontAttributes="Bold"
+TextColor="#FFD600"
+                HorizontalOptions="Center"
+                       Margin="0,30,0,0"/>
                 </StackLayout>
 
             </StackLayout>
@@ -239,14 +234,14 @@ TextColor="#FFD600"
                                 <!-- Pozadina kartice -->
                                 <Image Source="kupon1.png"
                Aspect="AspectFill"
-               Opacity="0.7"/>
+               Opacity="0.0"/>
 
                                 <!-- Gradient overlay -->
                                 <BoxView>
                                     <BoxView.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                            <GradientStop Color="#051851" Offset="0.0"/>
-                                            <GradientStop Color="#80051851" Offset="0.1"/>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="#051851" />
+                                            <GradientStop Color="#80051851" />
                                         </LinearGradientBrush>
                                     </BoxView.Background>
                                 </BoxView>
@@ -290,12 +285,12 @@ TextColor="#FFD600"
             HeightRequest="50"
             Clicked="OnViewPointsClicked"
             Margin="0,0,0,20"/>
-                <Label Text="Nagrade koje možeš osvojiti"
-       TextColor="#FFD600"
-       FontSize="18"
+                <Label Text="Skupljaj bodove i osvoji najbolje nagrade!"
+       TextColor="white"
+       FontSize="11"
        FontAttributes="Bold"
        HorizontalOptions="Center"
-       Margin="0,20,0,10"/>
+       Margin="0,-10,0,10"/>
 
               
 

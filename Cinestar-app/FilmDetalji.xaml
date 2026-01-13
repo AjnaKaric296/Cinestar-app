@@ -35,6 +35,53 @@
                    FontSize="20"
                    FontAttributes="Bold"
                    TextColor="#FFD200"/>
+
+            <!-- RECENZIJA FILMA -->
+            <Frame x:Name="RatingFrame"
+                BackgroundColor="#071942"
+       CornerRadius="16"
+       Padding="15"
+       HasShadow="False">
+
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                    <Label Text="Ocijeni film"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="#FFD200"
+               HorizontalOptions="Center"/>
+
+                    <!-- Zvjezdice -->
+                    <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+
+                        <Image x:Name="Star1" Source="star_empty.png" HeightRequest="36"/>
+                        <Image x:Name="Star2" Source="star_empty.png" HeightRequest="36"/>
+                        <Image x:Name="Star3" Source="star_empty.png" HeightRequest="36"/>
+                        <Image x:Name="Star4" Source="star_empty.png" HeightRequest="36"/>
+                        <Image x:Name="Star5" Source="star_empty.png" HeightRequest="36"/>
+
+                    </HorizontalStackLayout>
+
+                    <Label x:Name="RatingInfoLabel"
+               Text="Dodijeli ocjenu i osvoji bodove "
+               FontSize="12"
+               TextColor="White"
+               Opacity="0.7"
+               HorizontalOptions="Center"/>
+                    <Button x:Name="ConfirmRatingButton"
+                Text="Potvrdi ocjenu"
+                BackgroundColor="#FFD200"
+                TextColor="Black"
+                FontAttributes="Bold"
+                CornerRadius="10"
+                HeightRequest="40"
+                HorizontalOptions="Center"
+                Clicked="OnConfirmRatingClicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
+
+
             <!-- Glumci -->
             <CollectionView x:Name="ActorsCollectionView"
                 ItemsSource="{Binding Actors}"
