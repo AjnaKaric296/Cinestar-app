@@ -37,6 +37,10 @@ public partial class Profil : ContentPage
             await DisplayAlert("Greška", "Lozinka nije tačna", "OK");
             return;
         }
+        UserSession.Login(user);
+
+        // ← OVDJE dodaj ovaj red da bi RezervacijaPage znala tko je prijavljen
+        Preferences.Set("LoggedInEmail", user.Email.Trim().ToLower());
 
         UserSession.Login(user);
         await DisplayAlert("Uspjeh", $"Dobrodošli, {user.Ime}!", "OK");

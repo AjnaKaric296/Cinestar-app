@@ -22,18 +22,22 @@ public partial class UserProfilPage : ContentPage
     private async void Logout_Clicked(object sender, EventArgs e)
     {
         bool potvrda = await DisplayAlert(
-            "Odjava",
-            "Da li ste sigurni da želite da se odjavite?",
-            "Da",
-            "Ne"
-        );
+        "Odjava",
+        "Da li ste sigurni da želite da se odjavite?",
+        "Da",
+        "Ne"
+    );
 
-        if (potvrda) 
+        if (potvrda)
         {
+          
             UserSession.Logout();
+
+            Microsoft.Maui.Storage.Preferences.Remove("LoggedInEmail");
+
             await Navigation.PopToRootAsync();
         }
-       
+
     }
 
     private async void LoyaltyBodovi_Clicked(object sender, EventArgs e)
@@ -44,6 +48,11 @@ public partial class UserProfilPage : ContentPage
     private async void Podaci_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new PodaciORacunu());
+    }
+
+    private async void MojeRezervacije_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new MojeRezervacije());
     }
 
 }

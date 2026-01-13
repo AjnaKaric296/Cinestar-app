@@ -56,6 +56,20 @@
                     <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
 
+                <BoxView HeightRequest="1"
+Color="#3e3e57"
+Margin="0,5,0,5"
+HorizontalOptions="FillAndExpand"/>
+                <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="MojeRezervacije_Clicked"/>
+                    </StackLayout.GestureRecognizers>
+
+                    <Image Source="ulaznice.png" HeightRequest="20"/>
+                    <Label Text="Moje rezervacije"/>
+                    <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+
 
 
             </StackLayout>

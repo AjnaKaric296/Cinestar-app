@@ -180,20 +180,9 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
     }
     private async void OnReserveClicked(object sender, System.EventArgs e)
     {
-        if (sender is Button btn)
+        if ((sender as Button)?.BindingContext is Film film)
         {
-            if (btn.Parent is HorizontalStackLayout hStack &&
-                hStack.Parent is ScrollView scroll &&
-                scroll.Parent is StackLayout stack &&
-                stack.Parent is Grid grid &&
-                grid.Parent is Frame frame &&
-                frame.BindingContext is Film film)
-            {
-                string selectedTime = btn.Text;
-                await DisplayAlert("Rezervacija",
-                    $"Film: {film.Title}\nTermin: {selectedTime}",
-                    "OK");
-            }
+            await Navigation.PushAsync(new RezervacijaPage(film));
         }
     }
 

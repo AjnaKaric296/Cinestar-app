@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cinestar_app.MojeRezervacije"
+             xmlns:models="clr-namespace:Cinestar_app.Models"
+             Title="MojeRezervacije">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="Vaše rezervacije" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="White" 
+                   HorizontalOptions="Center"/>
+
+            <CollectionView x:Name="ReservationsCollectionView"
+                            ItemsSource="{Binding Reservations}"
+                            SelectionMode="None"
+                            VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Reservation">
+                        <Frame CornerRadius="15"
+                               Padding="10"
+                               Margin="5"
+                               BackgroundColor="#071942"
+                               HasShadow="False">
+
+                            <VerticalStackLayout Spacing="5">
+
+                                <Label Text="{Binding FilmTitle}" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#FFD200"/>
+                                <Label Text="{Binding Date, StringFormat='Datum: {0:dd.MM.yyyy}'}" 
+                                       TextColor="White"/>
+                                <Label Text="{Binding Time, StringFormat='Vrijeme: {0}'}" 
+                                       TextColor="White"/>
+                                <Label Text="{Binding TicketCount, StringFormat='Broj karata: {0}'}" 
+                                       TextColor="White"/>
+
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
