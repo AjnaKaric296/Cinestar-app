@@ -1,5 +1,10 @@
 using Cinestar_app.Models;
 using Cinestar_app.Services;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Linq;
+
+
 
 using System;
 using System.Collections.Generic;
@@ -11,8 +16,29 @@ public partial class RezervacijaPage : ContentPage
     private Film _film;
     private FilmService _filmService;
 
+    public ObservableCollection<Seat> Seats { get; set; }
+    public ICommand SeatTappedCommand { get; }
+    private int MaxSelectedSeats => (int)TicketStepper.Value;
+
+
+
     public RezervacijaPage(Film film)
     {
+        BindingContext = this;
+        Seats = new ObservableCollection<Seat>();
+
+        // npr. 20 sjedala
+        for (int i = 0; i < 20; i++)
+        {
+            Seats.Add(new Seat
+            {
+                Image = "seat.png",
+                IsSelected = false
+            });
+        }
+
+        // command za klik
+        SeatTappedCommand = new Command<Seat>(OnSeatTapped);
         InitializeComponent();
 
         _film = film;
@@ -80,5 +106,35 @@ public partial class RezervacijaPage : ContentPage
 
         await Navigation.PopAsync();
     }
+
+    private void OnSeatTapped(Seat seat)
+    {
+        if (seat == null)
+            return;
+
+        // uvijek dozvoli odznaèavanje
+        if (seat.IsSelected)
+        {
+            seat.IsSelected = false;
+            seat.Image = "seat.png";
+            return;
+        }
+
+        // broj trenutno selektovanih
+        int selectedCount = Seats.Count(s => s.IsSelected);
+
+        // ako je limit dosegnut ? blokiraj
+        if (selectedCount >= MaxSelectedSeats)
+        {
+            return; // ili DisplayAlert
+        }
+
+        // selektuj
+        seat.IsSelected = true;
+        seat.Image = "seat1.png";
+    }
+
+
+
 
 }
