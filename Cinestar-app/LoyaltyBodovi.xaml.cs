@@ -76,9 +76,17 @@ public partial class LoyaltyBodovi : ContentPage
     {
         if (!UserSession.IsLoggedIn) return;
 
-        await DisplayAlert(
-            "Tvoje zvjezdice ⭐",
-            $"Trenutno imaš {UserSession.LoyaltyPoints} zvjezdica.",
-            "OK");
+        // Trenutni bodovi, ograničeni do 100
+        int currentPoints = Math.Min(UserSession.LoyaltyPoints, 100);
+
+        // Bodovi do nove nagrade (100 je limit)
+        int pointsToNextReward = 100 - currentPoints;
+
+        // Tekst koji se prikazuje korisniku
+        string message = $"Trenutno imaš {currentPoints} zvjezdica.\n" +
+                         $"Još {pointsToNextReward} zvjezdica do nove nagrade! 🎁";
+
+        await DisplayAlert("Tvoje zvjezdice", message, "OK");
     }
+
 }
