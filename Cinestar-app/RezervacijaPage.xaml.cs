@@ -1,5 +1,10 @@
 using Cinestar_app.Models;
 using Cinestar_app.Services;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Linq;
+
+
 
 using System;
 using System.Collections.Generic;
@@ -11,9 +16,32 @@ public partial class RezervacijaPage : ContentPage
     private Film _film;
     private FilmService _filmService;
 
+    public ObservableCollection<Seat> Seats { get; set; }
+    public ICommand SeatTappedCommand { get; }
+    private int MaxSelectedSeats => (int)TicketStepper.Value;
+
+
+
     public RezervacijaPage(Film film)
-    {
+    { 
         InitializeComponent();
+        
+        Seats = new ObservableCollection<Seat>();
+
+        // npr. 20 sjedala
+        for (int i = 0; i < 20; i++)
+        {
+            Seats.Add(new Seat
+            {
+                Image = "seat.png",
+                IsSelected = false
+            });
+        }
+
+        // command za klik
+        SeatTappedCommand = new Command<Seat>(OnSeatTapped);
+
+        BindingContext = this;
 
         _film = film;
         _filmService = new FilmService();
@@ -34,7 +62,20 @@ public partial class RezervacijaPage : ContentPage
     private void TicketStepper_ValueChanged(object sender, ValueChangedEventArgs e)
     {
         TicketCountLabel.Text = ((int)e.NewValue).ToString();
+
+        int allowed = (int)e.NewValue;
+
+        var selectedSeats = Seats.Where(s => s.IsSelected).ToList();
+
+        while (selectedSeats.Count > allowed)
+        {
+            var seat = selectedSeats.Last();
+            seat.IsSelected = false;
+            seat.Image = "seat.png";
+            selectedSeats.Remove(seat);
+        }
     }
+
 
 
     private async void ConfirmButton_Clicked(object sender, EventArgs e)
@@ -80,5 +121,38 @@ public partial class RezervacijaPage : ContentPage
 
         await Navigation.PopAsync();
     }
+
+    private void OnSeatTapped(Seat seat)
+    {
+        if (seat == null)
+            return;
+
+        // uvijek dozvoli odznaèavanje
+        if (seat.IsSelected)
+        {
+            seat.IsSelected = false;
+            seat.Image = "seat.png";
+            return;
+        }
+
+        // broj trenutno selektovanih
+        int selectedCount = Seats.Count(s => s.IsSelected);
+
+        if (selectedCount >= MaxSelectedSeats)
+        {
+            DisplayAlert("Limit",
+                $"Možete odabrati najviše {MaxSelectedSeats} mjesta.",
+                "OK");
+            return;
+        }
+
+
+        // selektuj
+        seat.IsSelected = true;
+        seat.Image = "seat1.png";
+    }
+
+
+
 
 }
