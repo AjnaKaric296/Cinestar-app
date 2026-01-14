@@ -37,15 +37,13 @@ public partial class LoyaltyBodovi : ContentPage
             NonLoggedInLayout.IsVisible = false;
             LoggedInLayout.IsVisible = true;
 
-            // Učitaj početne bodove
-            await UpdatePointsLabel();
-
             PozdravLabel.Text = $"Dobrodošao/la, {UserSession.CurrentUser.Ime}!";
 
-            // Subscribe za update bodova iz FilmDetalji
-            MessagingCenter.Subscribe<FilmDetalji>(this, "UpdateLoyaltyPoints", async (sender) =>
+            await UpdatePointsLabel();
+
+            // Slušaj update bodova iz FilmDetalji
+            MessagingCenter.Subscribe<FilmDetalji>(this, "UpdateLoyaltyPoints", async (_) =>
             {
-                // Osvježi labelu na glavnom threadu
                 await Device.InvokeOnMainThreadAsync(async () =>
                 {
                     await UpdatePointsLabel();
@@ -65,26 +63,30 @@ public partial class LoyaltyBodovi : ContentPage
         MessagingCenter.Unsubscribe<FilmDetalji>(this, "UpdateLoyaltyPoints");
     }
 
-    // Osvježi bodove u labeli
-    private async Task UpdatePointsLabel()
+    // GLOBALNI BODOVI – samo iz UserSession
+    private Task UpdatePointsLabel()
     {
-        if (!UserSession.IsLoggedIn) return;
+        if (!UserSession.IsLoggedIn) return Task.CompletedTask;
 
-        var loyalty = await _db.GetLoyaltyAsync(UserSession.CurrentUser.Email);
-
-        // Ako korisnik još nema zapis u bazi, uzmi bodove iz memorije
-        int bodovi = loyalty?.Bodovi ?? UserSession.CurrentUser.LoyaltyPoints;
-
-        BodoviLabel.Text = bodovi.ToString();
+        BodoviLabel.Text = UserSession.LoyaltyPoints.ToString();
+        return Task.CompletedTask;
     }
 
     private async void OnViewPointsClicked(object sender, EventArgs e)
     {
         if (!UserSession.IsLoggedIn) return;
 
-        var loyalty = await _db.GetLoyaltyAsync(UserSession.CurrentUser.Email);
-        int bodovi = loyalty?.Bodovi ?? UserSession.CurrentUser.LoyaltyPoints;
+        // Trenutni bodovi, ograničeni do 100
+        int currentPoints = Math.Min(UserSession.LoyaltyPoints, 100);
 
-        await DisplayAlert("Tvoje zvjezdice", $"Trenutno imaš {bodovi} zvjezdica", "OK");
+        // Bodovi do nove nagrade (100 je limit)
+        int pointsToNextReward = 100 - currentPoints;
+
+        // Tekst koji se prikazuje korisniku
+        string message = $"Trenutno imaš {currentPoints} zvjezdica.\n" +
+                         $"Još {pointsToNextReward} zvjezdica do nove nagrade! 🎁";
+
+        await DisplayAlert("Tvoje zvjezdice", message, "OK");
     }
+
 }

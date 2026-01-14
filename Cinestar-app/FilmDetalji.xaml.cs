@@ -9,6 +9,7 @@ namespace Cinestar_app;
 public partial class FilmDetalji : ContentPage
 {
     int currentRating = 0;
+    
     private bool ratingConfirmed = false;
     private UserDatabase _db;
 
@@ -78,23 +79,26 @@ public partial class FilmDetalji : ContentPage
         RatingInfoLabel.Text = $"Dao/la si ocjenu {rating}/5 ⭐";
     }
 
-    private async Task<int> AddUserPoints(int rating)
+    private async Task AddUserPoints()
     {
-        var user = UserSession.CurrentUser;
-        if (user == null) return 0;
+        if (UserSession.CurrentUser == null) return;
 
-        user.LoyaltyPoints += 1;
-        int rezultat = user.LoyaltyPoints;
+        // 1️⃣ povećaš GLOBALNE bodove
+        UserSession.LoyaltyPoints += 1;
 
-        await _db.UpdateUserLoyaltyAsync(user.Email, user.LoyaltyPoints);
+        // 2️⃣ snimiš u bazu
+        await _db.UpdateUserLoyaltyAsync(
+            UserSession.CurrentUser.Email,
+            UserSession.LoyaltyPoints
+        );
 
+        // 3️⃣ obavijesti ostale stranice (opcionalno)
         Device.BeginInvokeOnMainThread(() =>
         {
             MessagingCenter.Send(this, "UpdateLoyaltyPoints");
         });
-
-        return rezultat;
     }
+
 
     private async void OnConfirmRatingClicked(object sender, EventArgs e)
     {
@@ -116,12 +120,15 @@ public partial class FilmDetalji : ContentPage
 
         if (!ratingConfirmed)
         {
-            int trenutniBodovi = await AddUserPoints(currentRating);
+            await AddUserPoints();
+
             ratingConfirmed = true;
 
-            await DisplayAlert("Hvala!",
-                $"Ocijenili ste film {currentRating}/5 ⭐ i osvojili bod! 🎉\nTrenutno imate {trenutniBodovi} bodova.",
+            await DisplayAlert(
+                "Hvala!",
+                $"Ocijenili ste film {currentRating}/5 ⭐ i osvojili bod! 🎉\nTrenutno imate {UserSession.LoyaltyPoints} bodova.",
                 "OK");
+
         }
         else
         {

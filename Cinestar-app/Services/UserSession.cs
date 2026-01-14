@@ -17,4 +17,14 @@ public static class UserSession
     }
 
     public static bool IsLoggedIn => CurrentUser != null;
+
+    public static int LoyaltyPoints
+    {
+        get => CurrentUser?.LoyaltyPoints ?? 0;
+        set
+        {
+            if (CurrentUser != null)
+                CurrentUser.LoyaltyPoints = value;
+        }
+    }
 }

@@ -276,15 +276,6 @@ TextColor="#FFD600"
                 </StackLayout>
                 
 
-                <!-- Dugme za pregled bodova -->
-                <Button Text="Pogledaj bodove"
-            BackgroundColor="#FFD600"
-            TextColor="Black"
-            FontAttributes="Bold"
-            CornerRadius="10"
-            HeightRequest="50"
-            Clicked="OnViewPointsClicked"
-            Margin="0,0,0,20"/>
                 <Label Text="Skupljaj bodove i osvoji najbolje nagrade!"
        TextColor="white"
        FontSize="11"

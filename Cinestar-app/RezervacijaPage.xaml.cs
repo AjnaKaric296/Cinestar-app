@@ -64,8 +64,20 @@ public partial class RezervacijaPage : ContentPage
         };
 
         await userDb.AddReservationAsync(reservation);
+        // --- DODAJ 2 BODA KORISNIKU ---
+        UserSession.LoyaltyPoints += 2;
+        await userDb.UpdateUserLoyaltyAsync(email, UserSession.LoyaltyPoints);
 
-        await DisplayAlert("Uspješno", "Rezervacija je spremljena na vaš profil.", "OK");
+        // --- Obavijesti LoyaltyBodovi stranicu da osvježi bodove ---
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            MessagingCenter.Send(this, "UpdateLoyaltyPoints");
+        });
+
+        await DisplayAlert("Uspjesno",
+            $"Rezervacija je spremljena na vaš profil.\nOsvojili ste 2 boda! \nTrenutno imate {UserSession.LoyaltyPoints} bodova.",
+            "OK");
+
         await Navigation.PopAsync();
     }
 
