@@ -25,7 +25,7 @@ public partial class LoyaltyBodovi : ContentPage
         BindingContext = this;
 
         _db = new UserDatabase();
-        NavigationPage.SetHasNavigationBar(this, false);
+
     }
 
     protected override async void OnAppearing()
@@ -87,6 +87,11 @@ public partial class LoyaltyBodovi : ContentPage
                          $"Još {pointsToNextReward} zvjezdica do nove nagrade! 🎁";
 
         await DisplayAlert("Tvoje zvjezdice", message, "OK");
+    }
+
+    public async void OnClickedKupovina(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Filmovi());
     }
 
 }

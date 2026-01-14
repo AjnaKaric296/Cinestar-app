@@ -26,13 +26,14 @@
                FontSize="20"
                FontAttributes="Bold"
                TextColor="#FFD600"
-                               HorizontalOptions="Center"/>
+                               HorizontalOptions="Center"
+                               Margin="0,60,0,0"/>
 
                         <Label Text="Skupljaj zvjezdice. Ostvari nagrade."
                FontSize="12"
                TextColor="White"
                Opacity="0.9"
-                               />
+                             Margin="0,5,0,0"  />
                     </StackLayout>
 
               
@@ -40,7 +41,7 @@
 
                 <!-- OPIS -->
                 <StackLayout Orientation="Horizontal"
-             Padding="10,0,10,20"
+             Padding="10,-20,10,20"
              Spacing="12"
              HorizontalOptions="Center">
 
@@ -156,7 +157,7 @@
                            HeightRequest="200"
                            Aspect="AspectFit"
                            Opacity="0.6"
-                           Margin="0,-35,0,-5"/>
+                           Margin="0,-35,0,-9"/>
                     
                
                 <BoxView HeightRequest="1"
@@ -205,10 +206,11 @@ TextColor="#FFD600"
 
 
                     <Label Text="Registruj se i ostvari mogućnost skupljanja bodova!"
-FontSize="16"
+FontSize="14"
 FontAttributes="Bold"
+                           
 TextColor="#FFD600"
-                HorizontalOptions="Center"
+                HorizontalOptions="Center" 
                        Margin="0,30,0,0"/>
                 </StackLayout>
 
@@ -218,16 +220,19 @@ TextColor="#FFD600"
             <StackLayout x:Name="LoggedInLayout" IsVisible="False" Spacing="0" Padding="10">
 
                 <!-- Header: Logo i bodovi -->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Spacing="15" Margin="0,10,0,20">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Spacing="15" Margin="0,40,0,20">
                    
-                    <StackLayout VerticalOptions="Center">
-                        <Label x:Name="PozdravLabel" Text="Dobrodošao/la!" FontSize="20" TextColor="White" Opacity="0.8" HorizontalOptions="Center"/>
-                        <Label Text="Tvoje zvjezdice" FontSize="14" TextColor="White" Opacity="0.8" HorizontalOptions="Center"/>
+                        <StackLayout VerticalOptions="Center">
+                        <Label x:Name="PozdravLabel" Text="Dobrodošao/la!" FontSize="20" TextColor="White" Opacity="0.8" HorizontalOptions="Center" />
+                        <Label Text="Skupljaj bodove i osvoji najbolje nagrade!" FontSize="14" TextColor="White" Opacity="0.8" HorizontalOptions="Center" Margin="0,5,0,20"/>
+                        
                         <Frame CornerRadius="24"
        Padding="0"
        HasShadow="True"
-       BackgroundColor="#FFD600"
+       BackgroundColor="#081F59"
        Margin="0,20">
+                            
+                      
 
                             <Grid HeightRequest="220">
 
@@ -276,57 +281,73 @@ TextColor="#FFD600"
                 </StackLayout>
                 
 
-                <Label Text="Skupljaj bodove i osvoji najbolje nagrade!"
-       TextColor="white"
-       FontSize="11"
-       FontAttributes="Bold"
-       HorizontalOptions="Center"
-       Margin="0,-10,0,10"/>
+               
 
               
 
 
                 <!-- Funkcionalnosti koje dodaju bodove -->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="12" Padding="0,20" >
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="0" Padding="-6,0,0,20" >
 
                     <Frame BackgroundColor="#081F59"
                CornerRadius="16"
                Padding="5"
-               WidthRequest="130"
+               WidthRequest="160"
                HasShadow="False">
-                        <Button Text="🎟️ Kupovina karata"
+                        <Button Text="🎟️ Kupi kartu"
+                                Clicked="OnClickedKupovina"
                     BackgroundColor="Transparent"
                     TextColor="White"
-                    FontSize="9" />
+                    FontSize="11" />
                     </Frame>
 
                     <Frame BackgroundColor="#081F59"
                CornerRadius="16"
               Padding="5"
-WidthRequest="130"
+WidthRequest="160"
                HasShadow="False">
                         <Button Text="✨ Ocijeni film"
+                                 Clicked="OnClickedKupovina"
                     BackgroundColor="Transparent"
                     TextColor="White"
-                    FontSize="9"
+                    FontSize="11"
                    />
                     </Frame>
 
-                    <Frame BackgroundColor="#081F59"
-               CornerRadius="16"
-                            Padding="2"
-WidthRequest="130"
-               HasShadow="False">
-                        <Button Text="🎁 Zamijeni bodove"
-                    BackgroundColor="Transparent"
-                    TextColor="White"
-                    FontSize="9"
-                    />
-                    </Frame>
-
+                   
                 </StackLayout>
 
-               
+                <StackLayout Orientation="Horizontal" Spacing="10" Padding="10,0" Margin="0,10">
+
+                    <!-- Medalja 1 -->
+                    <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7">
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                            <Image Source="medalja1.png" HeightRequest="80" WidthRequest="60"/>
+                            <Label Text="10 000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
+                            
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Medalja 2 -->
+                    <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7">
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                            <Image Source="medalja2.png" HeightRequest="80" WidthRequest="60"/>
+                            <Label Text="50 000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
+                            
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Medalja 3 -->
+                    <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7" >
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                            <Image Source="medalja3.png" HeightRequest="80" WidthRequest="60"/>
+                            <Label Text="1000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
+                            
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Možeš dodati još medalja po želji -->
+                </StackLayout>
 
             </StackLayout>
 
