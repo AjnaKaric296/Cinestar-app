@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
 
-
-
 using System;
 using System.Collections.Generic;
 
@@ -29,7 +27,7 @@ public partial class RezervacijaPage : ContentPage
         Seats = new ObservableCollection<Seat>();
 
         // npr. 20 sjedala
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 24; i++)
         {
             Seats.Add(new Seat
             {
