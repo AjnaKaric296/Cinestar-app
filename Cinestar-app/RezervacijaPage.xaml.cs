@@ -23,8 +23,9 @@ public partial class RezervacijaPage : ContentPage
 
 
     public RezervacijaPage(Film film)
-    {
-        BindingContext = this;
+    { 
+        InitializeComponent();
+        
         Seats = new ObservableCollection<Seat>();
 
         // npr. 20 sjedala
@@ -39,7 +40,8 @@ public partial class RezervacijaPage : ContentPage
 
         // command za klik
         SeatTappedCommand = new Command<Seat>(OnSeatTapped);
-        InitializeComponent();
+
+        BindingContext = this;
 
         _film = film;
         _filmService = new FilmService();
@@ -60,7 +62,20 @@ public partial class RezervacijaPage : ContentPage
     private void TicketStepper_ValueChanged(object sender, ValueChangedEventArgs e)
     {
         TicketCountLabel.Text = ((int)e.NewValue).ToString();
+
+        int allowed = (int)e.NewValue;
+
+        var selectedSeats = Seats.Where(s => s.IsSelected).ToList();
+
+        while (selectedSeats.Count > allowed)
+        {
+            var seat = selectedSeats.Last();
+            seat.IsSelected = false;
+            seat.Image = "seat.png";
+            selectedSeats.Remove(seat);
+        }
     }
+
 
 
     private async void ConfirmButton_Clicked(object sender, EventArgs e)
@@ -123,11 +138,14 @@ public partial class RezervacijaPage : ContentPage
         // broj trenutno selektovanih
         int selectedCount = Seats.Count(s => s.IsSelected);
 
-        // ako je limit dosegnut ? blokiraj
         if (selectedCount >= MaxSelectedSeats)
         {
-            return; // ili DisplayAlert
+            DisplayAlert("Limit",
+                $"Možete odabrati najviše {MaxSelectedSeats} mjesta.",
+                "OK");
+            return;
         }
+
 
         // selektuj
         seat.IsSelected = true;
