@@ -28,10 +28,10 @@
 
                                 <!-- QR KOD -->
                                 <Image HeightRequest="150"
-                           WidthRequest="150"
-                           HorizontalOptions="Center"
-                           Source="{Binding QrData,
-                                    Converter={StaticResource QrConverter}}" />
+                                   WidthRequest="150"
+                                   HorizontalOptions="Center"
+                                   Source="{Binding ReservationUrl, Converter={StaticResource QrConverter}}"/>
+
 
                             </VerticalStackLayout>
                         </Frame>

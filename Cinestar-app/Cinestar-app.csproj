@@ -82,6 +82,46 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Actors\elizabeth.jfif" />
+	  <None Remove="Resources\Actors\martin.jfif" />
+	  <None Remove="Resources\Actors\robert.jpg" />
+	  <None Remove="Resources\Actors\scarlett.jfif" />
+	  <None Remove="Resources\Actors\taika.jfif" />
+	  <None Remove="Resources\Actors\winston.jfif" />
+	  <None Remove="Resources\Actors\wong.jfif" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Actors\anthony.jfif" />
+	  <MauiImage Include="Resources\Actors\benedict.jfif" />
+	  <MauiImage Include="Resources\Actors\bradley.jfif" />
+	  <MauiImage Include="Resources\Actors\chadwick.jfif" />
+	  <MauiImage Include="Resources\Actors\chris.jfif" />
+	  <MauiImage Include="Resources\Actors\danai.jfif" />
+	  <MauiImage Include="Resources\Actors\dave.jfif" />
+	  <MauiImage Include="Resources\Actors\don.jfif" />
+	  <MauiImage Include="Resources\Actors\elizabeth.jfif" />
+	  <MauiImage Include="Resources\Actors\hemsworth.jfif" />
+	  <MauiImage Include="Resources\Actors\jeremy.jfif" />
+	  <MauiImage Include="Resources\Actors\karen.jfif" />
+	  <MauiImage Include="Resources\Actors\letitia.jfif" />
+	  <MauiImage Include="Resources\Actors\mark.jfif" />
+	  <MauiImage Include="Resources\Actors\martin.jfif" />
+	  <MauiImage Include="Resources\Actors\michael.jfif" />
+	  <MauiImage Include="Resources\Actors\paul.jfif" />
+	  <MauiImage Include="Resources\Actors\pom.jfif" />
+	  <MauiImage Include="Resources\Actors\pratt.jfif" />
+	  <MauiImage Include="Resources\Actors\robert.jpg" />
+	  <MauiImage Include="Resources\Actors\scarlett.jfif" />
+	  <MauiImage Include="Resources\Actors\sean.jfif" />
+	  <MauiImage Include="Resources\Actors\sebastian.jfif" />
+	  <MauiImage Include="Resources\Actors\sullivan.jfif" />
+	  <MauiImage Include="Resources\Actors\taika.jfif" />
+	  <MauiImage Include="Resources\Actors\tom.jfif" />
+	  <MauiImage Include="Resources\Actors\vin.jfif" />
+	  <MauiImage Include="Resources\Actors\winston.jfif" />
+	  <MauiImage Include="Resources\Actors\wong.jfif" />
+	  <MauiImage Include="Resources\Actors\zoe.jfif" />
 	  <MauiImage Include="Resources\Splash\splashbg.jpg" />
 	  <MauiImage Include="Resources\Splash\splashlg.png" />
 	</ItemGroup>
@@ -110,6 +150,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Filmovi.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="GlumciPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Home.xaml">

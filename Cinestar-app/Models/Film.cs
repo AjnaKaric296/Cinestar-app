@@ -1,14 +1,5 @@
 ﻿namespace Cinestar_app.Models;
 
-public class Actor
-{
-    public string Id { get; set; }  
-    public string Name { get; set; }
-    public string Photo { get; set; } = "https://via.placeholder.com/80";
-    //gdje se pojavljuje
-    public List<string> FilmIds { get; set; } = new();
-}
-
 
 public class Film
 {

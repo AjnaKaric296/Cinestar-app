@@ -128,7 +128,15 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
+            <Button
+                Text="Vidi sve glumce"
+                BackgroundColor="#FFD200"
+                TextColor="Black"
+                FontAttributes="Bold"
+                CornerRadius="10"
+                HeightRequest="40"
+                HorizontalOptions="Center"
+                Clicked="OnSeeAllActorsClicked"/>
 
         </VerticalStackLayout>
     </ScrollView>
