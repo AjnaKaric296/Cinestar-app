@@ -65,7 +65,7 @@ HorizontalOptions="FillAndExpand"/>
                         <TapGestureRecognizer Tapped="MojeRezervacije_Clicked"/>
                     </StackLayout.GestureRecognizers>
 
-                    <Image Source="ulaznice.png" HeightRequest="20"/>
+                    <Image Source="tickets.png" HeightRequest="20"/>
                     <Label Text="Moje rezervacije"/>
                     <Image Source="white.png" HeightRequest="15" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>

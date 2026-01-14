@@ -5,7 +5,7 @@ namespace Cinestar_app.Services
 {
     public class OmdbService
     {
-        private const string ApiKey = "5c851e28";
+        private const string ApiKey = "88ad3a5";
         private readonly HttpClient client;
         private readonly Dictionary<string, OmdbMovieDetails> cache = new();
 
@@ -32,6 +32,8 @@ namespace Cinestar_app.Services
             public string Title { get; set; }
             public string Year { get; set; }
             public string Genre { get; set; }
+            public string Runtime { get; set; }
+            public string Director { get; set; }
             public string Plot { get; set; }
             public string Poster { get; set; }
             public string imdbID { get; set; }
@@ -78,10 +80,12 @@ namespace Cinestar_app.Services
                 Title = json.GetProperty("Title").GetString(),
                 Year = json.GetProperty("Year").GetString(),
                 Genre = json.GetProperty("Genre").GetString(),
+                Director = json.GetProperty("Director").GetString(),
                 Plot = json.GetProperty("Plot").GetString(),
                 Poster = json.GetProperty("Poster").GetString(),
                 imdbID = json.GetProperty("imdbID").GetString(),
-                Actors = json.GetProperty("Actors").GetString()
+                Actors = json.GetProperty("Actors").GetString(),
+                Runtime = json.GetProperty("Runtime").GetString()
             };
 
             cache[imdbID] = details;

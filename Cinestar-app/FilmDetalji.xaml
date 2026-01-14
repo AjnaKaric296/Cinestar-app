@@ -4,6 +4,15 @@
              x:Class="Cinestar_app.FilmDetalji"
              Title=" ">
 
+    <NavigationPage.TitleView>
+        <Label Text="Detalji o Filmu"
+               FontSize="15"
+               TextColor="White"
+               Margin="60,0,0,0"
+               VerticalOptions="Center"
+               FontAttributes="Bold"/>
+    </NavigationPage.TitleView>
+
     <!-- ISTA GRADIENT POZADINA KAO OSTALE STRANICE -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -13,16 +22,46 @@
     </ContentPage.Background>
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="0" Spacing="20">
 
             <Image x:Name="PosterImage"
-                   HeightRequest="300"
-                   Aspect="AspectFill"/>
+                   Margin="0,10,0,0"
+                     HeightRequest="250"
+                     Aspect="AspectFit"
+                     HorizontalOptions="Fill"/>
 
             <Label x:Name="TitleLabel"
-                   FontSize="26"
+                   FontSize="20"
+                   Margin="20,0,20,0"
+                   TextTransform="Uppercase"
                    FontAttributes="Bold"
                    TextColor="White"/>
+
+            <Label Text="{Binding Genre}"
+           FontSize="12"
+           Margin="20,0,20,0"
+           TextColor="#FFD200"
+           VerticalOptions="Center"/>
+
+            <StackLayout Orientation="Horizontal"
+               Spacing="5" Margin="20,0,20,0">
+                <Image Source="clock.webp"
+             HeightRequest="12"/>
+                <Label Text="{Binding Runtime}"
+             TextColor="White"
+             FontSize="12"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Režiser:"
+                       Margin="20,0,5,0"
+                       FontSize="12"/>
+                <Label Text="{Binding Director}"
+           FontSize="12"
+            Margin="0,0,20,0"
+           TextColor="#AAAAAA"
+           VerticalOptions="Center"/>
+            </StackLayout>
 
             <Label x:Name="PlotLabel"
                    FontSize="14"

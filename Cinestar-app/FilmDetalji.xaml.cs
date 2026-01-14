@@ -19,7 +19,7 @@ public partial class FilmDetalji : ContentPage
         BindingContext = film;
         RatingFrame.IsVisible = UserSession.IsLoggedIn;
 
-        NavigationPage.SetHasNavigationBar(this, false);
+       
 
         _db = new UserDatabase();
 

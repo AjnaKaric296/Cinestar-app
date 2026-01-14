@@ -95,7 +95,9 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
                         Title = details.Title,
                         Year = details.Year,
                         Genre = details.Genre,
+                        Runtime = details.Runtime,
                         Plot = details.Plot,
+                        Director = details.Director,
                         Poster = details.Poster == "N/A" ? "placeholder.png" : details.Poster,
                         ImdbID = details.imdbID,
                         Actors = (details.Actors ?? "")
@@ -188,4 +190,5 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
 
     protected void OnPropertyChanged(string propertyName)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+  
 }
