@@ -89,4 +89,9 @@ public partial class LoyaltyBodovi : ContentPage
         await DisplayAlert("Tvoje zvjezdice", message, "OK");
     }
 
+    public async void OnClickedKupovina(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Filmovi());
+    }
+
 }
