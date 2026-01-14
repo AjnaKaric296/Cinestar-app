@@ -25,7 +25,7 @@ public partial class LoyaltyBodovi : ContentPage
         BindingContext = this;
 
         _db = new UserDatabase();
-        NavigationPage.SetHasNavigationBar(this, false);
+
     }
 
     protected override async void OnAppearing()

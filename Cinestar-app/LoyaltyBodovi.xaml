@@ -210,7 +210,7 @@ FontSize="14"
 FontAttributes="Bold"
                            
 TextColor="#FFD600"
-                HorizontalOptions="Center"
+                HorizontalOptions="Center" 
                        Margin="0,30,0,0"/>
                 </StackLayout>
 
@@ -222,14 +222,17 @@ TextColor="#FFD600"
                 <!-- Header: Logo i bodovi -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Spacing="15" Margin="0,40,0,20">
                    
-                    <StackLayout VerticalOptions="Center">
+                        <StackLayout VerticalOptions="Center">
                         <Label x:Name="PozdravLabel" Text="Dobrodošao/la!" FontSize="20" TextColor="White" Opacity="0.8" HorizontalOptions="Center" />
-                        <Label Text="Tvoje zvjezdice" FontSize="14" TextColor="White" Opacity="0.8" HorizontalOptions="Center" Margin="0,5,0,20"/>
+                        <Label Text="Skupljaj bodove i osvoji najbolje nagrade!" FontSize="14" TextColor="White" Opacity="0.8" HorizontalOptions="Center" Margin="0,5,0,20"/>
+                        
                         <Frame CornerRadius="24"
        Padding="0"
        HasShadow="True"
        BackgroundColor="#081F59"
        Margin="0,20">
+                            
+                      
 
                             <Grid HeightRequest="220">
 
@@ -278,18 +281,13 @@ TextColor="#FFD600"
                 </StackLayout>
                 
 
-                <Label Text="Skupljaj bodove i osvoji najbolje nagrade!"
-       TextColor="white"
-       FontSize="11"
-                       Opacity="0.9"
-       HorizontalOptions="Center"
-       Margin="0,-10,0,10"/>
+               
 
               
 
 
                 <!-- Funkcionalnosti koje dodaju bodove -->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="0" Padding="-6,20" >
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="0" Padding="-6,0,0,20" >
 
                     <Frame BackgroundColor="#081F59"
                CornerRadius="16"
@@ -324,8 +322,8 @@ WidthRequest="160"
                     <!-- Medalja 1 -->
                     <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
-                            <Image Source="medalja1.png" HeightRequest="60" WidthRequest="60"/>
-                            <Label Text="1000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
+                            <Image Source="medalja1.png" HeightRequest="80" WidthRequest="60"/>
+                            <Label Text="10 000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
                             
                         </StackLayout>
                     </Frame>
@@ -333,8 +331,8 @@ WidthRequest="160"
                     <!-- Medalja 2 -->
                     <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
-                            <Image Source="medalja2.png" HeightRequest="60" WidthRequest="60"/>
-                            <Label Text="50000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
+                            <Image Source="medalja2.png" HeightRequest="80" WidthRequest="60"/>
+                            <Label Text="50 000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
                             
                         </StackLayout>
                     </Frame>
@@ -342,8 +340,8 @@ WidthRequest="160"
                     <!-- Medalja 3 -->
                     <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7" >
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
-                            <Image Source="medalja3.png" HeightRequest="60" WidthRequest="60"/>
-                            <Label Text="10000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
+                            <Image Source="medalja3.png" HeightRequest="80" WidthRequest="60"/>
+                            <Label Text="1000 bodova" TextColor="Black" FontSize="12" HorizontalOptions="Center"/>
                             
                         </StackLayout>
                     </Frame>
