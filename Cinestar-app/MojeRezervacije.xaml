@@ -12,37 +12,33 @@
                    FontAttributes="Bold" 
                    TextColor="White" 
                    HorizontalOptions="Center"/>
-
-            <CollectionView x:Name="ReservationsCollectionView"
-                            ItemsSource="{Binding Reservations}"
-                            SelectionMode="None"
-                            VerticalOptions="FillAndExpand">
+            <CollectionView ItemsSource="{Binding Reservations}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Reservation">
-                        <Frame CornerRadius="15"
-                               Padding="10"
-                               Margin="5"
-                               BackgroundColor="#071942"
-                               HasShadow="False">
+                    <DataTemplate>
+                        <Frame Margin="10" Padding="10" CornerRadius="12">
+                            <VerticalStackLayout Spacing="8">
 
-                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding FilmTitle}"
+                           FontAttributes="Bold"
+                           FontSize="18"/>
 
-                                <Label Text="{Binding FilmTitle}" 
-                                       FontSize="20" 
-                                       FontAttributes="Bold" 
-                                       TextColor="#FFD200"/>
-                                <Label Text="{Binding Date, StringFormat='Datum: {0:dd.MM.yyyy}'}" 
-                                       TextColor="White"/>
-                                <Label Text="{Binding Time, StringFormat='Vrijeme: {0}'}" 
-                                       TextColor="White"/>
-                                <Label Text="{Binding TicketCount, StringFormat='Broj karata: {0}'}" 
-                                       TextColor="White"/>
+                                <Label Text="{Binding Date, StringFormat='Datum: {0:dd.MM.yyyy}'}"/>
+                                <Label Text="{Binding Time, StringFormat='Vrijeme: {0}'}"/>
+                                <Label Text="{Binding TicketCount, StringFormat='Karte: {0}'}"/>
+
+                                <!-- QR KOD -->
+                                <Image HeightRequest="150"
+                           WidthRequest="150"
+                           HorizontalOptions="Center"
+                           Source="{Binding QrData,
+                                    Converter={StaticResource QrConverter}}" />
 
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
 
         </VerticalStackLayout>
     </ScrollView>

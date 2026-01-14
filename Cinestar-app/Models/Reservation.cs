@@ -1,9 +1,5 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cinestar_app.Models
 {
@@ -18,5 +14,19 @@ namespace Cinestar_app.Models
         public DateTime Date { get; set; }
         public string Time { get; set; }
         public int TicketCount { get; set; }
+
+        // Jedinstveni kod rezervacije
+        public string ReservationCode { get; set; } = Guid.NewGuid().ToString();
+
+        // QR link na Netlify stranicu sa parametrima rezervacije
+        public string ReservationUrl
+        {
+            get
+            {
+                var filmEncoded = System.Net.WebUtility.UrlEncode(FilmTitle);
+                var baseUrl = "https://splendorous-mousse-e5ac88.netlify.app/index.html";
+                return $"{baseUrl}?film={filmEncoded}&date={Date:dd.MM.yyyy}&time={Time}&tickets={TicketCount}&code={ReservationCode}";
+            }
+        }
     }
 }

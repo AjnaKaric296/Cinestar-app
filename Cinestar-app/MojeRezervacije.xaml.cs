@@ -32,7 +32,7 @@ public partial class MojeRezervacije : ContentPage
 
         // Dohvati email prijavljenog korisnika iz Preferences
         var email = Preferences.Get("LoggedInEmail", string.Empty);
-        if (string.IsNullOrWhiteSpace(email))
+        if (!UserSession.IsLoggedIn || UserSession.CurrentUser == null)
         {
             await DisplayAlert("Greška", "Morate biti prijavljeni da vidite rezervacije.", "OK");
             return;

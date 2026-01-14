@@ -42,12 +42,16 @@ public partial class RezervacijaPage : ContentPage
         var userDb = new UserDatabase();
 
         // Dohvati trenutno prijavljenog korisnika (Preferences)
-        var email = Microsoft.Maui.Storage.Preferences.Get("LoggedInEmail", string.Empty);
-        if (string.IsNullOrWhiteSpace(email))
+        if (!UserSession.IsLoggedIn || UserSession.CurrentUser == null)
         {
-            await DisplayAlert("Greška", "Morate se prijaviti da biste rezervirali kartu.", "OK");
+            await DisplayAlert("Greška",
+                "Morate se prijaviti da biste rezervirali kartu.",
+                "OK");
             return;
         }
+
+        var email = UserSession.CurrentUser.Email;
+
 
         var reservation = new Reservation
         {
