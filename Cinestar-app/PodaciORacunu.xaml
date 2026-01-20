@@ -4,78 +4,58 @@
              BackgroundColor="#051851"
              Title="Podaci o računu">
 
-    <!-- Custom Navigation Bar -->
-    <NavigationPage.TitleView>
-        <Grid ColumnDefinitions="50,*,50" VerticalOptions="Center">
+    <ScrollView>
+        <StackLayout Padding="15" Spacing="10">
 
-            <!-- Back button -->
-            <Button Text="⟵"
-                    FontSize="24"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    Clicked="BackButton_Clicked"
-                    HorizontalOptions="Start" />
+            <!-- Logo -->
+            <Image Source="logo.png" HeightRequest="70" WidthRequest="70" HorizontalOptions="Start"/>
 
-            <!-- Logo in the middle -->
-            <Image Source="logo.png"
-                   HeightRequest="40"
-                   WidthRequest="40"
-                   HorizontalOptions="Center"/>
-
-            <!-- Profile image -->
-            <Frame BackgroundColor="Transparent" Padding="0" CornerRadius="20" HorizontalOptions="End">
-                <Image Source="profil.png"
-                       HeightRequest="40"
-                       WidthRequest="40"/>
+            <!-- Profilna slika -->
+            <Frame Padding="0" BackgroundColor="Transparent" BorderColor="Gray" WidthRequest="100" Margin="0,10,0,10" HorizontalOptions="Center">
+                <Image Source="profil.png" HeightRequest="100" />
             </Frame>
 
-        </Grid>
-    </NavigationPage.TitleView>
+            <!-- Ime i Prezime -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                <Label Text="{Binding Ime}" TextColor="White" FontSize="30" FontAttributes="Bold" CharacterSpacing="1"/>
+                <Label Text="{Binding Prezime}" TextColor="White" FontSize="30" FontAttributes="Bold" CharacterSpacing="1"/>
+            </HorizontalStackLayout>
 
-    <ScrollView>
-        <StackLayout Padding="15" Spacing="20">
+            <!-- Email -->
+            <Label Text="{Binding Email}" Margin="0,0,0,10" TextColor="White" FontSize="16" HorizontalOptions="Center"/>
 
-            <!-- Header -->
-            <Label Text="Podaci o računu"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center"
-                   Margin="0,10,0,20"/>
-
-            <!-- User Info Frame -->
-            <Frame BackgroundColor="#0c205e" Padding="20" CornerRadius="15">
+            <!-- Frame sa opcijama -->
+            <Frame BackgroundColor="#0c205e" Margin="0,20,0,0" Padding="20" CornerRadius="20">
                 <StackLayout Spacing="15">
 
-                    <!-- Ime -->
-                    <StackLayout Orientation="Horizontal" Spacing="15" VerticalOptions="Center">
-                        <Label Text="Ime:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
-                        <Label Text="{Binding Ime}" TextColor="White"/>
+                    <!-- Promijeni lozinku -->
+                    <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
+                        <Button Text="Promijeni lozinku"
+                                BackgroundColor="#E50914"
+                                TextColor="White"
+                                CornerRadius="25"
+                                HeightRequest="50"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Clicked="ChangePassword_Clicked"/>
                     </StackLayout>
 
-                    <!-- Prezime -->
-                    <StackLayout Orientation="Horizontal" Spacing="15" VerticalOptions="Center">
-                        <Label Text="Prezime:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
-                        <Label Text="{Binding Prezime}" TextColor="White"/>
-                    </StackLayout>
+                    <BoxView HeightRequest="1" Color="#3e3e57" HorizontalOptions="FillAndExpand"/>
 
-                    <!-- Email -->
-                    <StackLayout Orientation="Horizontal" Spacing="15" VerticalOptions="Center">
-                        <Label Text="Email:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
-                        <Label Text="{Binding Email}" TextColor="White"/>
+                    <!-- Povratak -->
+                    <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">
+                        <Button Text="Nazad"
+                                BackgroundColor="#0c205e"
+                                TextColor="White"
+                                CornerRadius="20"
+                                HeightRequest="45"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Clicked="BackButton_Clicked"/>
                     </StackLayout>
 
                 </StackLayout>
             </Frame>
-
-            <!-- Promjena lozinke button -->
-            <Button Text="Promijeni lozinku"
-                    BackgroundColor="#0c205e"
-                    TextColor="White"
-                    CornerRadius="15"
-                    HeightRequest="50"
-                    FontAttributes="Bold"
-                    Clicked="ChangePassword_Clicked"/>
 
         </StackLayout>
     </ScrollView>
