@@ -25,51 +25,53 @@
                      Margin="0,0,0,0"/>
 
                     <Label Text="Predstavijamo ti novo digitaino članstvo u kojem mogu sudjelovati svi registrirani korisnici CineStar aplikacije. Registruj se sada i počni skupijati
-zvjezdice koje možeš mijenjati za nagrade! Očekuju te i zvjezdice dobrodošlice. Jednom kada si registriran online ili putem CineStar aplikacije, svaku tvoju potrošnju nagrađujemo - bilo da kupuješ
+zvjezdice koje možeš mijenjati za nagrade! Očekuju te i zvjezdice dobrodošlice. " HorizontalOptions="Center" FontSize="12" Margin="25,80,25,0"  HorizontalTextAlignment="Center"/>
+                    
+                    <Label Text=" kada si registriran online ili putem CineStar aplikacije, svaku tvoju potrošnju nagrađujemo - bilo da kupuješ
 ulaznice, kokice, nachose, piće ili pokion kartice, bilo kako, online ili na blagajni - skupljaš zvjezdice koje možeš zamijeniti za razne nagrade u našoj trgovini s
-kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,80,25,0"  HorizontalTextAlignment="Center"/>
+kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,7,25,0"  HorizontalTextAlignment="Center"/>
 
                 </StackLayout>
 
 
                 <Image Source="linija.png"  HorizontalOptions="Center" WidthRequest="450" Margin="0" />
-                <StackLayout Orientation="Horizontal" 
-             HorizontalOptions="Center" 
-             VerticalOptions="Center"
-             Margin="0,20,0,20"
-             Spacing="15">
+                <StackLayout Orientation="Horizontal">
 
-                    <!-- Bebica -->
                     <Image Source="bebica.png"
-           HeightRequest="300"
-           WidthRequest="300"/>
+                    HeightRequest="120"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    Margin="20,-40,0,0"
+                    ZIndex="10"/>
+                    <Frame 
+                  Padding="20"
+                 HorizontalOptions="FillAndExpand"
+                  BackgroundColor="Transparent">
+                <Label Text="Pogodnosti?"
+               Opacity="0.5"
+               VerticalOptions="Center"
+               Margin="40,0"/>
+                    </Frame>
 
-                    <!-- Label -->
-                    <Label Text="Pogodnosti?"
-           VerticalOptions="Center"
-           FontSize="18"
-           FontAttributes="Bold"
-           TextColor="Black"/>
                 </StackLayout>
 
 
+
                 <!-- DONJI DIO -->
-                <StackLayout Margin="10">
-                    <Label Text="ČLANSTVO - članstvo je besplatno prvom registracijom" Margin="0,15,0,15" HorizontalTextAlignment="Center"  FontSize="12"/>
+                <StackLayout Margin="10,00,10,10">
+                    <Label Text="ČLANSTVO - članstvo je besplatno prvom registracijom" Margin="0,10,0,10" HorizontalTextAlignment="Center"  FontSize="12"/>
 
                     <Label Text=" SKUPLJANJE ZVJEZDICA  - Kupuj ulaznice i proizvode koristeći članstvo jer za svaki potrošeni 1 BAM dobivaš 1 zvjezdicu. Zvjezdice vrijede godinu dana." Margin="0" HorizontalTextAlignment="Center"  FontSize="12"/>
-                <Label Text="
-                ZAMJENA ZVJEZDICA ZA KUPONE - Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene." 
-                   Margin="15" HorizontalTextAlignment="Center"  FontSize="12"    />
+                <Label Text=" ZAMJENA ZVJEZDICA ZA KUPONE - Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene." 
+                   Margin="10" HorizontalTextAlignment="Center"  FontSize="12"    />
                 </StackLayout>
 
                 <BoxView HeightRequest="1"
          Color="#333333"
-         Margin="0,5,0,20"
+         Margin="0,5,0,15"
          HorizontalOptions="FillAndExpand"/>
 
-               
-
+                <Label Text="Prijavi se i započni!" TextColor="#FFD200" HorizontalOptions="Center" FontSize="18" Margin="0,0,0,20" TextTransform="Uppercase" FontAttributes="Bold" />
             </StackLayout>
 
             <!-- Prikaz za prijavljene korisnike -->

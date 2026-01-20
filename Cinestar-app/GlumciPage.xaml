@@ -6,7 +6,7 @@
              Title="Svi Glumci">
 
     <NavigationPage.TitleView>
-        <Label Text="Svi Glumci"
+        <Label Text="Glumci"
                FontSize="17"
                TextColor="White"
                Margin="0,0,60,0"

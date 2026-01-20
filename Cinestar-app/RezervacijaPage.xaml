@@ -4,6 +4,15 @@
              x:Name="Page"
              BackgroundColor="#051851"
              x:Class="Cinestar_app.RezervacijaPage">
+    <NavigationPage.TitleView>
+        <Label Text=" "
+               FontSize="17"
+               TextColor="White"
+               Margin="0,0,60,0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"/>
+    </NavigationPage.TitleView>
 
     <ScrollView>
         <VerticalStackLayout Padding="0" Spacing="20">
