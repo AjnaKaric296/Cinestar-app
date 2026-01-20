@@ -30,7 +30,7 @@ public partial class MojeRezervacije : ContentPage
     {
         Reservations.Clear();
 
-        // Dohvati email prijavljenog korisnika iz Preferences
+       
         var email = Preferences.Get("LoggedInEmail", string.Empty);
         if (!UserSession.IsLoggedIn || UserSession.CurrentUser == null)
         {

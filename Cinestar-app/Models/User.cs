@@ -15,6 +15,6 @@ public class User
     public string Prezime { get; set; }
     public string Email { get; set; }
 
-    public string Lozinka { get; set; }  // za jednostavnost, cuvamo plaintext (u pravoj aplikaciji hashirati!)
+    public string Lozinka { get; set; }  
     public int LoyaltyPoints { get; set; }
 }

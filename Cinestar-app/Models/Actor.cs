@@ -8,6 +8,6 @@ namespace Cinestar_app.Models
     public class Actor
     {
         public string Name { get; set; }
-        public string Photo { get; set; } // putanja u Resources/Actors ili URL ako hostaš online
+        public string Photo { get; set; } 
     }
 }

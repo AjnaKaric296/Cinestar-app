@@ -17,7 +17,6 @@ namespace Cinestar_app.Services
             };
         }
 
-        // DTO za listu (Search)
         public class OmdbMovieShort
         {
             public string Title { get; set; }
@@ -26,7 +25,6 @@ namespace Cinestar_app.Services
             public string Poster { get; set; }
         }
 
-        // DTO za detalje filma
         public class OmdbMovieDetails
         {
             public string Title { get; set; }

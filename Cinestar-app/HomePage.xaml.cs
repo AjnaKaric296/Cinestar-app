@@ -25,7 +25,7 @@ public partial class HomePage : ContentPage
             if (selectedCity != value)
             {
                 selectedCity = value;
-                OnPropertyChanged(); // Label ce se odmah updateovati
+                OnPropertyChanged(); 
             }
         }
     }
@@ -51,7 +51,7 @@ public partial class HomePage : ContentPage
         BindingContext = this;
         NavigationPage.SetHasNavigationBar(this, false);
 
-        // 🔹 Subscribe na grad promjenu
+      
         MessagingCenter.Subscribe<CityPickerPage, string>(this, "CityChanged", async (sender, newCity) =>
         {
             if (newCity != SelectedCity)
@@ -60,7 +60,7 @@ public partial class HomePage : ContentPage
                 CityLabel.Text = SelectedCity;
 
                 OverlayGrid.IsVisible = true;
-                await Task.Delay(50); // mali delay da overlay proradi
+                await Task.Delay(50); 
 
                 LoadCarousel();
                 await LoadFilmSections();

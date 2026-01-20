@@ -39,7 +39,7 @@ public partial class Profil : ContentPage
         }
         UserSession.Login(user);
 
-        // ← OVDJE dodaj ovaj red da bi RezervacijaPage znala tko je prijavljen
+       
         Preferences.Set("LoggedInEmail", user.Email.Trim().ToLower());
 
         UserSession.Login(user);

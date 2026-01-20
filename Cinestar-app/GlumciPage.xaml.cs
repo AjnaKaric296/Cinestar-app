@@ -11,7 +11,7 @@ public partial class GlumciPage : ContentPage
     {
         InitializeComponent();
 
-        // Prikaz svih glumaca iz baze
+       
         ActorsCollectionView.ItemsSource = ActorsDatabase.AllActors;
     }
 }

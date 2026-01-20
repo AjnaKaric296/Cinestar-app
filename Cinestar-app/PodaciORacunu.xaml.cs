@@ -1,3 +1,6 @@
+using Microsoft.Maui.Controls;
+using Cinestar_app.Services;
+
 namespace Cinestar_app;
 
 public partial class PodaciORacunu : ContentPage
@@ -5,34 +8,47 @@ public partial class PodaciORacunu : ContentPage
     public PodaciORacunu()
     {
         InitializeComponent();
-        UcitajPodatkeKorisnika();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
-    private void UcitajPodatkeKorisnika()
+    protected override void OnAppearing()
     {
-        // Ovdje ubaciš podatke prijavljenog korisnika
-        string ime = "Aida";
-        string prezime = "Begagic";
-        string email = "aida@example.com";
-        int loyaltyBodovi = 120;
-        DateTime datumRegistracije = new DateTime(2023, 5, 10);
-        string profilnaSlika = "profil.png"; // lokalna slika u Resources/Images
-
-        // Postavljanje podataka u UI
-        ImePrezimeLabel.Text = $"{ime} {prezime}";
-        EmailLabel.Text = email;
-        BodoviLabel.Text = $"Loyalty bodovi: {loyaltyBodovi}";
-        DatumLabel.Text = $"Pridružio se: {datumRegistracije:dd.MM.yyyy}";
-        ProfilImage.Source = profilnaSlika;
+        base.OnAppearing();
+        if (UserSession.CurrentUser != null)
+            BindingContext = UserSession.CurrentUser;
     }
 
-    private void UrediProfil_Clicked(object sender, EventArgs e)
+    private async void ChangePassword_Clicked(object sender, EventArgs e)
     {
-        DisplayAlert("Uredi profil", "Ovdje ide logika za ureðivanje profila", "OK");
+        string oldPassword = await DisplayPromptAsync("Promijeni lozinku", "Unesite staru lozinku:", "Dalje", "Otkaži", placeholder: "Stara lozinka", maxLength: 50, keyboard: Keyboard.Text);
+
+        if (string.IsNullOrWhiteSpace(oldPassword))
+            return;
+
+        if (oldPassword != UserSession.CurrentUser.Lozinka)
+        {
+            await DisplayAlert("Greška", "Pogrešna stara lozinka!", "OK");
+            return;
+        }
+
+        string newPassword = await DisplayPromptAsync("Promijeni lozinku", "Unesite novu lozinku:", "Dalje", "Otkaži", placeholder: "Nova lozinka", maxLength: 50, keyboard: Keyboard.Text);
+
+        if (string.IsNullOrWhiteSpace(newPassword))
+            return;
+
+        string confirmPassword = await DisplayPromptAsync("Promijeni lozinku", "Ponovite novu lozinku:", "Dalje", "Otkaži", placeholder: "Ponovi novu lozinku", maxLength: 50, keyboard: Keyboard.Text);
+
+        if (newPassword != confirmPassword)
+        {
+            await DisplayAlert("Greška", "Lozinke se ne poklapaju!", "OK");
+            return;
+        }
+
+        var db = new UserDatabase();
+        UserSession.CurrentUser.Lozinka = newPassword; 
+        await db.UpdateUserPasswordAsync(UserSession.CurrentUser.Email, newPassword);
+
+        await DisplayAlert("Uspješno", "Lozinka je promijenjena!", "OK");
     }
 
-    private void Odjava_Clicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Odjava", "Ovdje ide logika za odjavu", "OK");
-    }
 }

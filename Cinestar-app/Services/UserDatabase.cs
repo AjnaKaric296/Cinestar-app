@@ -78,7 +78,6 @@ public class UserDatabase
     }
     public Task<int> AddReservationAsync(Reservation reservation)
     {
-        // automatski stvara tablicu ako ne postoji
         _database.CreateTableAsync<Reservation>().Wait();
         return _database.InsertAsync(reservation);
     }
@@ -90,6 +89,19 @@ public class UserDatabase
                         .Where(r => r.UserEmail == email)
                         .ToListAsync();
     }
+
+    public async Task UpdateUserPasswordAsync(string email, string newPassword)
+    {
+        var user = await _database.Table<User>()
+                                  .Where(u => u.Email.ToLower() == email.ToLower())
+                                  .FirstOrDefaultAsync();
+        if (user != null)
+        {
+            user.Lozinka = newPassword;
+            await _database.UpdateAsync(user);
+        }
+    }
+
 
 
 

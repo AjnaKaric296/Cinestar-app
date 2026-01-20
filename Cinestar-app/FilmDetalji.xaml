@@ -52,17 +52,17 @@
 
             <VerticalStackLayout Padding="20,30,20,0" Spacing="5">
                 <Label x:Name="PlotLabel"
-       FontSize="13"
-       TextColor="White"
-       LineBreakMode="WordWrap">
+                       FontSize="13"
+                       TextColor="White"
+                       LineBreakMode="WordWrap">
                     <Label.FormattedText>
                         <FormattedString x:Name="PlotFormattedString">
                             <Span x:Name="PlotTextSpan"/>
                             <Span x:Name="ReadMoreSpan"
-                  Text=" Više"
-                  TextColor="#FFD200"
-                  TextTransform="Uppercase"
-                  FontAttributes="Bold">
+                                  Text=" Više"
+                                  TextColor="#FFD200"
+                                  TextTransform="Uppercase"
+                                  FontAttributes="Bold">
                                 <Span.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnReadMoreTapped"/>
                                 </Span.GestureRecognizers>
@@ -76,11 +76,11 @@
             
             <StackLayout Margin="0,20,0,20" >
                 <BoxView Grid.Row="1"
-          HeightRequest="1"
-          Color="#3e3e57"
-          Margin="0,10,0,0"
-          HorizontalOptions="Fill"
-          Opacity="1"/>
+                         HeightRequest="1"
+                         Color="#3e3e57"
+                         Margin="0,10,0,0"
+                         HorizontalOptions="Fill"
+                         Opacity="1"/>
                 <Frame CornerRadius="0"  Margin="0,0,0,0" Padding="20" HorizontalOptions="FillAndExpand">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                         <Label Text="ODABERI SVOJE MJESTO" TextColor="#FFD200" VerticalOptions="Center" FontAttributes="Bold" HorizontalOptions="Center">
@@ -96,11 +96,11 @@
                     </StackLayout>  
                 </Frame>
                 <BoxView Grid.Row="1"
-          HeightRequest="1"
-          Color="#3e3e57"
-          Margin="0,2,0,0"
-          HorizontalOptions="Fill"
-          Opacity="1"/>
+                         HeightRequest="1"
+                         Color="#3e3e57"
+                         Margin="0,2,0,0"
+                         HorizontalOptions="Fill"
+                         Opacity="1"/>
             </StackLayout>
             
 
@@ -113,57 +113,57 @@
             
             <Frame Margin="0" CornerRadius="0" BackgroundColor="#0c205e" Padding="10">
                 <Grid>
-                    <!-- Strelica lijevo -->
+                   
                     <Image Source="lijeva.png" WidthRequest="30" HorizontalOptions="Start" Margin="0,0,20,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnLeftArrowClicked"/>
                         </Image.GestureRecognizers>
                     </Image>
 
-                    <!-- CollectionView -->
+                  
                     <CollectionView x:Name="ActorsCollectionView"
-                ItemsSource="{Binding Actors}"
-                ItemsLayout="HorizontalList"
-                HeightRequest="130"
-                Margin="20,0,40,0"
-                HorizontalScrollBarVisibility="Never"
-                Scrolled="OnActorsScrolled">
+                                    ItemsSource="{Binding Actors}"
+                                    ItemsLayout="HorizontalList"
+                                    HeightRequest="130"
+                                    Margin="20,0,40,0"
+                                    HorizontalScrollBarVisibility="Never"
+                                    Scrolled="OnActorsScrolled">
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Actor">
                                 <Frame WidthRequest="100"
-                           HeightRequest="140"
-                           CornerRadius="15"
-                           Padding="5"
-                           Margin="10,0,10,0"
-                           BackgroundColor="#071942"
-                           HasShadow="False"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center">
+                                       HeightRequest="140"
+                                       CornerRadius="15"
+                                       Padding="5"
+                                       Margin="10,0,10,0"
+                                       BackgroundColor="#071942"
+                                       HasShadow="False"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center">
                                     <StackLayout Orientation="Vertical"
-                                     HorizontalOptions="Center"
-                                     VerticalOptions="Center"
-                                     Spacing="5">
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 Spacing="5">
                                         <Image Source="{Binding Photo}" 
-                                   HeightRequest="80" 
-                                   WidthRequest="70" 
-                                   Aspect="AspectFill"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   Clip="Ellipse"/>
+                                               HeightRequest="80" 
+                                               WidthRequest="70" 
+                                               Aspect="AspectFill"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               Clip="Ellipse"/>
                                         <Label Text="{Binding Name}" 
-                                   TextColor="White" 
-                                   FontSize="12" 
-                                   HorizontalOptions="Center"
-                                   LineBreakMode="TailTruncation"
-                                   HorizontalTextAlignment="Center"/>
+                                               TextColor="White" 
+                                               FontSize="12" 
+                                               HorizontalOptions="Center"
+                                               LineBreakMode="TailTruncation"
+                                               HorizontalTextAlignment="Center"/>
                                     </StackLayout>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <!-- Strelica desno -->
+                  
                     <Image Source="desna.png" WidthRequest="30" HorizontalOptions="End" Margin="30,0,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnRightArrowClicked"/>
@@ -171,19 +171,19 @@
                     </Image>
                 </Grid>
             </Frame>
-            <!-- Vidi sve glumce -->
+           
             <StackLayout Margin="0,20,0,20">
                 <BoxView HeightRequest="1"
-             Color="#3e3e57"
-             Margin="0,10,0,0"
-             HorizontalOptions="Fill"/>
+                         Color="#3e3e57"
+                         Margin="0,10,0,0"
+                         HorizontalOptions="Fill"/>
                 <Frame CornerRadius="0"
-           Padding="15"
-           HorizontalOptions="FillAndExpand">
+                       Padding="15"
+                       HorizontalOptions="FillAndExpand">
 
                     <HorizontalStackLayout HorizontalOptions="Center"
-                               Spacing="5"
-                               VerticalOptions="Center">
+                                           Spacing="5"
+                                           VerticalOptions="Center">
 
                         <HorizontalStackLayout.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnSeeAllActorsClicked"/>
@@ -197,29 +197,29 @@
                     </HorizontalStackLayout>
                 </Frame>
 
-                <!-- Donja linija -->
+              
                 <BoxView HeightRequest="1"
-             Color="#3e3e57"
-             Margin="0,2,0,0"
-             HorizontalOptions="Fill"/>
+                        Color="#3e3e57"
+                        Margin="0,2,0,0"
+                        HorizontalOptions="Fill"/>
 
             </StackLayout>
 
 
-            <!-- Rating frame -->
+
             <Frame x:Name="RatingFrame"
-       BackgroundColor="#071942"
-       CornerRadius="16"
-       Padding="15"
-       HasShadow="False">
+                   BackgroundColor="#071942"
+                   CornerRadius="16"
+                   Padding="15"
+                   HasShadow="False">
 
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
 
                     <Label Text="Ocijeni film"
-               FontSize="18"
-               FontAttributes="Bold"
-               TextColor="#FFD200"
-               HorizontalOptions="Center"/>
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#FFD200"
+                           HorizontalOptions="Center"/>
 
                     <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
                         <Image x:Name="Star1" Source="star_empty.png" HeightRequest="36"/>
@@ -230,26 +230,23 @@
                     </HorizontalStackLayout>
 
                     <Label x:Name="RatingInfoLabel"
-               Text="Dodijeli ocjenu i osvoji bodove "
-               FontSize="12"
-               TextColor="White"
-               Opacity="0.7"
-               HorizontalOptions="Center"/>
+                           Text="Dodijeli ocjenu i osvoji bodove "
+                           FontSize="12"
+                           TextColor="White"
+                           Opacity="0.7"
+                           HorizontalOptions="Center"/>
 
                     <Button x:Name="ConfirmRatingButton"
-                Text="Potvrdi ocjenu"
-                BackgroundColor="#FFD200"
-                TextColor="Black"
-                FontAttributes="Bold"
-                CornerRadius="10"
-                HeightRequest="40"
-                HorizontalOptions="Center"
-                Clicked="OnConfirmRatingClicked"/>
+                            Text="Potvrdi ocjenu"
+                            BackgroundColor="#FFD200"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            HeightRequest="40"
+                            HorizontalOptions="Center"
+                            Clicked="OnConfirmRatingClicked"/>
                 </VerticalStackLayout>
             </Frame>
-
-
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

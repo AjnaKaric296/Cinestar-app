@@ -40,11 +40,11 @@
 
                 <StackLayout>
                     <CarouselView x:Name="HeroCarousel"
-              HeightRequest="240"
-              ItemsLayout="HorizontalList"
-              IsSwipeEnabled="True"
-              IndicatorView="carouselIndicators"
-              Margin="0">
+                                  HeightRequest="240"
+                                  ItemsLayout="HorizontalList"
+                                  IsSwipeEnabled="True"
+                                  IndicatorView="carouselIndicators"
+                                  Margin="0">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -66,10 +66,10 @@
                     </CarouselView>
 
                     <IndicatorView x:Name="carouselIndicators"
-                   IndicatorColor="White"
-                   SelectedIndicatorColor="#FFD200" 
-                   HorizontalOptions="Center"
-                   Margin="0,10,0,15" />
+                                   IndicatorColor="White"
+                                    SelectedIndicatorColor="#FFD200" 
+                                   HorizontalOptions="Center"
+                                    Margin="0,10,0,15" />
                 </StackLayout>
 
                

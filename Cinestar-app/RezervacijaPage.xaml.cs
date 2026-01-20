@@ -53,8 +53,6 @@ public partial class RezervacijaPage : ContentPage
         TimePicker.SelectedIndex = 0;
     }
 
-    // ---------------- PLUS / MINUS ----------------
-
     private void PlusClicked(object sender, EventArgs e)
     {
         if (_ticketCount < 10)

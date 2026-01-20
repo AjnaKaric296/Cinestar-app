@@ -11,7 +11,6 @@ namespace Cinestar_app.Services
     {
         private readonly string apiKey = "ebd20d7e"; // OMDb ključ
 
-        // globalni Random objekt za sve filmove i glumce
         private static readonly Random rnd = new();
 
         public async Task<Film> GetFilmFromApi(string imdbId)
@@ -29,7 +28,6 @@ namespace Cinestar_app.Services
                 .Where(a => !string.IsNullOrWhiteSpace(a) && a != "N/A")
                 .ToList();
 
-            // svaki glumac bi trebalo da dobije random silku
             var actorsList = actorNames
                 .Select(a => new Actor
                 {

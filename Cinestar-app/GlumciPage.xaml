@@ -18,7 +18,7 @@
     <CollectionView x:Name="ActorsCollectionView"
                     Margin="10"
                     SelectionMode="None">
-        <!-- 2 kolone po red -->
+       
         <CollectionView.ItemsLayout>
             <GridItemsLayout Orientation="Vertical"
                              Span="2"
@@ -37,7 +37,7 @@
                                  HorizontalOptions="Center"
                                  VerticalOptions="Center"
                                  Spacing="10">
-                        <!-- VEĆA SLIKA -->
+                       
                         <Image Source="{Binding Photo}" 
                                HeightRequest="240" 
                                WidthRequest="160" 
@@ -50,7 +50,7 @@
                             </Image.Clip>
                         </Image>
 
-                        <!-- IME ISPOD SLIKE -->
+                       
                         <Label Text="{Binding Name}" 
                                TextColor="White" 
                                FontSize="18" 

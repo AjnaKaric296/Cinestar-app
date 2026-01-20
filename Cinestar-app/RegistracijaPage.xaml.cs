@@ -49,12 +49,12 @@ public partial class RegistracijaPage : ContentPage
 
         await _db.AddUserAsync(user);
 
-        // automatski login
+        
         UserSession.Login(user);
 
         await DisplayAlert("", " Uspješno ste Registrovani! ", "OK");
 
-        // direktno na profil
+   
         await Navigation.PushAsync(new UserProfilPage());
 
     }

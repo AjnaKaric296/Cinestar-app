@@ -119,7 +119,7 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
             foreach (var f in allFilms)
                 Films.Add(f);
 
-            // Popuni GenrePicker
+   
             var genres = Films
                 .SelectMany(f => (f.Genre ?? "").Split(','))
                 .Select(g => g.Trim())
@@ -154,12 +154,12 @@ public partial class Filmovi : ContentPage, INotifyPropertyChanged
     {
         if ((sender as Frame)?.BindingContext is Film film)
         {
-            // Ako film Actors nisu popunjeni, uzmi puni film preko ImdbID
+            
             if (film.Actors == null || film.Actors.Count == 0)
             {
                 var fullFilm = await filmService.GetFilmFromApi(film.ImdbID);
                 if (fullFilm != null)
-                    film = fullFilm; // zamijeni sa punim
+                    film = fullFilm; 
             }
 
             await Navigation.PushAsync(new FilmDetalji(film));

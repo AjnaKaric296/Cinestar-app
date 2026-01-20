@@ -29,7 +29,6 @@ namespace Cinestar_app
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        // Lista gradova sa koordinatama
         private List<Cinema> cinemas = new List<Cinema>
         {
             new Cinema { City = "Mostar", Latitude = 43.3438, Longitude = 17.8078 },
@@ -42,19 +41,18 @@ namespace Cinestar_app
             new Cinema { City = "Gracanica", Latitude = 44.5333, Longitude = 18.6667 }
         };
 
-        // Klik na dugme „Koristi moju lokaciju“
         private async void OnUseLocationTapped(object sender, EventArgs e)
         {
             var label = sender as Label;
             if (label == null) return;
 
-            // Promijeni boju na tamno sivo dok traje klik
+           
             var originalColor = label.TextColor;
-            label.TextColor = Color.FromArgb("#AAAAAA"); // tamno sivo
-            await Task.Delay(100); // kratka animacija / feedback
+            label.TextColor = Color.FromArgb("#AAAAAA"); 
+            await Task.Delay(100); 
             label.TextColor = originalColor;
 
-            // Sada radi logiku za lokaciju
+           
             var location = await GetUserLocationAsync();
             if (location != null)
             {
@@ -73,7 +71,7 @@ namespace Cinestar_app
 
 
 
-        // Dohvati lokaciju korisnika
+     
         private async Task<Location?> GetUserLocationAsync()
         {
             try
@@ -89,7 +87,6 @@ namespace Cinestar_app
             return null;
         }
 
-        // Nađi najbliži grad
         private Cinema? GetNearestCinema(Location userLocation)
         {
             return cinemas
@@ -97,7 +94,6 @@ namespace Cinestar_app
                 .FirstOrDefault();
         }
 
-        // Klik na ListView za klasičan odabir grada
         private void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null) return;
@@ -121,7 +117,6 @@ namespace Cinestar_app
         }
     }
 
-    // Model za kino / grad
     public class Cinema
     {
         public string City { get; set; }
