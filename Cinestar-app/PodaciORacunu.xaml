@@ -1,53 +1,82 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.PodaciORacunu"
              BackgroundColor="#051851"
-             Title="PodaciORacunu">
+             Title="Podaci o računu">
 
+    <!-- Custom Navigation Bar -->
     <NavigationPage.TitleView>
-        <Label Text="Podaci o Računu"
-               FontSize="17"
-               TextColor="White"
-               Margin="0,0,60,0"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               FontAttributes="Bold"/>
+        <Grid ColumnDefinitions="50,*,50" VerticalOptions="Center">
+
+            <!-- Back button -->
+            <Button Text="⟵"
+                    FontSize="24"
+                    TextColor="White"
+                    BackgroundColor="Transparent"
+                    Clicked="BackButton_Clicked"
+                    HorizontalOptions="Start" />
+
+            <!-- Logo in the middle -->
+            <Image Source="logo.png"
+                   HeightRequest="40"
+                   WidthRequest="40"
+                   HorizontalOptions="Center"/>
+
+            <!-- Profile image -->
+            <Frame BackgroundColor="Transparent" Padding="0" CornerRadius="20" HorizontalOptions="End">
+                <Image Source="profil.png"
+                       HeightRequest="40"
+                       WidthRequest="40"/>
+            </Frame>
+
+        </Grid>
     </NavigationPage.TitleView>
-    <StackLayout Padding="15">
-        <Label Text="Informacije o vašem računu" 
-               TextColor="White" 
-               FontSize="24" 
-               FontAttributes="Bold" 
-               HorizontalOptions="Center"
-               Margin="0,10,0,20"/>
 
-        <Frame BackgroundColor="#0c205e" Padding="20" CornerRadius="10">
-            <StackLayout Spacing="15">
+    <ScrollView>
+        <StackLayout Padding="15" Spacing="20">
 
-                <StackLayout Orientation="Horizontal" Spacing="10">
-                    <Label Text="Ime:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
-                    <Label Text="{Binding Ime}" TextColor="White"/>
+            <!-- Header -->
+            <Label Text="Podaci o računu"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,20"/>
+
+            <!-- User Info Frame -->
+            <Frame BackgroundColor="#0c205e" Padding="20" CornerRadius="15">
+                <StackLayout Spacing="15">
+
+                    <!-- Ime -->
+                    <StackLayout Orientation="Horizontal" Spacing="15" VerticalOptions="Center">
+                        <Label Text="Ime:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
+                        <Label Text="{Binding Ime}" TextColor="White"/>
+                    </StackLayout>
+
+                    <!-- Prezime -->
+                    <StackLayout Orientation="Horizontal" Spacing="15" VerticalOptions="Center">
+                        <Label Text="Prezime:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
+                        <Label Text="{Binding Prezime}" TextColor="White"/>
+                    </StackLayout>
+
+                    <!-- Email -->
+                    <StackLayout Orientation="Horizontal" Spacing="15" VerticalOptions="Center">
+                        <Label Text="Email:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
+                        <Label Text="{Binding Email}" TextColor="White"/>
+                    </StackLayout>
+
                 </StackLayout>
+            </Frame>
 
-                <StackLayout Orientation="Horizontal" Spacing="10">
-                    <Label Text="Prezime:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
-                    <Label Text="{Binding Prezime}" TextColor="White"/>
-                </StackLayout>
+            <!-- Promjena lozinke button -->
+            <Button Text="Promijeni lozinku"
+                    BackgroundColor="#0c205e"
+                    TextColor="White"
+                    CornerRadius="15"
+                    HeightRequest="50"
+                    FontAttributes="Bold"
+                    Clicked="ChangePassword_Clicked"/>
 
-                <StackLayout Orientation="Horizontal" Spacing="10">
-                    <Label Text="Email:" TextColor="White" FontAttributes="Bold" WidthRequest="120"/>
-                    <Label Text="{Binding Email}" TextColor="White"/>
-                </StackLayout>
-
-
-            </StackLayout>
-        </Frame>
-
-        <Button Text="Promijeni lozinku" 
-BackgroundColor="#0c205e" 
-TextColor="White"
-Clicked="ChangePassword_Clicked"/>
-
-    </StackLayout>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

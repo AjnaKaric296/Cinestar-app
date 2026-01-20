@@ -8,7 +8,6 @@ public partial class PodaciORacunu : ContentPage
     public PodaciORacunu()
     {
         InitializeComponent();
-        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     protected override void OnAppearing()
@@ -50,5 +49,10 @@ public partial class PodaciORacunu : ContentPage
 
         await DisplayAlert("Uspješno", "Lozinka je promijenjena!", "OK");
     }
+    private async void BackButton_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
 
 }
