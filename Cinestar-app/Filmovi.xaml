@@ -2,141 +2,175 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.Filmovi"
-             
              Title=" ">
 
-    <!-- Gradient pozadina -->
+    <!-- BACKGROUND -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#051851" Offset="0.0"/>
-            <GradientStop Color="#0B2A6F" Offset="1.0"/>
+            <GradientStop Color="#051851" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="10">
+    <!-- MAIN GRID -->
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"
+          Padding="10">
 
-        <!-- Header: logo + grad + strelica -->
-        <Grid HeightRequest="60" Padding="0,10,0,0">
+        <!-- HEADER -->
+        <Grid Grid.Row="0"
+              HeightRequest="60"
+              >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Logo lijevo -->
-            <Image Source="logo.png" HeightRequest="100" WidthRequest="100" Grid.Column="0" VerticalOptions="Center"/>
+            <Image Source="logo.png"
+                   HeightRequest="100"
+                   WidthRequest="100"
+                   Grid.Column="0"
+                   VerticalOptions="Center"
+                   Margin="15,10,0,0"/>
 
-            <!-- Spacer -->
-            <BoxView Grid.Column="1" WidthRequest="10"/>
-
-            <!-- Grad + strelica desno -->
-            <StackLayout Orientation="Horizontal" Grid.Column="2" VerticalOptions="Center" Spacing="10">
-                <Label x:Name="CityLabel"
-                       Text="{Binding SelectedCity}"
-                       TextColor="#FFD200"
+            <StackLayout Orientation="Horizontal"
+                         Grid.Column="2"
+                         VerticalOptions="Center"
+                         Spacing="10">
+                <Label Text="{Binding SelectedCity}"
+                       TextColor="white"
                        FontAttributes="Bold"
-                       FontSize="16"
-                       VerticalOptions="Center">
+                       VerticalOptions="Center"
+                       Margin="0,10,0,10"
+                       FontSize="16">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnCityTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
+
                 <Image Source="strelica.png"
                        HeightRequest="10"
                        WidthRequest="10"
-                       VerticalOptions="Center"/>
+                       VerticalOptions="Center"
+                       Margin="0,10,15,10"
+                       />
             </StackLayout>
         </Grid>
 
-        <!-- Zanr -->
-        <Picker Grid.Row="1"
-                x:Name="GenrePicker"
-                Title="Filter po žanru"
-                TextColor="White"
-                SelectedIndexChanged="OnGenreChanged"
-                HorizontalOptions="Fill"
-                Margin="0,10,0,0"/>
+        <!-- LINE UNDER HEADER -->
+        <BoxView Grid.Row="1"
+                 HeightRequest="1"
+                 Color="#3e3e57"
+                 Margin="0,10,0,0"
+                 HorizontalOptions="Fill"
+                 Opacity="0.6"/>
 
-        <!-- Filmovi -->
-        <CollectionView Grid.Row="2"
+        <!-- PICKER + STRELICA -->
+        <Grid Grid.Row="2"
+              ColumnDefinitions="*,Auto"
+              Margin="0,10,0,0"
+              VerticalOptions="Center">
+
+            <Picker x:Name="GenrePicker"
+                    Title="Filter po žanru"
+                    VerticalOptions="Center"
+                    Margin="15,0,0,10"
+                    TextColor="White"
+                    SelectedIndexChanged="OnGenreChanged"/>
+
+            <Image Grid.Column="1"
+                   Source="strelica.png"
+                   HeightRequest="10"
+                   WidthRequest="10"
+                   VerticalOptions="Center"
+                   Margin="0,0,15,10"/>
+        </Grid>
+
+        <!-- LINE UNDER PICKER -->
+        <BoxView Grid.Row="3"
+                 HeightRequest="1"
+                 Color="#3e3e57"
+                 HorizontalOptions="Fill"
+                 Opacity="0.6"/>
+
+        <!-- FILMS LIST -->
+        <CollectionView Grid.Row="4"
                         x:Name="FilmsCollectionView"
                         SelectionMode="None"
                         Margin="0,10,0,0">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Film">
-                    <Frame BackgroundColor="#0B2A6F"
+                    <Frame BackgroundColor="#051851"
                            CornerRadius="20"
                            Padding="12"
                            Margin="8">
 
-                        <!-- TapGesture za navigaciju -->
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnFilmTapped"/>
                         </Frame.GestureRecognizers>
 
                         <Grid ColumnDefinitions="120,*">
+
                             <Image Source="{Binding Poster}"
                                    HeightRequest="180"
                                    WidthRequest="120"
                                    Aspect="AspectFill"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Center"/>
+                                   VerticalOptions="Center"/>
 
                             <StackLayout Grid.Column="1"
                                          Padding="10"
-                                         Spacing="8">
+                                         VerticalOptions="Center"
+                                         Spacing="6">
 
                                 <Label Text="{Binding Title}"
                                        TextColor="White"
-                                       FontAttributes="Bold"
-                                       FontSize="18"
+                                       FontSize="15"
+                                       TextTransform="Uppercase"
                                        LineBreakMode="TailTruncation"/>
 
                                 <Label Text="{Binding Genre}"
-                                       TextColor="#FFC107"
-                                       FontSize="13"
+                                       TextColor="#CCCCCC"
+                                       FontSize="11"
                                        LineBreakMode="TailTruncation"/>
 
-                                <Label Text="{Binding Year}"
-                                       TextColor="White"
-                                       FontSize="13"/>
+                                <Label Text="{Binding Director}"
+                                       TextColor="#AAAAAA"
+                                       FontSize="10"/>
 
-                                <ScrollView Orientation="Horizontal" Margin="0,10,0,0">
-                                    <HorizontalStackLayout Spacing="8">
-                                        <Button Text="12:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
-                                        <Button Text="15:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
-                                        <Button Text="18:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
-                                        <!-- Možeš dodati još termina -->
-                                        <Button Text="21:00" Clicked="OnReserveClicked" BackgroundColor="#FFD200" TextColor="#051851" CornerRadius="15" Padding="10,5"/>
-                                    </HorizontalStackLayout>
-                                </ScrollView>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="5">
+                                    <Image Source="clock.webp"
+                                           HeightRequest="12"/>
+                                    <Label Text="{Binding Runtime}"
+                                           TextColor="White"
+                                           FontSize="12"/>
+                                </StackLayout>
 
                             </StackLayout>
                         </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
         </CollectionView>
 
-        <!-- Loading overlay -->
+        <!-- LOADING OVERLAY -->
         <Grid x:Name="LoadingOverlay"
               BackgroundColor="#80000000"
               IsVisible="False"
-              VerticalOptions="FillAndExpand"
-              HorizontalOptions="FillAndExpand"
-              RowSpan="3">
+              Grid.RowSpan="5">
 
             <StackLayout VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Spacing="10">
-                <ActivityIndicator IsRunning="True" Color="#FFD200" WidthRequest="60" HeightRequest="60"/>
+                <ActivityIndicator IsRunning="True"
+                                   Color="#FFD200"
+                                   WidthRequest="60"
+                                   HeightRequest="60"/>
                 <Label Text="Učitavanje filmova..."
                        TextColor="White"
                        FontSize="18"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"/>
+                       FontAttributes="Bold"/>
             </StackLayout>
         </Grid>
 

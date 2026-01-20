@@ -3,9 +3,6 @@ using Cinestar_app.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
-
-
-
 using System;
 using System.Collections.Generic;
 
@@ -16,58 +13,73 @@ public partial class RezervacijaPage : ContentPage
     private Film _film;
     private FilmService _filmService;
 
-    public ObservableCollection<Seat> Seats { get; set; }
+    public ObservableCollection<Seat> SeatsLeft { get; set; }
+    public ObservableCollection<Seat> SeatsRight { get; set; }
+
     public ICommand SeatTappedCommand { get; }
-    private int MaxSelectedSeats => (int)TicketStepper.Value;
 
-
+    private int _ticketCount = 1;
+    private int MaxSelectedSeats => _ticketCount;
+    public Film Film { get; set; }
 
     public RezervacijaPage(Film film)
-    { 
+    {
         InitializeComponent();
-        
-        Seats = new ObservableCollection<Seat>();
+        Film = film;
+        SeatsLeft = new ObservableCollection<Seat>();
+        SeatsRight = new ObservableCollection<Seat>();
 
-        // npr. 20 sjedala
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 12; i++)
         {
-            Seats.Add(new Seat
-            {
-                Image = "seat.png",
-                IsSelected = false
-            });
+            SeatsLeft.Add(new Seat { Image = "seat.png", IsSelected = false });
+            SeatsRight.Add(new Seat { Image = "seat.png", IsSelected = false });
         }
 
-        // command za klik
         SeatTappedCommand = new Command<Seat>(OnSeatTapped);
-
         BindingContext = this;
 
         _film = film;
         _filmService = new FilmService();
 
-        // Postavi film podatke
         PosterImage.Source = _film.Poster;
         FilmTitleLabel.Text = _film.Title;
 
-        // Postavi default vrijednosti
-        TicketStepper.ValueChanged += TicketStepper_ValueChanged;
-        TicketCountLabel.Text = ((int)TicketStepper.Value).ToString();
+        TicketCountLabel.Text = _ticketCount.ToString();
 
-        // Dodaj dummy termine (kasnije se mogu dohvatiti iz API-ja)
-        TimePicker.ItemsSource = new List<string> { "16:30", "18:00", "20:15", "22:00" };
+        TimePicker.ItemsSource = new List<string>
+        {
+            "16:30", "18:00", "20:15", "22:00"
+        };
         TimePicker.SelectedIndex = 0;
     }
 
-    private void TicketStepper_ValueChanged(object sender, ValueChangedEventArgs e)
+    // ---------------- PLUS / MINUS ----------------
+
+    private void PlusClicked(object sender, EventArgs e)
     {
-        TicketCountLabel.Text = ((int)e.NewValue).ToString();
+        if (_ticketCount < 10)
+            _ticketCount++;
 
-        int allowed = (int)e.NewValue;
+        UpdateTicketCount();
+    }
 
-        var selectedSeats = Seats.Where(s => s.IsSelected).ToList();
+    private void MinusClicked(object sender, EventArgs e)
+    {
+        if (_ticketCount > 1)
+            _ticketCount--;
 
-        while (selectedSeats.Count > allowed)
+        UpdateTicketCount();
+    }
+
+    private void UpdateTicketCount()
+    {
+        TicketCountLabel.Text = _ticketCount.ToString();
+
+        var selectedSeats = SeatsLeft.Concat(SeatsRight)
+                                     .Where(s => s.IsSelected)
+                                     .ToList();
+
+        while (selectedSeats.Count > _ticketCount)
         {
             var seat = selectedSeats.Last();
             seat.IsSelected = false;
@@ -77,12 +89,46 @@ public partial class RezervacijaPage : ContentPage
     }
 
 
+    private void OnSeatTapped(Seat seat)
+    {
+        if (seat == null)
+            return;
+
+        if (seat.IsSelected)
+        {
+            seat.IsSelected = false;
+            seat.Image = "seat.png";
+        }
+        else
+        {
+            int selectedCount = SeatsLeft.Concat(SeatsRight)
+                                         .Count(s => s.IsSelected);
+
+            if (selectedCount >= MaxSelectedSeats)
+            {
+                DisplayAlert("Limit",
+                    $"Možete odabrati najviše {MaxSelectedSeats} mjesta.",
+                    "OK");
+                return;
+            }
+
+            seat.IsSelected = true;
+            seat.Image = "seat1.png";
+        }
+
+     
+        ConfirmButton.IsEnabled =
+            SeatsLeft.Concat(SeatsRight).Any(s => s.IsSelected);
+
+        ConfirmButton.Opacity = ConfirmButton.IsEnabled ? 1 : 0.5;
+    }
+
+
 
     private async void ConfirmButton_Clicked(object sender, EventArgs e)
     {
         var userDb = new UserDatabase();
 
-        // Dohvati trenutno prijavljenog korisnika (Preferences)
         if (!UserSession.IsLoggedIn || UserSession.CurrentUser == null)
         {
             await DisplayAlert("Greška",
@@ -91,68 +137,29 @@ public partial class RezervacijaPage : ContentPage
             return;
         }
 
-        var email = UserSession.CurrentUser.Email;
-
-
         var reservation = new Reservation
         {
-            UserEmail = email,
+            UserEmail = UserSession.CurrentUser.Email,
             FilmTitle = _film.Title,
             FilmId = _film.ImdbID,
             Date = DatePicker.Date,
             Time = TimePicker.SelectedItem?.ToString() ?? "",
-            TicketCount = (int)TicketStepper.Value
+            TicketCount = _ticketCount
         };
 
         await userDb.AddReservationAsync(reservation);
-        // --- DODAJ 2 BODA KORISNIKU ---
+
         UserSession.LoyaltyPoints += 2;
-        await userDb.UpdateUserLoyaltyAsync(email, UserSession.LoyaltyPoints);
+        await userDb.UpdateUserLoyaltyAsync(
+            UserSession.CurrentUser.Email,
+            UserSession.LoyaltyPoints);
 
-        // --- Obavijesti LoyaltyBodovi stranicu da osvježi bodove ---
-        Device.BeginInvokeOnMainThread(() =>
-        {
-            MessagingCenter.Send(this, "UpdateLoyaltyPoints");
-        });
+        MessagingCenter.Send(this, "UpdateLoyaltyPoints");
 
-        await DisplayAlert("Uspjesno",
-            $"Rezervacija je spremljena na vaš profil.\nOsvojili ste 2 boda! \nTrenutno imate {UserSession.LoyaltyPoints} bodova.",
+        await DisplayAlert("Uspješno",
+            $"Rezervacija je spremljena.\nOsvojili ste 2 boda!\nUkupno: {UserSession.LoyaltyPoints}",
             "OK");
 
         await Navigation.PopAsync();
     }
-
-    private void OnSeatTapped(Seat seat)
-    {
-        if (seat == null)
-            return;
-
-        // uvijek dozvoli odznaèavanje
-        if (seat.IsSelected)
-        {
-            seat.IsSelected = false;
-            seat.Image = "seat.png";
-            return;
-        }
-
-        // broj trenutno selektovanih
-        int selectedCount = Seats.Count(s => s.IsSelected);
-
-        if (selectedCount >= MaxSelectedSeats)
-        {
-            DisplayAlert("Limit",
-                $"Možete odabrati najviše {MaxSelectedSeats} mjesta.",
-                "OK");
-            return;
-        }
-
-
-        // selektuj
-        seat.IsSelected = true;
-        seat.Image = "seat1.png";
-    }
-
-
-
-
 }

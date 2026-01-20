@@ -6,5 +6,7 @@
      xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
     android:TabbedPage.ToolbarPlacement="Bottom"
     BarBackgroundColor="#051851"
+    SelectedTabColor="{StaticResource AccentYellow}"
+    UnselectedTabColor="Gray"
     BarTextColor="White">
 </TabbedPage>

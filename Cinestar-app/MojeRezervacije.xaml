@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.MojeRezervacije"
              xmlns:models="clr-namespace:Cinestar_app.Models"
-             Title="MojeRezervacije">
+             BackgroundColor="#051851"
+             Title=" ">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
 
@@ -15,26 +16,34 @@
             <CollectionView ItemsSource="{Binding Reservations}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="10" Padding="10" CornerRadius="12">
+                        
+                        
+                        <Frame BorderColor="Gray" Margin="10" Padding="10" CornerRadius="5"> 
                             <VerticalStackLayout Spacing="8">
-
-                                <Label Text="{Binding FilmTitle}"
-                           FontAttributes="Bold"
-                           FontSize="18"/>
-
-                                <Label Text="{Binding Date, StringFormat='Datum: {0:dd.MM.yyyy}'}"/>
-                                <Label Text="{Binding Time, StringFormat='Vrijeme: {0}'}"/>
-                                <Label Text="{Binding TicketCount, StringFormat='Karte: {0}'}"/>
-
-                                <!-- QR KOD -->
-                                <Image HeightRequest="150"
-                                   WidthRequest="150"
+                            <Label Text="{Binding FilmTitle}"
                                    HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                                   Margin="0,0,0,20"
+                           FontSize="18"/>
+                           
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Margin="20,0,0,0">
+                                        <Label Text="{Binding Date, StringFormat='Datum: {0:dd.MM.yyyy}'}" FontSize="12" />
+                                        <Label Text="{Binding Time, StringFormat='Vrijeme: {0}'}" FontSize="12"/>
+                                        <Label Text="{Binding TicketCount, StringFormat='Karte: {0}'}" FontSize="12"/>
+                                </StackLayout>
+                                
+                                <Image HeightRequest="120"
+                                   WidthRequest="120"
+                                       Margin="0,0,20,10"
+                                   HorizontalOptions="EndAndExpand"
                                    Source="{Binding ReservationUrl, Converter={StaticResource QrConverter}}"/>
-
+                                </StackLayout>
 
                             </VerticalStackLayout>
                         </Frame>
+                        
+                        
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

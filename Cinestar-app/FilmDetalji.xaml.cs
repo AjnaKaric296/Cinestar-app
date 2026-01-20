@@ -3,15 +3,22 @@ using Cinestar_app.Services;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cinestar_app;
 
 public partial class FilmDetalji : ContentPage
 {
     int currentRating = 0;
-    
+
     private bool ratingConfirmed = false;
     private UserDatabase _db;
+    private string fullPlotText;
+    private bool isPlotExpanded = false;
+    private int previewLength = 250;
+
+    private int currentActorIndex = 0;
+
 
     public FilmDetalji(Film film)
     {
@@ -19,10 +26,7 @@ public partial class FilmDetalji : ContentPage
         BindingContext = film;
         RatingFrame.IsVisible = UserSession.IsLoggedIn;
 
-        NavigationPage.SetHasNavigationBar(this, false);
-
         _db = new UserDatabase();
-
         if (UserSession.IsLoggedIn)
         {
             AddStarTap(Star1, 1);
@@ -34,14 +38,14 @@ public partial class FilmDetalji : ContentPage
 
         PosterImage.Source = film.Poster;
         TitleLabel.Text = film.Title;
-        PlotLabel.Text = film.Plot;
+        SetPlotText(film.Plot);
 
-        // --- RANDOM GLUMCI IZ LOKALNE BAZE ---
+        
         var random = new Random();
         var actors = new List<Actor>();
         var allActors = Cinestar_app.Data.ActorsDatabase.AllActors;
 
-        while (actors.Count < 3)
+        while (actors.Count < 5)
         {
             var candidate = allActors[random.Next(allActors.Count)];
             if (!actors.Contains(candidate))
@@ -83,22 +87,18 @@ public partial class FilmDetalji : ContentPage
     {
         if (UserSession.CurrentUser == null) return;
 
-        // 1️⃣ povećaš GLOBALNE bodove
         UserSession.LoyaltyPoints += 1;
 
-        // 2️⃣ snimiš u bazu
         await _db.UpdateUserLoyaltyAsync(
             UserSession.CurrentUser.Email,
             UserSession.LoyaltyPoints
         );
 
-        // 3️⃣ obavijesti ostale stranice (opcionalno)
         Device.BeginInvokeOnMainThread(() =>
         {
             MessagingCenter.Send(this, "UpdateLoyaltyPoints");
         });
     }
-
 
     private async void OnConfirmRatingClicked(object sender, EventArgs e)
     {
@@ -135,9 +135,86 @@ public partial class FilmDetalji : ContentPage
             await DisplayAlert("Već ocijenjeno", "Već ste ocijenili ovaj film.", "OK");
         }
     }
+
     private async void OnSeeAllActorsClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new GlumciPage());
     }
 
+    private void SetPlotText(string plot)
+    {
+        fullPlotText = plot;
+
+        if (plot.Length > previewLength)
+        {
+            PlotTextSpan.Text = plot.Substring(0, previewLength) + "...";
+            ReadMoreSpan.Text = " Više";
+
+            isPlotExpanded = false;
+        }
+        else
+        {
+            PlotTextSpan.Text = plot;
+
+        }
+    }
+
+    private void OnReadMoreTapped(object sender, EventArgs e)
+    {
+        if (!isPlotExpanded)
+        {
+            PlotTextSpan.Text = fullPlotText;
+            ReadMoreSpan.Text = " Manje";
+            isPlotExpanded = true;
+        }
+        else
+        {
+            PlotTextSpan.Text = fullPlotText.Substring(0, previewLength) + "...";
+            ReadMoreSpan.Text = " Više";
+            isPlotExpanded = false;
+        }
+    }
+
+    private void OnLeftArrowClicked(object sender, EventArgs e)
+    {
+        if (ActorsCollectionView.ItemsSource is not IList<Actor> actors)
+            return;
+
+        if (currentActorIndex > 0)
+            currentActorIndex--;
+
+        ActorsCollectionView.ScrollTo(
+            actors[currentActorIndex],
+            position: ScrollToPosition.MakeVisible,
+            animate: true);
+    }
+
+    private void OnRightArrowClicked(object sender, EventArgs e)
+    {
+        if (ActorsCollectionView.ItemsSource is not IList<Actor> actors)
+            return;
+
+        if (currentActorIndex < actors.Count - 1)
+            currentActorIndex++;
+
+        ActorsCollectionView.ScrollTo(
+            actors[currentActorIndex],
+            position: ScrollToPosition.MakeVisible,
+            animate: true);
+    }
+
+    private void OnActorsScrolled(object sender, ItemsViewScrolledEventArgs e)
+    {
+      
+        currentActorIndex = e.FirstVisibleItemIndex;
+    }
+
+    private async void OnReserveClicked(object sender, EventArgs e)
+    {
+        if (sender is VisualElement element &&
+            element.BindingContext is Film film)
+        {
+            await Navigation.PushAsync(new RezervacijaPage(film));
+        }
+    }
 }
