@@ -2,82 +2,213 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.FilmDetalji"
-             Title=" ">
+             Title="">
 
     <NavigationPage.TitleView>
         <Label Text="Detalji o Filmu"
-               FontSize="15"
+               FontSize="17"
                TextColor="White"
-               Margin="60,0,0,0"
+               Margin="0,0,60,0"
                VerticalOptions="Center"
+               HorizontalOptions="Center"
                FontAttributes="Bold"/>
     </NavigationPage.TitleView>
 
-    <!-- ISTA GRADIENT POZADINA KAO OSTALE STRANICE -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#051851" Offset="0"/>
-            <GradientStop Color="#0B2A6F" Offset="1"/>
+            <GradientStop Color="#051851" Offset="1"/>
         </LinearGradientBrush>
     </ContentPage.Background>
 
     <ScrollView>
-        <VerticalStackLayout Padding="0" Spacing="20">
-
+        <VerticalStackLayout Padding="0" Spacing="0">
             <Image x:Name="PosterImage"
-                   Margin="0,10,0,0"
-                     HeightRequest="250"
-                     Aspect="AspectFit"
-                     HorizontalOptions="Fill"/>
+                   Margin="0,10,0,30"
+                   WidthRequest="410"
+                   Aspect="AspectFill"
+                   HeightRequest="250"/>
 
             <Label x:Name="TitleLabel"
                    FontSize="20"
-                   Margin="20,0,20,0"
+                   Margin="20,0,20,5"
                    TextTransform="Uppercase"
                    FontAttributes="Bold"
                    TextColor="White"/>
-
             <Label Text="{Binding Genre}"
-           FontSize="12"
-           Margin="20,0,20,0"
-           TextColor="#FFD200"
-           VerticalOptions="Center"/>
-
+                   FontSize="12"
+                   Margin="20,0,0,0"
+                   TextColor="White"/>
             <StackLayout Orientation="Horizontal"
-               Spacing="5" Margin="20,0,20,0">
-                <Image Source="clock.webp"
-             HeightRequest="12"/>
-                <Label Text="{Binding Runtime}"
-             TextColor="White"
-             FontSize="12"/>
+                         Spacing="5"
+                         Margin="20,5,20,0">
+                <Image Source="clock.webp" HeightRequest="12"/>
+                <Label Text="{Binding Runtime}" TextColor="White" FontSize="12"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="0,5,5,0">
+                <Label Text="Režiser:" Margin="20,0,5,0" FontSize="12"/>
+                <Label Text="{Binding Director}" FontSize="12" Margin="0,0,20,0" TextColor="White" VerticalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Režiser:"
-                       Margin="20,0,5,0"
-                       FontSize="12"/>
-                <Label Text="{Binding Director}"
-           FontSize="12"
-            Margin="0,0,20,0"
-           TextColor="#AAAAAA"
-           VerticalOptions="Center"/>
-            </StackLayout>
+            <VerticalStackLayout Padding="20,30,20,0" Spacing="5">
+                <Label x:Name="PlotLabel"
+       FontSize="13"
+       TextColor="White"
+       LineBreakMode="WordWrap">
+                    <Label.FormattedText>
+                        <FormattedString x:Name="PlotFormattedString">
+                            <Span x:Name="PlotTextSpan"/>
+                            <Span x:Name="ReadMoreSpan"
+                  Text=" Više"
+                  TextColor="#FFD200"
+                  TextTransform="Uppercase"
+                  FontAttributes="Bold">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnReadMoreTapped"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
 
-            <Label x:Name="PlotLabel"
-                   FontSize="14"
-                   Margin="20,0,20,0"
+            </VerticalStackLayout>
+
+            
+            <StackLayout Margin="0,20,0,20" >
+                <BoxView Grid.Row="1"
+          HeightRequest="1"
+          Color="#3e3e57"
+          Margin="0,10,0,0"
+          HorizontalOptions="Fill"
+          Opacity="1"/>
+                <Frame CornerRadius="0"  Margin="0,0,0,0" Padding="20" HorizontalOptions="FillAndExpand">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="ODABERI SVOJE MJESTO" TextColor="#FFD200" VerticalOptions="Center" FontAttributes="Bold" HorizontalOptions="Center">
+                            <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnReserveClicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                        <Image Source="zutastrelica.png" WidthRequest="7" HorizontalOptions="Center" Margin="10,0,0,0" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnReserveClicked"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>  
+                </Frame>
+                <BoxView Grid.Row="1"
+          HeightRequest="1"
+          Color="#3e3e57"
+          Margin="0,2,0,0"
+          HorizontalOptions="Fill"
+          Opacity="1"/>
+            </StackLayout>
+            
+
+            <Label Text="Glumci"
+                   FontSize="15"
+                   Margin="20,30,20,10"
+                   TextTransform="Uppercase"
                    TextColor="White"/>
 
-            <!-- GLUMCI -->
-            <Label Text="Glumci"
-                   FontSize="20"
-                   Margin="20,0,20,0"
-                   FontAttributes="Bold"
-                   TextColor="#FFD200"/>
+            
+            <Frame Margin="0" CornerRadius="0" BackgroundColor="#0c205e" Padding="10">
+                <Grid>
+                    <!-- Strelica lijevo -->
+                    <Image Source="lijeva.png" WidthRequest="30" HorizontalOptions="Start" Margin="0,0,20,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLeftArrowClicked"/>
+                        </Image.GestureRecognizers>
+                    </Image>
 
-            <!-- RECENZIJA FILMA -->
+                    <!-- CollectionView -->
+                    <CollectionView x:Name="ActorsCollectionView"
+                ItemsSource="{Binding Actors}"
+                ItemsLayout="HorizontalList"
+                HeightRequest="130"
+                Margin="20,0,40,0"
+                HorizontalScrollBarVisibility="Never"
+                Scrolled="OnActorsScrolled">
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Actor">
+                                <Frame WidthRequest="100"
+                           HeightRequest="140"
+                           CornerRadius="15"
+                           Padding="5"
+                           Margin="10,0,10,0"
+                           BackgroundColor="#071942"
+                           HasShadow="False"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center">
+                                    <StackLayout Orientation="Vertical"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="5">
+                                        <Image Source="{Binding Photo}" 
+                                   HeightRequest="80" 
+                                   WidthRequest="70" 
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Clip="Ellipse"/>
+                                        <Label Text="{Binding Name}" 
+                                   TextColor="White" 
+                                   FontSize="12" 
+                                   HorizontalOptions="Center"
+                                   LineBreakMode="TailTruncation"
+                                   HorizontalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Strelica desno -->
+                    <Image Source="desna.png" WidthRequest="30" HorizontalOptions="End" Margin="30,0,0,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRightArrowClicked"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+            </Frame>
+            <!-- Vidi sve glumce -->
+            <StackLayout Margin="0,20,0,20">
+                <BoxView HeightRequest="1"
+             Color="#3e3e57"
+             Margin="0,10,0,0"
+             HorizontalOptions="Fill"/>
+                <Frame CornerRadius="0"
+           Padding="15"
+           HorizontalOptions="FillAndExpand">
+
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                               Spacing="5"
+                               VerticalOptions="Center">
+
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSeeAllActorsClicked"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+
+                        <Label Text="Vidi sve glumce"
+                               TextColor="#FFD200" VerticalOptions="Center" FontAttributes="Bold" HorizontalOptions="Center"
+                               TextTransform="Uppercase"/>
+
+                        <Image Source="zutastrelica.png" WidthRequest="7" HorizontalOptions="Center" Margin="10,0,0,0"/>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <!-- Donja linija -->
+                <BoxView HeightRequest="1"
+             Color="#3e3e57"
+             Margin="0,2,0,0"
+             HorizontalOptions="Fill"/>
+
+            </StackLayout>
+
+
+            <!-- Rating frame -->
             <Frame x:Name="RatingFrame"
-                BackgroundColor="#071942"
+       BackgroundColor="#071942"
        CornerRadius="16"
        Padding="15"
        HasShadow="False">
@@ -90,15 +221,12 @@
                TextColor="#FFD200"
                HorizontalOptions="Center"/>
 
-                    <!-- Zvjezdice -->
                     <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
-
                         <Image x:Name="Star1" Source="star_empty.png" HeightRequest="36"/>
                         <Image x:Name="Star2" Source="star_empty.png" HeightRequest="36"/>
                         <Image x:Name="Star3" Source="star_empty.png" HeightRequest="36"/>
                         <Image x:Name="Star4" Source="star_empty.png" HeightRequest="36"/>
                         <Image x:Name="Star5" Source="star_empty.png" HeightRequest="36"/>
-
                     </HorizontalStackLayout>
 
                     <Label x:Name="RatingInfoLabel"
@@ -107,6 +235,7 @@
                TextColor="White"
                Opacity="0.7"
                HorizontalOptions="Center"/>
+
                     <Button x:Name="ConfirmRatingButton"
                 Text="Potvrdi ocjenu"
                 BackgroundColor="#FFD200"
@@ -120,71 +249,6 @@
             </Frame>
 
 
-
-            <!-- Glumci -->
-            <CollectionView x:Name="ActorsCollectionView"
-                ItemsSource="{Binding Actors}"
-                ItemsLayout="HorizontalList"
-                HeightRequest="130"           
-                Margin="0,10,0,0"
-                HorizontalScrollBarVisibility="Never">
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Actor">
-                        <Frame WidthRequest="90"
-                   HeightRequest="120"
-                   CornerRadius="15"
-                   Padding="5"
-                    Margin="20,0,10,0"
-                   BackgroundColor="#071942"
-                   HasShadow="False"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center">
-
-                            <StackLayout Orientation="Vertical"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center"
-                             Spacing="5">
-
-                                <!-- Slika glumca -->
-                                <Image Source="{Binding Photo}" 
-                           HeightRequest="70" 
-                           WidthRequest="70" 
-                           Aspect="AspectFill"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           Clip="Ellipse"/>
-
-                                <!-- Ime glumca -->
-                                <Label Text="{Binding Name}" 
-                           TextColor="White" 
-                           FontSize="12" 
-                           HorizontalOptions="Center"
-                           LineBreakMode="TailTruncation"
-                           HorizontalTextAlignment="Center"/>
-                            </StackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="0,0,0,20" VerticalOptions="Center">
-                <Label
-        Text="Vidi sve glumce"
-        TextColor="White"
-        TextDecorations="Underline"
-        FontAttributes="Bold"
-        VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnSeeAllActorsClicked"/>
-                    </Label.GestureRecognizers>
-                </Label>
-
-                <Image Source="strelica.png"
-           HeightRequest="12"
-           WidthRequest="12"
-           VerticalOptions="Center"/>
-            </HorizontalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

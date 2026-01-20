@@ -5,9 +5,15 @@
              x:Class="Cinestar_app.App">
     <Application.Resources>
         <ResourceDictionary>
+           
+
             <Color x:Key="PrimaryBlue">#051851</Color>
             <Color x:Key="SecondaryWhite">#FFFFFF</Color>
-            <Color x:Key="AccentYellow">#FFD700</Color>
+            <Color x:Key="AccentYellow">#FFD700</Color> 
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarTextColor" Value="White"/>
+                <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryBlue}"/>
+            </Style>
 
             <Style TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource AccentYellow}"/>

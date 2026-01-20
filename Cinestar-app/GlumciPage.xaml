@@ -2,51 +2,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Cinestar_app.Models"
              x:Class="Cinestar_app.GlumciPage"
+             BackgroundColor="#051851"
              Title="Svi Glumci">
 
-    <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#051851" Offset="0"/>
-            <GradientStop Color="#0B2A6F" Offset="1"/>
-        </LinearGradientBrush>
-    </ContentPage.Background>
+    <NavigationPage.TitleView>
+        <Label Text="Svi Glumci"
+               FontSize="17"
+               TextColor="White"
+               Margin="0,0,60,0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"/>
+    </NavigationPage.TitleView>
 
-    <ScrollView>
-        <CollectionView x:Name="ActorsCollectionView"
-                        ItemsLayout="VerticalList"
-                        Margin="10"
-                        SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Actor">
-                    <Frame WidthRequest="100"
-                           HeightRequest="140"
-                           CornerRadius="15"
-                           Padding="5"
-                           Margin="5"
-                           BackgroundColor="#071942"
-                           HasShadow="False"
-                           HorizontalOptions="Center">
-                        <StackLayout Orientation="Vertical"
-                                     HorizontalOptions="Center"
-                                     VerticalOptions="Center"
-                                     Spacing="5">
-                            <Image Source="{Binding Photo}" 
-                                   HeightRequest="70" 
-                                   WidthRequest="70" 
-                                   Aspect="AspectFill"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   Clip="Ellipse"/>
-                            <Label Text="{Binding Name}" 
-                                   TextColor="White" 
-                                   FontSize="14" 
-                                   HorizontalOptions="Center"
-                                   LineBreakMode="TailTruncation"
-                                   HorizontalTextAlignment="Center"/>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </ScrollView>
+    <CollectionView x:Name="ActorsCollectionView"
+                    Margin="10"
+                    SelectionMode="None">
+        <!-- 2 kolone po red -->
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout Orientation="Vertical"
+                             Span="2"
+                             HorizontalItemSpacing="10"
+                             VerticalItemSpacing="10"/>
+        </CollectionView.ItemsLayout>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:Actor">
+                <Frame CornerRadius="20"
+                       Padding="10"
+                       HasShadow="False"
+                       HorizontalOptions="FillAndExpand">
+
+                    <StackLayout Orientation="Vertical"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 Spacing="10">
+                        <!-- VEĆA SLIKA -->
+                        <Image Source="{Binding Photo}" 
+                               HeightRequest="240" 
+                               WidthRequest="160" 
+                               Aspect="AspectFill"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center">
+                            <Image.Clip>
+                                <RoundRectangleGeometry CornerRadius="20"
+                                                        Rect="0,0,160,240"/>
+                            </Image.Clip>
+                        </Image>
+
+                        <!-- IME ISPOD SLIKE -->
+                        <Label Text="{Binding Name}" 
+                               TextColor="White" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="TailTruncation"/>
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
 </ContentPage>
