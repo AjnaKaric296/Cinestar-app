@@ -65,9 +65,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon
-			Include="Resources\AppIcon\icon.png"
-			OutputName="appicon" />
+		<MauiIcon Include="Resources\AppIcon\icon.png" OutputName="appicon" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen

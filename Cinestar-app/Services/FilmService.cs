@@ -9,7 +9,7 @@ namespace Cinestar_app.Services
 {
     public class FilmService
     {
-        private readonly string apiKey = "ebd20d7e"; // OMDb ključ
+        private readonly string apiKey = "418f702e"; // OMDb ključ
 
         private static readonly Random rnd = new();
 
