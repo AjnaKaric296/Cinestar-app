@@ -17,8 +17,8 @@
         </HorizontalStackLayout>
         <Label Text="{Binding Email}" Margin="0,0,0,0" TextColor="White" FontSize="16" HorizontalOptions="Center"/>
 
-        
-            <Frame BackgroundColor="#212066" Margin="0,30,0,0" Padding="20">
+
+        <Frame BackgroundColor="#0c205e" Margin="0,30,0,0" Padding="20">
                 <StackLayout Spacing="10">
                
                 <StackLayout Orientation="Horizontal" Spacing="15" Margin="5,0,5,0">

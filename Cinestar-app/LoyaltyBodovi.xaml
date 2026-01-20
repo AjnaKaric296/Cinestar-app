@@ -3,216 +3,72 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cinestar_app.LoyaltyBodovi"
              Title=" "
-             BackgroundColor="#051851"
+             BackgroundImageSource="slikicajedna.png"
              NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
-        <StackLayout Spacing="0">
+        <StackLayout >
 
-            <!-- Prikaz za neprijavljene korisnike -->
-            <StackLayout x:Name="NonLoggedInLayout" Spacing="0">
+            <StackLayout x:Name="NonLoggedInLayout">
 
-                <!-- LOGO -->
-                <!-- HEADER: LOGO + TEKST -->
-               
-                    <!-- Tekst pored loga -->
-                    <StackLayout Grid.Column="1"
+                <StackLayout Grid.Column="1"
                  VerticalOptions="Center"
-                                 HorizontalOptions="Center"
-                 Spacing="2"
-                 Padding="0,0,0,50">
+                 HorizontalOptions="Center"
+                 Spacing="0"
+                 Padding="0,0,0,0">
+                    
+                    <Image Source="logo.png" HeightRequest="60" Margin="0,30,0,30"/>
+                    <Label Text="Skupljajte loyalty bodove"
+                     FontSize="14"
+                     FontAttributes="Bold"
+                     HorizontalOptions="Center"
+                     Margin="0,0,0,0"/>
 
-                        <Label Text="CineStar Loyalty"
-               FontSize="20"
-               FontAttributes="Bold"
-               TextColor="#FFD600"
-                               HorizontalOptions="Center"
-                               Margin="0,60,0,0"/>
+                    <Label Text="Predstavijamo ti novo digitaino članstvo u kojem mogu sudjelovati svi registrirani korisnici CineStar aplikacije. Registruj se sada i počni skupijati
+zvjezdice koje možeš mijenjati za nagrade! Očekuju te i zvjezdice dobrodošlice. Jednom kada si registriran online ili putem CineStar aplikacije, svaku tvoju potrošnju nagrađujemo - bilo da kupuješ
+ulaznice, kokice, nachose, piće ili pokion kartice, bilo kako, online ili na blagajni - skupljaš zvjezdice koje možeš zamijeniti za razne nagrade u našoj trgovini s
+kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,80,25,0"  HorizontalTextAlignment="Center"/>
 
-                        <Label Text="Skupljaj zvjezdice. Ostvari nagrade."
-               FontSize="12"
-               TextColor="White"
-               Opacity="0.9"
-                             Margin="0,5,0,0"  />
-                    </StackLayout>
-
-              
-
-
-                <!-- OPIS -->
-                <StackLayout Orientation="Horizontal"
-             Padding="10,-20,10,20"
-             Spacing="12"
-             HorizontalOptions="Center">
-
-                    <Frame BackgroundColor="#081F59"
-           CornerRadius="16"
-           Padding="12"
-           WidthRequest="100"
-           HasShadow="False">
-                        <Label Text="🎟️ Kupuj"
-               TextColor="White"
-               FontSize="12"
-               HorizontalTextAlignment="Center"/>
-                    </Frame>
-
-                    <Frame BackgroundColor="#081F59"
-           CornerRadius="16"
-           Padding="12"
-           WidthRequest="100"
-           HasShadow="False">
-                        <Label Text="✨ Skupljaj"
-               TextColor="White"
-               FontSize="12"
-               HorizontalTextAlignment="Center"/>
-                    </Frame>
-
-                    <Frame BackgroundColor="#081F59"
-           CornerRadius="16"
-           Padding="12"
-           WidthRequest="100"
-           HasShadow="False">
-                        <Label Text="🎁 Zamijeni"
-               TextColor="White"
-               FontSize="12"
-               HorizontalTextAlignment="Center"/>
-                    </Frame>
                 </StackLayout>
 
 
-                <!-- ŽUTA TRAKA -->
-                <AbsoluteLayout BackgroundColor="#051851"
-                HeightRequest="70" 
-                    Margin="0,-20,0,0">
+                <Image Source="linija.png"  HorizontalOptions="Center" WidthRequest="450" Margin="0" />
+                <StackLayout Orientation="Horizontal" 
+             HorizontalOptions="Center" 
+             VerticalOptions="Center"
+             Margin="0,20,0,20"
+             Spacing="15">
 
-                    <!-- Postojeće slike bodova i zvijezda -->
-                    <Image Source="bodovi.png"
-           HeightRequest="30"
-           WidthRequest="40"
-           AbsoluteLayout.LayoutBounds="0.05,0.5,40,30"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="50"
-           Opacity="0.4"/>
+                    <!-- Bebica -->
+                    <Image Source="bebica.png"
+           HeightRequest="300"
+           WidthRequest="300"/>
 
-                    <Image Source="zvjezdica.png"
-           HeightRequest="50"
-           WidthRequest="25"
-           AbsoluteLayout.LayoutBounds="0.5,0.3,20,40"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="40"/>
+                    <!-- Label -->
+                    <Label Text="Pogodnosti?"
+           VerticalOptions="Center"
+           FontSize="18"
+           FontAttributes="Bold"
+           TextColor="Black"/>
+                </StackLayout>
 
-                    <Image Source="bodovi.png"
-           HeightRequest="50"
-           WidthRequest="40"
-           AbsoluteLayout.LayoutBounds="0.95,0.6,40,50"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="20"
-           Opacity="0.5"/>
-
-                    <!-- NOVO: dodatne dekorativne zvijezde -->
-                    <Image Source="zvjezdica.png"
-           HeightRequest="20"
-           WidthRequest="30"
-           AbsoluteLayout.LayoutBounds="0.2,0.2,15,15"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="-15"
-           Opacity="0.7"/>
-
-                    <Image Source="zvjezdica.png"
-           HeightRequest="12"
-           WidthRequest="12"
-           AbsoluteLayout.LayoutBounds="0.7,0.15,12,12"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="25"
-           Opacity="0.7"/>
-
-                    <Image Source="zvjezdica.png"
-           HeightRequest="18"
-           WidthRequest="18"
-           AbsoluteLayout.LayoutBounds="0.3,0.7,18,18"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="10"
-           Opacity="0.35"/>
-
-                    <Image Source="zvjezdica.png"
-           HeightRequest="10"
-           WidthRequest="10"
-           AbsoluteLayout.LayoutBounds="0.85,0.25,10,10"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="-20"
-           Opacity="0.3"/>
-
-                    <Image Source="bodovi.png"
-           HeightRequest="150"
-           WidthRequest="14"
-           AbsoluteLayout.LayoutBounds="0.6,0.8,14,20"
-           AbsoluteLayout.LayoutFlags="PositionProportional"
-           Rotation="30"
-           Opacity="0.2"/>
-                </AbsoluteLayout>
 
                 <!-- DONJI DIO -->
-            
-                    <Image Source="pozadinabodovii.png"
-                           HeightRequest="200"
-                           Aspect="AspectFit"
-                           Opacity="0.6"
-                           Margin="0,-35,0,-9"/>
-                    
-               
+                <StackLayout Margin="10">
+                    <Label Text="ČLANSTVO - članstvo je besplatno prvom registracijom" Margin="0,15,0,15" HorizontalTextAlignment="Center"  FontSize="12"/>
+
+                    <Label Text=" SKUPLJANJE ZVJEZDICA  - Kupuj ulaznice i proizvode koristeći članstvo jer za svaki potrošeni 1 BAM dobivaš 1 zvjezdicu. Zvjezdice vrijede godinu dana." Margin="0" HorizontalTextAlignment="Center"  FontSize="12"/>
+                <Label Text="
+                ZAMJENA ZVJEZDICA ZA KUPONE - Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene." 
+                   Margin="15" HorizontalTextAlignment="Center"  FontSize="12"    />
+                </StackLayout>
+
                 <BoxView HeightRequest="1"
          Color="#333333"
          Margin="0,5,0,20"
          HorizontalOptions="FillAndExpand"/>
 
-                <!-- INFO TEKST + DUGME -->
-                <Label Text="ZAŠTO POSTATI ČLAN?"
-FontSize="20"
-FontAttributes="Bold"
-TextColor="#FFD600"
-                HorizontalOptions="Center"
-                       Margin="0,0,0,20"/>
-                <StackLayout Padding="25,0,25,40" Spacing="12">
-                   
-
-                    <Label Text="🎟️ ČLANSTVO – Članstvo je besplatno jednom promocijom"
-                           FontSize="12"
-                           TextColor="White"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="🎁 SKUPlJANJE ZVJEZDICA – Kupuj ulaznice i proizvode koristeći članstvo jer za svaki potrošeni 1 BAM dobivaš 1 zvjezdicu. Zvjezdice vrijede godinu dana."
-                           FontSize="12"
-                           TextColor="White"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="🔄 ZAMJENA ZVJEZDICA ZA KUPONE – Zvjezdice zamijeni za kupone u online trgovini. Kupon vrijedi 30 dana od zamjene."
-                           FontSize="12"
-                           TextColor="White"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="🛒 POPUST NA PROIZVODE - Članovi ostvaruju popust na odabrane proizvode." 
-                           FontSize="12"
-                           TextColor="White"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="🍹 POPUST U BARU - Kao naš član ostvaruješ popust u svim barovima koje posjedujemo!"
-                           FontSize="12"
-                           TextColor="White"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="🍿 MENI - Posebni Meni samo za članove." 
-                           FontSize="12"
-                           TextColor="White"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="💌 LIMITED EDITION KUPONI - Članovi imaju priliku dobiti posebne kupone putem posebnih promocija!"
-                           FontSize="12"
-                           TextColor="White"
-                           HorizontalTextAlignment="Center"/>
-
-
-                    <Label Text="Registruj se i ostvari mogućnost skupljanja bodova!"
-FontSize="14"
-FontAttributes="Bold"
-                           
-TextColor="#FFD600"
-                HorizontalOptions="Center" 
-                       Margin="0,30,0,0"/>
-                </StackLayout>
+               
 
             </StackLayout>
 
@@ -229,7 +85,7 @@ TextColor="#FFD600"
                         <Frame CornerRadius="24"
        Padding="0"
        HasShadow="True"
-       BackgroundColor="#081F59"
+       BackgroundColor="#0c205e"
        Margin="0,20">
                             
                       
@@ -294,7 +150,7 @@ TextColor="#FFD600"
                Padding="5"
                WidthRequest="160"
                HasShadow="False">
-                        <Button Text="🎟️ Kupi kartu"
+                        <Button Text=" Kupi kartu"
                                 Clicked="OnClickedKupovina"
                     BackgroundColor="Transparent"
                     TextColor="White"
@@ -306,7 +162,7 @@ TextColor="#FFD600"
               Padding="5"
 WidthRequest="160"
                HasShadow="False">
-                        <Button Text="✨ Ocijeni film"
+                        <Button Text=" Ocijeni film"
                                  Clicked="OnClickedKupovina"
                     BackgroundColor="Transparent"
                     TextColor="White"
