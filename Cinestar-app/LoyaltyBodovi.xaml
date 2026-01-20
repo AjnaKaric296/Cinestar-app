@@ -38,26 +38,24 @@ kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,7,25,0"  Horizont
                 <StackLayout Orientation="Horizontal">
 
                     <Image Source="bebica.png"
-                    HeightRequest="120"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Start"
-                    Margin="20,-40,0,0"
-                    ZIndex="10"/>
-                    <Frame 
-                  Padding="20"
-                 HorizontalOptions="FillAndExpand"
-                  BackgroundColor="Transparent">
+                            HeightRequest="120"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            Margin="20,-40,0,0"
+                            ZIndex="10"/>
+                    <Frame Padding="20"
+                           HorizontalOptions="FillAndExpand"
+                           BackgroundColor="Transparent">
                 <Label Text="Pogodnosti?"
-               Opacity="0.5"
-               VerticalOptions="Center"
-               Margin="40,0"/>
+                        Opacity="0.5"
+                        VerticalOptions="Center"
+                       Margin="40,0"/>
                     </Frame>
 
                 </StackLayout>
 
 
 
-                <!-- DONJI DIO -->
                 <StackLayout Margin="10,00,10,10">
                     <Label Text="ČLANSTVO - članstvo je besplatno prvom registracijom" Margin="0,10,0,10" HorizontalTextAlignment="Center"  FontSize="12"/>
 
@@ -67,17 +65,16 @@ kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,7,25,0"  Horizont
                 </StackLayout>
 
                 <BoxView HeightRequest="1"
-         Color="#333333"
-         Margin="0,5,0,15"
-         HorizontalOptions="FillAndExpand"/>
+                         Color="#333333"
+                          Margin="0,5,0,15"
+                         HorizontalOptions="FillAndExpand"/>
 
                 <Label Text="Prijavi se i započni!" TextColor="#FFD200" HorizontalOptions="Center" FontSize="18" Margin="0,0,0,20" TextTransform="Uppercase" FontAttributes="Bold" />
             </StackLayout>
 
-            <!-- Prikaz za prijavljene korisnike -->
             <StackLayout x:Name="LoggedInLayout" IsVisible="False" Spacing="0" Padding="10">
 
-                <!-- Header: Logo i bodovi -->
+         
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Spacing="15" Margin="0,40,0,20">
                    
                         <StackLayout VerticalOptions="Center">
@@ -85,21 +82,18 @@ kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,7,25,0"  Horizont
                         <Label Text="Skupljaj bodove i osvoji najbolje nagrade!" FontSize="14" TextColor="White" Opacity="0.8" HorizontalOptions="Center" Margin="0,5,0,20"/>
                         
                         <Frame CornerRadius="24"
-       Padding="0"
-       HasShadow="True"
-       BackgroundColor="#0c205e"
-       Margin="0,20">
+                               Padding="0"
+                               HasShadow="True"
+                               BackgroundColor="#0c205e"
+                               Margin="0,20">
                             
-                      
-
                             <Grid HeightRequest="220">
 
-                                <!-- Pozadina kartice -->
+                               
                                 <Image Source="kupon1.png"
-               Aspect="AspectFill"
-               Opacity="0.0"/>
-
-                                <!-- Gradient overlay -->
+                                       Aspect="AspectFill"
+                                       Opacity="0.0"/>
+                         
                                 <BoxView>
                                     <BoxView.Background>
                                         <LinearGradientBrush>
@@ -109,23 +103,22 @@ kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,7,25,0"  Horizont
                                     </BoxView.Background>
                                 </BoxView>
 
-                                <!-- Sadržaj -->
                                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="9">
 
                                    
 
                                     <Label x:Name="BodoviLabel"
-                   Text="0"
-                   FontSize="90"
-                   FontAttributes="Bold"
-                   TextColor="#FFD600"
-                   HorizontalOptions="Center"/>
+                                           Text="0"
+                                           FontSize="90"
+                                           FontAttributes="Bold"
+                                           TextColor="#FFD600"
+                                           HorizontalOptions="Center"/>
 
                                     <Label Text=" dostupnih bodova"
-                   FontSize="12"
-                   TextColor="White"
-                   Opacity="0.9"
-                   HorizontalOptions="Center"/>
+                                            FontSize="12"
+                                            TextColor="White"
+                                             Opacity="0.9"
+                                            HorizontalOptions="Center"/>
                                 </StackLayout>
                                 
 
@@ -138,20 +131,13 @@ kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,7,25,0"  Horizont
                     
                 </StackLayout>
                 
-
-               
-
-              
-
-
-                <!-- Funkcionalnosti koje dodaju bodove -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="0" Padding="-6,0,0,20" >
 
                     <Frame BackgroundColor="#081F59"
-               CornerRadius="16"
-               Padding="5"
-               WidthRequest="160"
-               HasShadow="False">
+                           CornerRadius="16"
+                           Padding="5"
+                           WidthRequest="160"
+                           HasShadow="False">
                         <Button Text=" Kupi kartu"
                                 Clicked="OnClickedKupovina"
                     BackgroundColor="Transparent"
@@ -160,16 +146,15 @@ kuponima!" HorizontalOptions="Center" FontSize="12" Margin="25,7,25,0"  Horizont
                     </Frame>
 
                     <Frame BackgroundColor="#081F59"
-               CornerRadius="16"
-              Padding="5"
-WidthRequest="160"
-               HasShadow="False">
+                             CornerRadius="16"
+                             Padding="5"
+                            WidthRequest="160"
+                             HasShadow="False">
                         <Button Text=" Ocijeni film"
                                  Clicked="OnClickedKupovina"
-                    BackgroundColor="Transparent"
-                    TextColor="White"
-                    FontSize="11"
-                   />
+                                 BackgroundColor="Transparent"
+                                 TextColor="White"
+                                FontSize="11"/>
                     </Frame>
 
                    
@@ -177,7 +162,7 @@ WidthRequest="160"
 
                 <StackLayout Orientation="Horizontal" Spacing="10" Padding="10,0" Margin="0,10">
 
-                    <!-- Medalja 1 -->
+                 
                     <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
                             <Image Source="medalja1.png" HeightRequest="80" WidthRequest="60"/>
@@ -186,7 +171,7 @@ WidthRequest="160"
                         </StackLayout>
                     </Frame>
 
-                    <!-- Medalja 2 -->
+           
                     <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7">
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
                             <Image Source="medalja2.png" HeightRequest="80" WidthRequest="60"/>
@@ -195,7 +180,7 @@ WidthRequest="160"
                         </StackLayout>
                     </Frame>
 
-                    <!-- Medalja 3 -->
+              
                     <Frame WidthRequest="110" HeightRequest="150" CornerRadius="16" BackgroundColor="#FFD700" HasShadow="True" Opacity="0.7" >
                         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
                             <Image Source="medalja3.png" HeightRequest="80" WidthRequest="60"/>
@@ -204,7 +189,6 @@ WidthRequest="160"
                         </StackLayout>
                     </Frame>
 
-                    <!-- Možeš dodati još medalja po želji -->
                 </StackLayout>
 
             </StackLayout>

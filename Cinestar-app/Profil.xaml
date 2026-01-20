@@ -17,85 +17,64 @@
                    TextColor="White"
                    FontFamily="Arial"
                    Padding="10"/>
-            <BoxView HeightRequest="1" 
+                <BoxView HeightRequest="1" 
                      BackgroundColor="White" 
                      HorizontalOptions="FillAndExpand"
                      Margin="5,5"/>
-
-
-
-                <Frame
-    Padding="0"
-    BackgroundColor="#051851"
-    CornerRadius="20"
-    HasShadow="False">
-                    <Entry
-        x:Name="EmailEntry"
-        Placeholder="Unesite svoj email"
-        Keyboard="Email"
-        TextColor="White"
-        PlaceholderColor="#AAAAAA"
-        BackgroundColor="Transparent"
-        FontSize="13"
-        HeightRequest="35"
-        VerticalTextAlignment="Center"
-        Margin="12,0"
-        />
-        </Frame>
-            
-            
-        <Frame
-        Padding="0"
-        BackgroundColor="#051851"
-        CornerRadius="20"
-        HasShadow="False">
-
-        <Entry
-    x:Name="LozinkaEntry"
-    Placeholder="Unesite svoju lozinku"
-    IsPassword="True"
-    TextColor="White"
-    PlaceholderColor="#AAAAAA"
-    BackgroundColor="Transparent"
-    FontSize="13"
-    HeightRequest="35"
-    VerticalTextAlignment="Center"
-    Margin="12,0"
-    />
-    </Frame>
-                
-              
-                <!-- Buttoni -->
-
-               
-                     <Button Text="Prijavi se"
+                <Frame Padding="0"
+                       BackgroundColor="#051851"
+                       CornerRadius="20"
+                        HasShadow="False">
+                    <Entry x:Name="EmailEntry"
+                            Placeholder="Unesite svoj email"
+                            Keyboard="Email"
+                            TextColor="White"
+                            PlaceholderColor="#AAAAAA"
+                            BackgroundColor="Transparent"
+                            FontSize="13"
+                            HeightRequest="35"
+                            VerticalTextAlignment="Center"
+                            Margin="12,0" />
+                </Frame>
+                <Frame Padding="0"
+                       BackgroundColor="#051851"
+                        CornerRadius="20"
+                        HasShadow="False">
+                    <Entry x:Name="LozinkaEntry"
+                            Placeholder="Unesite svoju lozinku"
+                            IsPassword="True"
+                            TextColor="White"
+                            PlaceholderColor="#AAAAAA"
+                            BackgroundColor="Transparent"
+                            FontSize="13"
+                            HeightRequest="35"
+                            VerticalTextAlignment="Center"
+                            Margin="12,0" />
+                </Frame>
+                <Button Text="Prijavi se"
                     BackgroundColor="#0a0733"
                     TextColor="White"
                     Clicked="Prijava_Clicked"
                     FontFamily="Arial"
                     CornerRadius="15"
                     WidthRequest="200"
-                    Margin="5,0"
-                    /> 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    Margin="5,0" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="Nemate profil?"
                            VerticalOptions="Center"
                            FontSize="11"
                            Margin="10,0,5,0"/>
                     <Label Text="Registruj se"
-                       VerticalOptions="Center"
-                       TextDecorations="Underline"
+                           VerticalOptions="Center"
+                           TextDecorations="Underline"
                            FontSize="12"
-       InputTransparent="False">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Registracija_Clicked"/>
-                    </Label.GestureRecognizers>
-                </Label>
-</StackLayout>
-
-              
-
-        </VerticalStackLayout>
+                           InputTransparent="False">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Registracija_Clicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </VerticalStackLayout>
     </ScrollView>
     </Grid>
 </ContentPage>

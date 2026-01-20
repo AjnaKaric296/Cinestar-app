@@ -5,13 +5,10 @@
              BackgroundColor="#051851">
 
     <Grid>
-        <!-- Pozadina -->
         <Image Source="pozadinskaslika.jpg"
                Aspect="AspectFill"/>
-
         <ScrollView>
             <VerticalStackLayout Padding="20" Spacing="15">
-
                 <Label Text="REGISTRACIJA"
                        FontSize="24"
                        HorizontalOptions="Center"
@@ -25,7 +22,6 @@
                          HorizontalOptions="FillAndExpand"
                          Margin="5,5"/>
 
-                <!-- Ime -->
                 <Frame Padding="0"
                        BackgroundColor="#051851"
                        CornerRadius="20"
@@ -41,7 +37,6 @@
                            Margin="12,0"/>
                 </Frame>
 
-                <!-- Prezime -->
                 <Frame Padding="0"
                        BackgroundColor="#051851"
                        CornerRadius="20"
@@ -57,7 +52,6 @@
                            Margin="12,0"/>
                 </Frame>
 
-                <!-- Email -->
                 <Frame Padding="0"
                        BackgroundColor="#051851"
                        CornerRadius="20"
@@ -74,7 +68,6 @@
                            Margin="12,0"/>
                 </Frame>
 
-                <!-- Lozinka -->
                 <Frame Padding="0"
                        BackgroundColor="#051851"
                        CornerRadius="20"
@@ -91,7 +84,6 @@
                            Margin="12,0"/>
                 </Frame>
 
-                <!-- Potvrda lozinke -->
                 <Frame Padding="0"
                        BackgroundColor="#051851"
                        CornerRadius="20"
@@ -108,7 +100,6 @@
                            Margin="12,0"/>
                 </Frame>
 
-                <!-- Button -->
                 <Button Text="Registruj se"
                         BackgroundColor="#0a0733"
                         TextColor="White"

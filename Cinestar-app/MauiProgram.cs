@@ -23,7 +23,6 @@ namespace Cinestar_app
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // ✅ UKLANJANJE LINIJE ISPOD ENTRY-a
             EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
             {
 #if ANDROID
