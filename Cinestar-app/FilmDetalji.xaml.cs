@@ -161,6 +161,13 @@ public partial class FilmDetalji : ContentPage
 
     private void OnReadMoreTapped(object sender, EventArgs e)
     {
+        if (string.IsNullOrEmpty(fullPlotText) || fullPlotText.Length <= previewLength)
+        {
+            PlotTextSpan.Text = fullPlotText;
+            ReadMoreSpan.Text = ""; 
+            return;
+        }
+
         if (!isPlotExpanded)
         {
             PlotTextSpan.Text = fullPlotText;
@@ -169,7 +176,8 @@ public partial class FilmDetalji : ContentPage
         }
         else
         {
-            PlotTextSpan.Text = fullPlotText.Substring(0, previewLength) + "...";
+            int actualLength = Math.Min(previewLength, fullPlotText.Length);
+            PlotTextSpan.Text = fullPlotText.Substring(0, actualLength) + "...";
             ReadMoreSpan.Text = " Više";
             isPlotExpanded = false;
         }

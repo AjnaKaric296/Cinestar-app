@@ -8,8 +8,9 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-
+        Preferences.Remove("SelectedCity"); 
         var city = Preferences.Get("SelectedCity", null);
+
 
         if (string.IsNullOrEmpty(city))
         {
