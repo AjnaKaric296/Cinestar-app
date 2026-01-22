@@ -57,9 +57,6 @@
                                         <Label Text="{Binding Year}" FontSize="10" TextColor="#FFD200"/>
                                         <Label Text="{Binding Description}" FontSize="10" TextColor="White" LineBreakMode="WordWrap"/>
                                     </StackLayout>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnCarouselTapped"/>
-                                    </Grid.GestureRecognizers>
                                 </Grid>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
@@ -80,9 +77,7 @@
                             <DataTemplate>
                                 <Frame Padding="0" Margin="0,5,15,0" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12" HeightRequest="240" WidthRequest="185">
                                     <Image Source="{Binding Poster}" WidthRequest="200" HeightRequest="240" Aspect="AspectFill"/>
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnFilmTapped"/>
-                                    </Frame.GestureRecognizers>
+                                
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -97,9 +92,7 @@
                             <DataTemplate>
                                 <Frame Padding="0" Margin="0,5,15,0" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12" HeightRequest="240" WidthRequest="185"> 
                                     <Image Source="{Binding Poster}" WidthRequest="200" HeightRequest="240" Aspect="AspectFill"/>
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnFilmTapped"/>
-                                    </Frame.GestureRecognizers>
+                             
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -114,9 +107,7 @@
                             <DataTemplate>
                                 <Frame Padding="0" Margin="0,5,15,0" BackgroundColor="Transparent" HasShadow="False" CornerRadius="12" HeightRequest="240" WidthRequest="185">
                                     <Image Source="{Binding Poster}" WidthRequest="200" HeightRequest="240" Aspect="AspectFill"/>
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnFilmTapped"/>
-                                    </Frame.GestureRecognizers>
+                                 
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

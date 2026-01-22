@@ -68,11 +68,7 @@
 		<MauiIcon Include="Resources\AppIcon\icon.png" OutputName="appicon" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen
-			Include="Resources\Splash\splashbg.png"
-			BaseSize="1024,1024"
-			Color="#000000" />
-
+<MauiSplashScreen Include="Resources\Splash\splashbg.png" Color="#000000" Resize="false" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -83,6 +79,10 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Resources\values\styles.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -126,7 +126,6 @@
 	  <MauiImage Include="Resources\Actors\winston.jfif" />
 	  <MauiImage Include="Resources\Actors\wong.jfif" />
 	  <MauiImage Include="Resources\Actors\zoe.jfif" />
-	  <MauiImage Include="Resources\Splash\splashbg.jpg" />
 	  <MauiImage Include="Resources\Splash\splashlg.png" />
 	</ItemGroup>
 
@@ -135,6 +134,13 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
 		<PackageReference Include="QRCoder" Version="1.7.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Update="Platforms\Android\Resources\drawable\splashbg.png">
+	    <Resize>false</Resize>
+	    <Color>#000000</Color>
+	  </AndroidResource>
 	</ItemGroup>
 
 	<ItemGroup>
